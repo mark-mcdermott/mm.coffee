@@ -1,0 +1,8 @@
+@import "tailwindcss";
+
+/* astro:fonts emits --font-anton / --font-jetbrains; map them onto Tailwind's
+   font scale so `font-display` and `font-mono` resolve to the self-hosted faces. */
+@theme {
+  --font-display: var(--font-anton);
+  --font-mono: var(--font-jetbrains);
+}

@@ -1,0 +1,36 @@
+---
+import { Font } from 'astro:assets'
+import '@styles/globals.css'
+
+interface Props {
+  title?: string
+  description?: string
+}
+
+const {
+  title,
+  description = 'A software studio in Austin, Texas. Small-batch software since 2024.',
+} = Astro.props
+
+const SITE_NAME = 'mm.coffee'
+const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Software for the Modern Age`
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="generator" content={Astro.generator} />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+
+    <title>{pageTitle}</title>
+    <meta name="description" content={description} />
+
+    <Font cssVariable="--font-anton" preload />
+    <Font cssVariable="--font-jetbrains" preload />
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>
