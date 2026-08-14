@@ -1,10 +1,19 @@
 ---
 import Layout from '@layouts/Layout.astro'
+import Hero from '@components/home/Hero.astro'
+import SelectedPrograms from '@components/home/SelectedPrograms.astro'
+import BrewingNow from '@components/home/BrewingNow.astro'
+import Manifesto from '@components/home/Manifesto.astro'
 ---
 
 <Layout>
-  <div class="p-8">
-    <h1 class="font-display text-6xl uppercase">Software for the modern age</h1>
-    <p class="font-mono mt-4 text-sm">mm@coffee:~$ make something useful</p>
+  <Hero />
+
+  <!-- Programs and the lab teaser sit side by side on wide screens, as in the comps. -->
+  <div class="grid lg:grid-cols-[1fr_22rem]">
+    <SelectedPrograms />
+    <BrewingNow />
   </div>
+
+  <Manifesto />
 </Layout>

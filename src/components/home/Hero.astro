@@ -1,0 +1,43 @@
+---
+import HalftoneStack from '@components/art/HalftoneStack.astro'
+import Swoosh from '@components/art/Swoosh.astro'
+---
+
+<section class="relative overflow-hidden border-b">
+  <!-- Ribbon bleeds off the right edge, behind the type. -->
+  <Swoosh
+    class="pointer-events-none absolute -right-20 -top-24 w-[min(62vw,46rem)] lg:-right-10 lg:-top-32 lg:w-[46rem]"
+  />
+
+  <div class="relative px-6 py-10 lg:px-8 lg:py-14">
+    <!-- Circles sit alongside the headline at every width, as in the comps. -->
+    <div class="grid grid-cols-[auto_1fr] items-start gap-6 lg:gap-12">
+      <HalftoneStack class="w-20 shrink-0 sm:w-28 lg:w-40" />
+
+      <div class="min-w-0">
+        <!-- Explicit breaks: the comps set this as four short columnar lines. -->
+        <h1 class="display max-w-[11ch] text-[clamp(2.6rem,11vw,7.5rem)]">
+          <span class="text-red">Software</span><br />
+          for the<br />
+          modern<br />
+          age.
+        </h1>
+
+        <p class="label mt-7 text-blue">
+          Useful systems.<br />
+          Built with care.<br />
+          Caffeine optional.
+        </p>
+
+        <p class="label mt-7 text-signal">mm@coffee:~$ make something useful</p>
+      </div>
+    </div>
+
+    <p
+      class="label mt-10 ml-auto max-w-[30ch] text-right lg:absolute lg:bottom-12 lg:right-10 lg:mt-0"
+    >
+      Good software is like good coffee. It should be strong, smooth, and keep
+      you up at night.
+    </p>
+  </div>
+</section>

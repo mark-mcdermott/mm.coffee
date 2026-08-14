@@ -1,0 +1,25 @@
+---
+import Terminal from '@components/art/Terminal.astro'
+import { EXPERIMENTS } from '@lib/content'
+---
+
+<section class="border-t lg:border-l lg:border-t-0" aria-labelledby="brewing-heading">
+  <a
+    href="/lab"
+    class="group flex items-center gap-3 px-6 py-5 hover:text-red-deep lg:px-8"
+  >
+    <h2 id="brewing-heading" class="label">Brewing now</h2>
+    <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">
+      &rarr;
+    </span>
+  </a>
+
+  <Terminal class="w-full border-y" />
+
+  <div class="px-6 py-6 lg:px-8">
+    <h3 class="label opacity-45">Experiments in:</h3>
+    <ul class="mt-3 space-y-1">
+      {EXPERIMENTS.map((item) => <li class="label text-red-deep">{item}</li>)}
+    </ul>
+  </div>
+</section>

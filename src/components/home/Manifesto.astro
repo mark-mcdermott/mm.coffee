@@ -1,0 +1,32 @@
+---
+import Swoosh from '@components/art/Swoosh.astro'
+import DotMatrixMark from '@components/art/DotMatrixMark.astro'
+import { MANIFESTO } from '@lib/content'
+import { SITE } from '@lib/site'
+---
+
+<section
+  class="grid border-t lg:grid-cols-[22rem_1fr_auto]"
+  aria-labelledby="manifesto-heading"
+>
+  <div class="px-6 py-8 lg:px-8 lg:py-10">
+    <h2 id="manifesto-heading" class="label">Our manifesto</h2>
+    <div class="mt-5 space-y-4">
+      {MANIFESTO.map((line) => <p class="label max-w-[30ch] text-blue">{line}</p>)}
+    </div>
+  </div>
+
+  <div class="relative min-h-44 overflow-hidden border-t lg:min-h-56 lg:border-l lg:border-t-0">
+    <Swoosh variant="manifesto" class="absolute inset-0 h-full w-full" />
+  </div>
+
+  <div
+    class="flex flex-col justify-end gap-4 border-t px-6 py-8 lg:border-l lg:border-t-0 lg:px-10 lg:py-10"
+  >
+    <DotMatrixMark class="w-36 text-ink lg:w-44" />
+    <p class="label text-red-deep">
+      Est. {SITE.established}<br />
+      by {SITE.author}
+    </p>
+  </div>
+</section>
