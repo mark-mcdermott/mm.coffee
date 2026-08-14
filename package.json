@@ -13,7 +13,7 @@
     "check": "astro check",
     "check:contrast": "node scripts/check-contrast.mjs",
     "build:icons": "node scripts/build-icons.mjs",
-    "test": "playwright test",
+    "test": "pnpm build && playwright test",
     "astro": "astro"
   },
   "dependencies": {
