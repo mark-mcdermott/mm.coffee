@@ -1,0 +1,88 @@
+---
+import Layout from '@layouts/Layout.astro'
+import Logo from '@components/Logo.astro'
+import Swoosh from '@components/art/Swoosh.astro'
+import HalftoneStack from '@components/art/HalftoneStack.astro'
+import RiverWaves from '@components/art/RiverWaves.astro'
+import Chevrons from '@components/art/Chevrons.astro'
+import DotMatrixMark from '@components/art/DotMatrixMark.astro'
+import Barcode from '@components/art/Barcode.astro'
+
+const swatches = [
+  ['paper', 'bg-paper'],
+  ['ink', 'bg-ink'],
+  ['red', 'bg-red'],
+  ['blue', 'bg-blue'],
+  ['gold', 'bg-gold'],
+  ['orange', 'bg-orange'],
+  ['signal', 'bg-signal'],
+]
+---
+
+<Layout title="Styleguide">
+  <main class="mx-auto max-w-6xl p-10 space-y-12">
+    <section>
+      <p class="label mb-3">Wordmark</p>
+      <Logo class="w-96 text-ink" />
+      <div class="mt-4 bg-red p-4 w-fit"><Logo class="w-64 text-paper" /></div>
+      <div class="mt-4"><Logo short class="w-24 text-ink" /></div>
+    </section>
+
+    <section>
+      <p class="label mb-3">Palette</p>
+      <div class="flex gap-0">
+        {
+          swatches.map(([name, cls]) => (
+            <div class="w-28">
+              <div class={`h-20 ${cls} rule-t rule-b rule-l`} />
+              <p class="label mt-1">{name}</p>
+            </div>
+          ))
+        }
+      </div>
+    </section>
+
+    <section>
+      <p class="label mb-3">Type</p>
+      <h1 class="display text-[7rem] text-red">Software</h1>
+      <h2 class="display text-[4rem]">For the modern age.</h2>
+      <p class="label text-blue mt-2">Useful systems. Built with care.</p>
+      <p class="label text-signal">mm@coffee:~$ make something useful</p>
+    </section>
+
+    <section class="grid grid-cols-3 gap-6">
+      <div>
+        <p class="label mb-2">Halftone stack</p>
+        <HalftoneStack class="w-40" />
+      </div>
+      <div>
+        <p class="label mb-2">River waves</p>
+        <RiverWaves class="w-full" />
+      </div>
+      <div>
+        <p class="label mb-2">Chevrons</p>
+        <Chevrons class="w-full" />
+      </div>
+    </section>
+
+    <section>
+      <p class="label mb-3">Swoosh</p>
+      <div class="flex gap-8">
+        <Swoosh class="w-80" />
+        <Swoosh class="w-80" flip />
+      </div>
+    </section>
+
+    <section class="flex items-end gap-10">
+      <div>
+        <p class="label mb-2">Dot matrix</p>
+        <DotMatrixMark class="w-40 text-ink" />
+      </div>
+      <div>
+        <p class="label mb-2">Barcode</p>
+        <Barcode value="MM013379602024" class="w-72 text-ink" />
+        <p class="label mt-1">MM013379602024</p>
+      </div>
+    </section>
+  </main>
+</Layout>
