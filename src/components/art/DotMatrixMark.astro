@@ -1,0 +1,53 @@
+---
+/**
+ * `mm.` rendered as a dot-matrix / LED grid — the mark in the manifesto block.
+ * The glyphs are a 5-row bitmap so the dots land on an exact grid rather than
+ * being traced off the wordmark.
+ */
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+// 5 rows. Two `m` glyphs (5 cols each) plus a full stop, separated by a blank col.
+const GLYPH_M = ['11111', '10101', '10101', '10101', '10101']
+const GLYPH_DOT = ['0', '0', '0', '0', '1']
+
+const rows = 5
+
+/** Compose the full bitmap row by row. */
+const bitmap = Array.from({ length: rows }, (_, r) =>
+  [GLYPH_M[r], '0', GLYPH_M[r], '0', GLYPH_DOT[r]].join('')
+)
+
+const R = 4.6
+const PITCH = 12
+const width = bitmap[0].length * PITCH
+const height = rows * PITCH
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`0 0 ${width} ${height}`}
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+>
+  {
+    bitmap.map((row, r) =>
+      row
+        .split('')
+        .map((cell, c) =>
+          cell === '1' ? (
+            <circle
+              cx={c * PITCH + PITCH / 2}
+              cy={r * PITCH + PITCH / 2}
+              r={R}
+              fill="currentColor"
+            />
+          ) : null
+        )
+    )
+  }
+</svg>

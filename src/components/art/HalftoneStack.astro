@@ -1,0 +1,43 @@
+---
+/**
+ * Three overlapping process-colour circles with a fine screen texture.
+ * Overlaps multiply, so gold over blue reads green and blue over red reads
+ * near-black — the way misregistered process printing actually behaves.
+ */
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+const CIRCLES = [
+  { cy: 96, fill: 'var(--color-gold)' },
+  { cy: 216, fill: 'var(--color-blue)' },
+  { cy: 336, fill: 'var(--color-red)' },
+]
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 200 432"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+>
+  <defs>
+    <pattern id="screen" width="5" height="5" patternUnits="userSpaceOnUse">
+      <path d="M5 0H0V5" fill="none" stroke="#000" stroke-width="0.7" opacity="0.38"></path>
+    </pattern>
+  </defs>
+
+  <g style="mix-blend-mode: multiply">
+    {
+      CIRCLES.map(({ cy, fill }) => (
+        <>
+          <circle cx="100" cy={cy} r="96" fill={fill} style="mix-blend-mode: multiply" />
+          <circle cx="100" cy={cy} r="96" fill="url(#screen)" />
+        </>
+      ))
+    }
+  </g>
+</svg>

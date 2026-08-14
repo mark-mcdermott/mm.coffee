@@ -46,6 +46,11 @@ type, rules, and fills — never small text.
   expose the programmatic API the checker relies on, so don't bump it to 7.
 - The `Font` component is imported from `astro:assets` (not `astro:fonts`, which was
   the Astro 5 experimental name).
+- Astro 7 keeps a **persistent background dev server** and reuses it across `pnpm dev`
+  invocations, so it can serve stale CSS after config changes and silently pick a
+  different port than the one you asked for. If styles look wrong, check
+  `pnpm astro dev status` for the real port and `pnpm astro dev stop` before trusting
+  what you see. A production build is the reliable signal.
 
 ## Before opening a PR
 
