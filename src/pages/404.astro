@@ -1,0 +1,50 @@
+---
+import Layout from '@layouts/Layout.astro'
+import Swoosh from '@components/art/Swoosh.astro'
+import { NAV } from '@lib/nav'
+---
+
+<Layout
+  title="Not found"
+  description="That page isn't here."
+>
+  <section class="relative overflow-hidden">
+    <Swoosh
+      class="pointer-events-none absolute -right-24 -top-32 w-[min(60vw,40rem)]"
+    />
+
+    <div class="relative px-6 py-16 lg:px-8 lg:py-24">
+      <p class="label text-red-deep">Error 404</p>
+
+      <h1 class="display mt-3 max-w-[12ch] text-[clamp(3rem,12vw,8rem)]">
+        Nothing brewing here.
+      </h1>
+
+      <p class="label mt-6 max-w-[44ch] text-blue">
+        That page doesn't exist, or it moved. Nothing's broken on your end.
+      </p>
+
+      <p class="label mt-8 text-signal">
+        mm@coffee:~$ ls {Astro.url.pathname} &rarr; no such file or directory
+      </p>
+
+      <nav class="mt-12" aria-label="Where to next">
+        <h2 class="label opacity-45">Try one of these</h2>
+        <ul class="mt-4 flex flex-wrap gap-x-8 gap-y-3">
+          <li>
+            <a href="/" class="label underline hover:text-red-deep">Home</a>
+          </li>
+          {
+            NAV.map(({ href, label }) => (
+              <li>
+                <a href={href} class="label underline hover:text-red-deep">
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+    </div>
+  </section>
+</Layout>
