@@ -1,0 +1,85 @@
+---
+/**
+ * Stand-in for the "brewing now" photograph in the comps — a period terminal
+ * and a studio mug, drawn rather than shot.
+ *
+ * The comps use a black-and-white photo here. Drawing it keeps the panel from
+ * sitting empty, avoids licensing a stock image, and matches the rest of the
+ * art library. Swap in a real photograph whenever one exists.
+ */
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 400 300"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+>
+  <defs>
+    <pattern id="term-screen" width="4" height="4" patternUnits="userSpaceOnUse">
+      <rect width="4" height="2" fill="var(--color-ink)" opacity="0.06"></rect>
+    </pattern>
+  </defs>
+
+  <rect width="400" height="300" fill="var(--color-paper-tint)"></rect>
+
+  <!-- desk -->
+  <path d="M0 236h400v64H0z" fill="var(--color-ink)" opacity="0.07"></path>
+  <path d="M0 236h400" stroke="var(--color-ink)" stroke-width="1.5"></path>
+
+  <!-- monitor -->
+  <g stroke="var(--color-ink)" stroke-width="2.5" fill="none">
+    <path d="M96 44h176a10 10 0 0 1 10 10v122a10 10 0 0 1-10 10H96a10 10 0 0 1-10-10V54a10 10 0 0 1 10-10Z"></path>
+    <path d="M150 186h68v22h-68z"></path>
+    <path d="M126 208h116"></path>
+  </g>
+
+  <!-- screen -->
+  <path d="M108 60h152v104H108z" fill="var(--color-ink)"></path>
+  <path d="M108 60h152v104H108z" fill="url(#term-screen)"></path>
+  {
+    [
+      [118, 78, 74],
+      [118, 90, 108],
+      [118, 102, 52],
+      [118, 114, 96],
+      [118, 126, 66],
+      [118, 138, 120],
+    ].map(([x, y, w]) => (
+      <rect x={x} y={y} width={w} height="4" fill="var(--color-signal)" opacity="0.85" />
+    ))
+  }
+  <rect x="118" y="150" width="10" height="5" fill="var(--color-signal)"></rect>
+
+  <!-- keyboard -->
+  <g stroke="var(--color-ink)" stroke-width="2" fill="none">
+    <path d="M104 232h164l14 28H90l14-28Z"></path>
+  </g>
+  {
+    Array.from({ length: 5 }, (_, row) =>
+      Array.from({ length: 14 }, (_, col) => (
+        <rect
+          x={112 + col * 11 - row * 1.5}
+          y={236 + row * 4.4}
+          width="7"
+          height="2.6"
+          fill="var(--color-ink)"
+          opacity="0.5"
+        />
+      ))
+    )
+  }
+
+  <!-- mug -->
+  <g stroke="var(--color-ink)" stroke-width="2.5" fill="none">
+    <path d="M312 194h50v34a14 14 0 0 1-14 14h-22a14 14 0 0 1-14-14v-34Z"></path>
+    <path d="M362 202h9a10 10 0 0 1 0 20h-9"></path>
+  </g>
+  <circle cx="337" cy="212" r="8" fill="var(--color-red)"></circle>
+</svg>

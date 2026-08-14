@@ -29,7 +29,9 @@ export default defineConfig({
   ],
 
   webServer: {
-    command: `pnpm build && node scripts/serve.mjs`,
+    // `pnpm test` builds first. The server only serves whatever is already in
+    // .vercel/output/static — reusing it must never mean skipping a build.
+    command: `node scripts/serve.mjs`,
     env: { PORT: String(PORT) },
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
