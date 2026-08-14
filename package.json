@@ -12,6 +12,7 @@
     "preview": "astro preview",
     "check": "astro check",
     "check:contrast": "node scripts/check-contrast.mjs",
+    "build:icons": "node scripts/build-icons.mjs",
     "test": "playwright test",
     "astro": "astro"
   },

@@ -1,0 +1,29 @@
+{
+  "name": "mm.coffee",
+  "short_name": "mm.coffee",
+  "description": "A software studio in Austin, Texas. Small-batch software, built with care.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#f0dbb7",
+  "theme_color": "#f0dbb7",
+  "icons": [
+    {
+      "src": "/icon-192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/icon-512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
