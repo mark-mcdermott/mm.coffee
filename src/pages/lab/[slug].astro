@@ -1,0 +1,74 @@
+---
+import { render } from 'astro:content'
+import Layout from '@layouts/Layout.astro'
+import { getPosts, formatLongDate } from '@lib/lab'
+
+export async function getStaticPaths() {
+  const posts = await getPosts()
+  return posts.map((post, index) => ({
+    params: { slug: post.id },
+    props: {
+      post,
+      // Posts are newest first, so the next one along is older.
+      newer: posts[index - 1] ?? null,
+      older: posts[index + 1] ?? null,
+    },
+  }))
+}
+
+const { post, newer, older } = Astro.props
+const { title, subtitle, date, tags, draft } = post.data
+const { Content } = await render(post)
+---
+
+<Layout title={title} description={subtitle}>
+  <article>
+    <header class="border-b px-6 py-12 lg:px-8 lg:py-16">
+      <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
+        <time datetime={date} class="label opacity-45">{formatLongDate(date)}</time>
+        {tags.map((tag) => <span class="label text-blue">#{tag}</span>)}
+        {draft && <span class="label text-red-deep">Draft</span>}
+      </div>
+
+      <h1 class="display mt-4 max-w-[18ch] text-[clamp(2.25rem,8vw,5rem)]">
+        {title}
+      </h1>
+
+      {subtitle && <p class="label mt-5 max-w-[56ch] text-blue">{subtitle}</p>}
+    </header>
+
+    <div class="prose px-6 py-10 lg:px-8 lg:py-14">
+      <Content />
+    </div>
+
+    <nav
+      class="grid gap-4 border-t px-6 py-6 sm:grid-cols-2 lg:px-8"
+      aria-label="More posts"
+    >
+      <div>
+        {
+          older && (
+            <a href={`/lab/${older.id}`} class="label group hover:text-red-deep">
+              <span class="block opacity-45">Older</span>
+              <span class="mt-1 block">&larr; {older.data.title}</span>
+            </a>
+          )
+        }
+      </div>
+      <div class="sm:text-right">
+        {
+          newer && (
+            <a href={`/lab/${newer.id}`} class="label group hover:text-red-deep">
+              <span class="block opacity-45">Newer</span>
+              <span class="mt-1 block">{newer.data.title} &rarr;</span>
+            </a>
+          )
+        }
+      </div>
+    </nav>
+
+    <p class="border-t px-6 py-6 lg:px-8">
+      <a href="/lab" class="label hover:text-red-deep">&larr; All notes</a>
+    </p>
+  </article>
+</Layout>

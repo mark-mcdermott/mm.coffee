@@ -17,6 +17,9 @@ Pages prerender. Only `src/pages/api/*` opts into server rendering with
   a hex value in a component
 - **Content** is Markdown in `src/content/`. Adding a project is one file in
   `src/content/programs/`; adding a post is one file in `src/content/lab/`
+- **Lab posts** support `draft: true` — visible in `pnpm dev`, excluded from
+  production builds and from the RSS feed. Dates are coerced, so an unquoted
+  `date: 2026-08-14` in frontmatter is fine
 - **TypeScript is strict.** No `any`
 
 ## Typography

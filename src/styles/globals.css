@@ -94,6 +94,131 @@
     text-transform: uppercase;
   }
 
+  /**
+   * Long-form body copy for the lab.
+   *
+   * The whole site is set in mono, which is punchy at label size but hard going
+   * over several hundred words. So prose keeps the mono but buys back
+   * legibility: larger than the UI text, looser leading, and a measure capped
+   * around 68 characters.
+   */
+  .prose {
+    max-width: 68ch;
+    font-size: 0.9375rem;
+    line-height: 1.85;
+  }
+
+  .prose > * + * {
+    margin-top: 1.35em;
+  }
+
+  .prose h2 {
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 4vw, 2rem);
+    line-height: 1.05;
+    letter-spacing: -0.005em;
+    text-transform: uppercase;
+    margin-top: 2.4em;
+  }
+
+  .prose h3 {
+    font-size: 0.9375rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    margin-top: 2em;
+  }
+
+  .prose a {
+    text-decoration: underline;
+    text-underline-offset: 3px;
+  }
+
+  .prose a:hover {
+    color: var(--color-red-deep);
+  }
+
+  .prose strong {
+    font-weight: 700;
+  }
+
+  .prose ul,
+  .prose ol {
+    padding-left: 1.4em;
+  }
+
+  .prose ul {
+    list-style: square;
+  }
+
+  .prose ol {
+    list-style: decimal;
+  }
+
+  .prose li + li {
+    margin-top: 0.5em;
+  }
+
+  .prose :not(pre) > code {
+    background-color: color-mix(in srgb, var(--color-ink) 8%, transparent);
+    padding: 0.12em 0.36em;
+    font-size: 0.92em;
+  }
+
+  /* Shiki sets its own background inline; override it so code blocks are the
+     same ink as the rest of the design. */
+  .prose pre,
+  .prose pre.astro-code {
+    background-color: var(--color-ink) !important;
+    color: var(--color-paper);
+    padding: 1.15rem 1.3rem;
+    overflow-x: auto;
+    font-size: 0.8125rem;
+    line-height: 1.7;
+    border: 1px solid var(--color-ink);
+  }
+
+  .prose pre code {
+    background: none;
+    padding: 0;
+    font-size: inherit;
+  }
+
+  /* Wide tables scroll rather than pushing the page sideways. */
+  .prose table {
+    display: block;
+    overflow-x: auto;
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.8125rem;
+  }
+
+  .prose th,
+  .prose td {
+    border: 1px solid var(--color-ink);
+    padding: 0.5rem 0.7rem;
+    text-align: left;
+    white-space: nowrap;
+  }
+
+  .prose th {
+    text-transform: uppercase;
+    letter-spacing: var(--tracking-label);
+    font-weight: 700;
+  }
+
+  .prose blockquote {
+    border-left: 3px solid var(--color-red);
+    padding-left: 1.1rem;
+    color: var(--color-blue);
+  }
+
+  .prose hr {
+    border: 0;
+    border-top: 1px solid var(--color-ink);
+    margin-block: 2.4em;
+  }
+
   /* Heavy condensed display type. Always uppercase in this design. */
   .display {
     font-family: var(--font-display);

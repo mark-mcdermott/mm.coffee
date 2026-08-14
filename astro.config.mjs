@@ -12,6 +12,16 @@ export default defineConfig({
     plugins: [tailwindcss()],
   },
 
+  markdown: {
+    shikiConfig: {
+      // Muted and low-chroma, so highlighted code sits beside the palette
+      // rather than competing with it. The block's background is overridden to
+      // ink in globals.css so it matches the rest of the design.
+      theme: 'vitesse-dark',
+      wrap: false,
+    },
+  },
+
   // Self-hosted and subset at build time — no request ever leaves for a font CDN.
   fonts: [
     {
