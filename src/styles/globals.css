@@ -11,6 +11,19 @@
   --color-orange: #e2622a;
   --color-signal: #2c591c;
 
+  /* Accessible counterparts, same hue and saturation, darkened until they clear
+     4.5:1 on paper. The comp colours are display colours: on paper, red is
+     3.94:1, orange 2.58:1 and gold 1.44:1 — fine for large type and fills, but
+     they fail AA at label size, and this design sets most of its text at label
+     size. So: bright for display type and graphics, deep for anything small.
+     Verified by `pnpm check:contrast`. */
+  --color-red-deep: #b82519;
+  --color-gold-deep: #7b5b0b;
+  --color-orange-deep: #a0451d;
+
+  /* Ships the "handle with care" bar; paper on this is 4.95:1. */
+  --color-crate: #a8321a;
+
   /* astro:fonts emits --font-anton / --font-jetbrains; map them onto Tailwind's
      font scale so `font-display` and `font-mono` resolve to the self-hosted faces. */
   --font-display: var(--font-anton);
@@ -54,6 +67,17 @@
     outline-offset: 2px;
   }
 
+  /* The comps are a hard-ruled grid: 1px black rules, cells butted together,
+     no gaps and no rounded corners. Defaulting every border to ink means
+     `border-t` alone draws a correct rule, so the layout uses Tailwind's own
+     border utilities — which, unlike a custom `.rule-t` class, compose with
+     responsive variants. That matters: the grid fully reflows at `lg`. */
+  *,
+  *::before,
+  *::after {
+    border-color: var(--color-ink);
+  }
+
   ::selection {
     background-color: var(--color-ink);
     color: var(--color-paper);
@@ -61,23 +85,6 @@
 }
 
 @layer components {
-  /* The comps are a hard-ruled grid: 1px black rules, cells butted together,
-     no gaps and no rounded corners. Rules are applied on the top/left edges and
-     the container closes the outer right/bottom, so adjacent cells never
-     double up into a 2px rule. */
-  .rule-t {
-    border-top: 1px solid var(--color-ink);
-  }
-  .rule-b {
-    border-bottom: 1px solid var(--color-ink);
-  }
-  .rule-l {
-    border-left: 1px solid var(--color-ink);
-  }
-  .rule-r {
-    border-right: 1px solid var(--color-ink);
-  }
-
   /* Small uppercase mono label — the workhorse type style of this design. */
   .label {
     font-family: var(--font-mono);
