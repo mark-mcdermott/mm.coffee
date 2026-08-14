@@ -9,6 +9,7 @@ const ROUTES = [
   '/lab',
   '/lab/outline-the-logo',
   '/lab/display-colours-arent-text-colours',
+  '/about',
 ]
 
 test.describe('routes', () => {
