@@ -1,0 +1,171 @@
+---
+import Logo from '@components/Logo.astro'
+import Globe from '@components/Globe.astro'
+import StatusDot from '@components/StatusDot.astro'
+import { NAV } from '@lib/nav'
+
+const path = Astro.url.pathname
+const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
+---
+
+<header class="border-b">
+  <!-- Mobile -->
+  <div class="flex items-center justify-between gap-3 px-5 py-4 lg:hidden">
+    <a href="/" aria-label="mm.coffee home" class="min-w-0">
+      <Logo class="w-32 text-ink sm:w-44" />
+    </a>
+
+    <div class="flex shrink-0 items-center gap-3">
+      <StatusDot class="hidden sm:flex" />
+      <button
+        type="button"
+        id="nav-toggle"
+        aria-expanded="false"
+        aria-controls="nav-panel"
+        aria-label="Open menu"
+        class="flex size-9 flex-col items-center justify-center gap-[5px]"
+      >
+        <span class="block h-[3px] w-7 bg-ink"></span>
+        <span class="block h-[3px] w-7 bg-ink"></span>
+        <span class="block h-[3px] w-7 bg-ink"></span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Mobile panel -->
+  <div
+    id="nav-panel"
+    hidden
+    class="fixed inset-0 z-40 flex flex-col bg-paper px-5 py-4 lg:hidden"
+  >
+    <div class="flex items-center justify-between">
+      <Logo class="w-44 text-ink" />
+      <button
+        type="button"
+        id="nav-close"
+        aria-label="Close menu"
+        class="relative size-9"
+      >
+        <span
+          class="absolute left-1 top-1/2 block h-[3px] w-7 rotate-45 bg-ink"
+        ></span>
+        <span
+          class="absolute left-1 top-1/2 block h-[3px] w-7 -rotate-45 bg-ink"
+        ></span>
+      </button>
+    </div>
+
+    <nav aria-label="Main" class="mt-12">
+      <ul class="space-y-6">
+        {
+          NAV.map(({ href, label }) => (
+            <li>
+              <a
+                href={href}
+                aria-current={isActive(href) ? 'page' : undefined}
+                class:list={[
+                  'display text-5xl',
+                  isActive(href) ? 'text-red-deep' : 'text-ink',
+                ]}
+              >
+                {label}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </nav>
+  </div>
+
+  <!-- Desktop: two cells, matching the comp — [wordmark + origin] | [nav + status] -->
+  <div class="hidden lg:grid lg:grid-cols-2 lg:items-stretch">
+    <div class="flex items-center gap-8 px-8 py-6">
+      <a href="/" aria-label="mm.coffee home">
+        <Logo class="w-60 text-ink" />
+      </a>
+      <div class="flex flex-col gap-2">
+        <p class="label max-w-[11ch]">Software roasted in Austin, Texas</p>
+        <Globe class="size-5" />
+      </div>
+    </div>
+
+    <div class="flex items-center justify-between gap-8 border-l px-8 py-6">
+      <nav aria-label="Main">
+        <ul class="flex items-center gap-9">
+          {
+            NAV.map(({ href, label }) => (
+              <li>
+                <a
+                  href={href}
+                  aria-current={isActive(href) ? 'page' : undefined}
+                  class:list={[
+                    'label transition-colors hover:text-red-deep',
+                    isActive(href) ? 'text-red-deep' : 'text-ink',
+                  ]}
+                >
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </nav>
+
+      <StatusDot />
+    </div>
+  </div>
+</header>
+
+<script>
+  const toggle = document.getElementById('nav-toggle')
+  const close = document.getElementById('nav-close')
+  const panel = document.getElementById('nav-panel')
+
+  if (toggle && close && panel) {
+    const FOCUSABLE = 'a[href], button:not([disabled])'
+    let lastFocused: HTMLElement | null = null
+
+    const open = () => {
+      lastFocused = document.activeElement as HTMLElement
+      panel.hidden = false
+      toggle.setAttribute('aria-expanded', 'true')
+      document.body.style.overflow = 'hidden'
+      panel.querySelector<HTMLElement>(FOCUSABLE)?.focus()
+    }
+
+    const shut = () => {
+      panel.hidden = true
+      toggle.setAttribute('aria-expanded', 'false')
+      document.body.style.overflow = ''
+      lastFocused?.focus()
+    }
+
+    toggle.addEventListener('click', open)
+    close.addEventListener('click', shut)
+
+    document.addEventListener('keydown', (event) => {
+      if (panel.hidden) return
+
+      if (event.key === 'Escape') {
+        shut()
+        return
+      }
+
+      // Keep focus inside the panel while it's open.
+      if (event.key !== 'Tab') return
+      const items = [...panel.querySelectorAll<HTMLElement>(FOCUSABLE)]
+      if (items.length === 0) return
+
+      const first = items[0]
+      const last = items[items.length - 1]
+
+      if (event.shiftKey && document.activeElement === first) {
+        event.preventDefault()
+        last.focus()
+      } else if (!event.shiftKey && document.activeElement === last) {
+        event.preventDefault()
+        first.focus()
+      }
+    })
+  }
+</script>

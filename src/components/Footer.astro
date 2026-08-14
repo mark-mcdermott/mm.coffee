@@ -1,0 +1,120 @@
+---
+import Globe from '@components/Globe.astro'
+import Barcode from '@components/art/Barcode.astro'
+import { SITE, BUILD } from '@lib/site'
+import { STATUS_TARGETS } from '@lib/status'
+---
+
+<footer class="border-t">
+  <div class="grid lg:grid-cols-[1fr_1.1fr_auto]">
+    <!-- System status -->
+    <section class="px-8 py-8" aria-labelledby="system-status-heading">
+      <div class="flex items-center gap-2">
+        <h2 id="system-status-heading" class="label">System status</h2>
+        <span
+          class="inline-block size-2 rounded-full bg-signal"
+          data-status-light
+          aria-hidden="true"></span>
+      </div>
+
+      <dl class="mt-6 space-y-1">
+        {
+          STATUS_TARGETS.map(({ id, label }) => (
+            <div class="flex items-baseline justify-between gap-6">
+              <dt class="label">{label}</dt>
+              <dd class="label text-signal" data-status-for={id}>
+                Checking
+              </dd>
+            </div>
+          ))
+        }
+      </dl>
+
+      <dl class="mt-8 space-y-1">
+        <div class="flex items-baseline justify-between gap-6">
+          <dt class="label">Build</dt>
+          <dd class="label">{BUILD.date}</dd>
+        </div>
+        <div class="flex items-baseline justify-between gap-6">
+          <dt class="label">Environment</dt>
+          <dd class="label">{BUILD.env}</dd>
+        </div>
+      </dl>
+    </section>
+
+    <!-- Packaging panel -->
+    <section class="border-t lg:border-t-0 lg:border-l px-8 py-8">
+      <div class="flex flex-col gap-4 sm:flex-row sm:items-start sm:justify-between sm:gap-6">
+        <address class="label not-italic">
+          {SITE.company}<br />
+          {SITE.tagline}<br />
+          {SITE.location}
+        </address>
+
+        <p class="label max-w-[14ch]">
+          Small-batch software since {SITE.established}
+        </p>
+
+        <Globe class="size-5 shrink-0" />
+      </div>
+
+      <div class="border-t mt-6 pt-4">
+        <p class="label opacity-45">Batch No.</p>
+        <p
+          class="display relative mt-1 inline-block text-[4.5rem] leading-none text-red"
+        >
+          {SITE.batch}
+          <span
+            class="absolute inset-x-[-6px] top-1/2 block h-[3px] -rotate-6 bg-red"
+            aria-hidden="true"></span>
+        </p>
+      </div>
+
+      <div class="border-t grid grid-cols-2 gap-6 pt-4">
+        <div>
+          <p class="label opacity-45">Roast</p>
+          <p class="label">{SITE.roast}</p>
+        </div>
+        <div>
+          <p class="label opacity-45">Weight</p>
+          <p class="label">{SITE.weight}</p>
+        </div>
+      </div>
+
+      <div class="border-t mt-4 flex flex-col gap-6 pt-4 sm:flex-row sm:items-end sm:justify-between sm:gap-8">
+        <div>
+          <p class="label opacity-45">Notes</p>
+          <p class="label max-w-[26ch]">{SITE.notes}</p>
+        </div>
+
+        <div class="shrink-0 self-start sm:self-auto">
+          <Barcode value={SITE.batchCode} class="h-12 w-44 text-ink" />
+          <p class="label mt-1 text-center">{SITE.batchCode}</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- Handle with care -->
+    <aside
+      class="border-t flex items-center justify-center bg-crate px-3 py-6 lg:border-t-0 lg:border-l"
+    >
+      <p
+        class="label whitespace-nowrap text-paper lg:[writing-mode:vertical-rl]"
+      >
+        Handle with care
+      </p>
+    </aside>
+  </div>
+
+  <div class="border-t flex flex-wrap items-center justify-between gap-4 px-8 py-4">
+    <p class="label">
+      &copy; {new Date().getFullYear()} {SITE.company}
+    </p>
+    <p class="label">
+      Est. {SITE.established} by{' '}
+      <a href="https://markmcdermott.io" class="underline hover:text-red-deep">
+        {SITE.author}
+      </a>
+    </p>
+  </div>
+</footer>

@@ -20,7 +20,7 @@ const swatches = [
 ---
 
 <Layout title="Styleguide">
-  <main class="mx-auto max-w-6xl p-10 space-y-12">
+  <div class="mx-auto max-w-6xl p-10 space-y-12">
     <section>
       <p class="label mb-3">Wordmark</p>
       <Logo class="w-96 text-ink" />
@@ -34,7 +34,7 @@ const swatches = [
         {
           swatches.map(([name, cls]) => (
             <div class="w-28">
-              <div class={`h-20 ${cls} rule-t rule-b rule-l`} />
+              <div class={`h-20 ${cls} border-t border-b border-l`} />
               <p class="label mt-1">{name}</p>
             </div>
           ))
@@ -84,5 +84,5 @@ const swatches = [
         <p class="label mt-1">MM013379602024</p>
       </div>
     </section>
-  </main>
+  </div>
 </Layout>

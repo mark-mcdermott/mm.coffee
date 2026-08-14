@@ -1,0 +1,19 @@
+---
+interface Props {
+  label?: string
+  class?: string
+}
+
+const { label = 'Status', class: className } = Astro.props
+---
+
+<div class={`flex items-start gap-2 ${className ?? ''}`}>
+  <div class="label leading-none">
+    <span class="block">{label}</span>
+    <span class="mt-1 block text-signal" data-status-summary>Checking</span>
+  </div>
+  <span
+    class="mt-[1px] inline-block size-2 shrink-0 rounded-full bg-signal"
+    data-status-light
+    aria-hidden="true"></span>
+</div>
