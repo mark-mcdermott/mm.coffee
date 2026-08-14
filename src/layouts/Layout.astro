@@ -30,6 +30,12 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link
+      rel="alternate"
+      type="application/rss+xml"
+      title={`${SITE.name} — Lab`}
+      href="/rss.xml"
+    />
     <meta name="theme-color" content="#f0dbb7" />
     <link rel="canonical" href={canonical} />
 
