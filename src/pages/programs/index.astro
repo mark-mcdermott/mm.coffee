@@ -1,0 +1,27 @@
+---
+import Layout from '@layouts/Layout.astro'
+import ProgramCard from '@components/ProgramCard.astro'
+import { getPrograms } from '@lib/programs'
+
+const programs = await getPrograms()
+---
+
+<Layout
+  title="Programs"
+  description="Software the studio has shipped and is shipping — what each one is, and how it's built."
+>
+  <section class="border-b px-6 py-12 lg:px-8 lg:py-16">
+    <p class="label text-red-deep">Selected programs</p>
+    <h1 class="display mt-3 text-[clamp(2.75rem,9vw,6rem)]">
+      What the studio<br />has shipped.
+    </h1>
+    <p class="label mt-6 max-w-[46ch] text-blue">
+      Small, useful things. Each one is a real product with a real URL — not a
+      case study for something that never launched.
+    </p>
+  </section>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3">
+    {programs.map((program) => <ProgramCard program={program} />)}
+  </div>
+</Layout>

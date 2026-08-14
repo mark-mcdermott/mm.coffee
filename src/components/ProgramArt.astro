@@ -1,0 +1,30 @@
+---
+import { Image } from 'astro:assets'
+import RiverWaves from '@components/art/RiverWaves.astro'
+import Chevrons from '@components/art/Chevrons.astro'
+import wolf from '@assets/programs/wolf.png'
+
+interface Props {
+  art: 'wolf' | 'waves' | 'chevrons'
+  class?: string
+}
+
+const { art, class: className } = Astro.props
+---
+
+<div class={`flex min-w-0 items-center justify-center overflow-hidden ${className ?? ''}`}>
+  {
+    art === 'wolf' && (
+      <Image
+        src={wolf}
+        alt=""
+        widths={[320, 560]}
+        sizes="(min-width: 1024px) 320px, 60vw"
+        class="h-full w-full object-contain"
+        loading="lazy"
+      />
+    )
+  }
+  {art === 'waves' && <RiverWaves class="h-full w-full min-w-0" />}
+  {art === 'chevrons' && <Chevrons class="h-full w-full min-w-0" />}
+</div>
