@@ -1,0 +1,24 @@
+---
+import { encodeCode39 } from '@lib/barcode'
+
+interface Props {
+  value: string
+  class?: string
+  height?: number
+}
+
+const { value, class: className, height = 52 } = Astro.props
+const { bars, width } = encodeCode39(value)
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`0 0 ${width} ${height}`}
+  preserveAspectRatio="none"
+  role="img"
+  aria-label={`Barcode: ${value}`}
+  class={className}
+>
+  <title>{value}</title>
+  {bars.map(({ x, width: w }) => <rect x={x} y="0" width={w} height={height} fill="currentColor" />)}
+</svg>

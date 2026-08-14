@@ -1,0 +1,41 @@
+---
+/**
+ * Nested gold chevrons — the mm.experiments motif. Reads as a perspective
+ * corridor of repeating angles.
+ */
+interface Props {
+  class?: string
+  rows?: number
+}
+
+const { class: className, rows = 14 } = Astro.props
+
+const W = 400
+const H = 240
+const STEP = 15
+const SLOPE = 0.55
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`0 0 ${W} ${H}`}
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+>
+  {
+    Array.from({ length: rows }, (_, i) => {
+      const y = H - i * STEP
+      const rise = (W / 2) * SLOPE
+      return (
+        <path
+          d={`M0 ${y} L${W / 2} ${y - rise} L${W} ${y}`}
+          stroke="var(--color-gold)"
+          stroke-width="7"
+          stroke-linejoin="miter"
+        />
+      )
+    })
+  }
+</svg>

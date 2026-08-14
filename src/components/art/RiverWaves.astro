@@ -1,0 +1,51 @@
+---
+/**
+ * Stacked blue wave bands — the DriveTracks/road motif from the comps.
+ * Same parallel-offset idea as the swoosh, but the curve is a simple repeating
+ * sine so the bands can be generated inline.
+ */
+interface Props {
+  class?: string
+  bands?: number
+}
+
+const { class: className, bands = 5 } = Astro.props
+
+const W = 400
+const H = 240
+const AMP = 26
+const PERIOD = 190
+
+/** One sine ridge sampled across the full width. */
+const ridge = (offsetY: number) => {
+  const pts: string[] = []
+  for (let x = 0; x <= W; x += 8) {
+    const y = offsetY + Math.sin((x / PERIOD) * Math.PI * 2) * AMP
+    pts.push(`${x} ${y.toFixed(1)}`)
+  }
+  return `M${pts.join('L')}`
+}
+
+const SPACING = 34
+const START = (H - (bands - 1) * SPACING) / 2
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`0 0 ${W} ${H}`}
+  fill="none"
+  aria-hidden="true"
+  focusable="false"
+  class={className}
+>
+  {
+    Array.from({ length: bands }, (_, i) => (
+      <path
+        d={ridge(START + i * SPACING)}
+        stroke="var(--color-blue)"
+        stroke-width="16"
+        stroke-linecap="round"
+      />
+    ))
+  }
+</svg>
