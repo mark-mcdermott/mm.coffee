@@ -51,12 +51,28 @@ type, rules, and fills — never small text.
   different port than the one you asked for. If styles look wrong, check
   `pnpm astro dev status` for the real port and `pnpm astro dev stop` before trusting
   what you see. A production build is the reliable signal.
+- **Screenshot with Playwright, not `chrome --headless --screenshot`.** The raw
+  Chrome flag silently drops some elements (it lost the mobile nav button entirely
+  in both old and new headless modes) while Playwright renders them correctly. If a
+  screenshot disagrees with a passing test, suspect the screenshot.
+- `astro preview` daemonises itself, which races Playwright's readiness probe —
+  hence the plain foreground `scripts/serve.mjs` used by the test config.
+
+## Colour and contrast
+
+The comp colours are **display** colours. On paper, red is 3.94:1, orange 2.58:1 and
+gold 1.44:1 — fine for large type and fills, but they fail AA at label size, and this
+design sets most of its text at label size.
+
+So: `red` / `gold` / `orange` for display type and graphics only; `red-deep` /
+`gold-deep` / `orange-deep` for anything at label size. `pnpm check:contrast` reads
+the tokens straight out of `globals.css` and fails the build if this slips.
 
 ## Before opening a PR
 
 ```sh
-pnpm build && pnpm check
+pnpm build && pnpm check && pnpm check:contrast && pnpm test
 ```
 
-Both must pass. Conventional commits, lowercase, no trailing period. No AI
+All must pass. Conventional commits, lowercase, no trailing period. No AI
 attribution in commits or PR bodies.
