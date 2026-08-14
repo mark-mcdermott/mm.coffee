@@ -1,6 +1,15 @@
 import { test, expect } from '@playwright/test'
 
-const ROUTES = ['/', '/programs', '/programs/fullstack-wolfpack', '/programs/mockingboard', '/programs/markmcdermott-io']
+const ROUTES = [
+  '/',
+  '/programs',
+  '/programs/fullstack-wolfpack',
+  '/programs/mockingboard',
+  '/programs/markmcdermott-io',
+  '/lab',
+  '/lab/outline-the-logo',
+  '/lab/display-colours-arent-text-colours',
+]
 
 test.describe('routes', () => {
   for (const route of ROUTES) {
