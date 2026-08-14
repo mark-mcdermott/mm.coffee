@@ -1,8 +1,109 @@
 @import "tailwindcss";
 
-/* astro:fonts emits --font-anton / --font-jetbrains; map them onto Tailwind's
-   font scale so `font-display` and `font-mono` resolve to the self-hosted faces. */
 @theme {
+  /* Sampled from the design comps. */
+  --color-paper: #f0dbb7;
+  --color-paper-tint: #f7ead1;
+  --color-ink: #000000;
+  --color-red: #cd2a1c;
+  --color-blue: #145ca9;
+  --color-gold: #edaf16;
+  --color-orange: #e2622a;
+  --color-signal: #2c591c;
+
+  /* astro:fonts emits --font-anton / --font-jetbrains; map them onto Tailwind's
+     font scale so `font-display` and `font-mono` resolve to the self-hosted faces. */
   --font-display: var(--font-anton);
   --font-mono: var(--font-jetbrains);
+
+  --text-label: 0.6875rem;
+  --text-label--line-height: 1.5;
+  --text-label--letter-spacing: 0.08em;
+
+  --tracking-label: 0.08em;
+  --tracking-nav: 0.06em;
+}
+
+@layer base {
+  html {
+    -webkit-text-size-adjust: 100%;
+  }
+
+  body {
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 0.8125rem;
+    line-height: 1.6;
+  }
+
+  /* Paper grain. Static, generated inline — no image request. */
+  body::before {
+    content: "";
+    position: fixed;
+    inset: 0;
+    z-index: 50;
+    pointer-events: none;
+    opacity: 0.28;
+    mix-blend-mode: multiply;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.42'/%3E%3C/svg%3E");
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-red);
+    outline-offset: 2px;
+  }
+
+  ::selection {
+    background-color: var(--color-ink);
+    color: var(--color-paper);
+  }
+}
+
+@layer components {
+  /* The comps are a hard-ruled grid: 1px black rules, cells butted together,
+     no gaps and no rounded corners. Rules are applied on the top/left edges and
+     the container closes the outer right/bottom, so adjacent cells never
+     double up into a 2px rule. */
+  .rule-t {
+    border-top: 1px solid var(--color-ink);
+  }
+  .rule-b {
+    border-bottom: 1px solid var(--color-ink);
+  }
+  .rule-l {
+    border-left: 1px solid var(--color-ink);
+  }
+  .rule-r {
+    border-right: 1px solid var(--color-ink);
+  }
+
+  /* Small uppercase mono label — the workhorse type style of this design. */
+  .label {
+    font-family: var(--font-mono);
+    font-size: var(--text-label);
+    line-height: 1.5;
+    letter-spacing: var(--tracking-label);
+    text-transform: uppercase;
+  }
+
+  /* Heavy condensed display type. Always uppercase in this design. */
+  .display {
+    font-family: var(--font-display);
+    font-weight: 400;
+    text-transform: uppercase;
+    line-height: 0.86;
+    letter-spacing: -0.005em;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
 }
