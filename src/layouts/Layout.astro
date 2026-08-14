@@ -1,19 +1,23 @@
 ---
 import { Font } from 'astro:assets'
+import Header from '@components/Header.astro'
+import Footer from '@components/Footer.astro'
+import { SITE } from '@lib/site'
 import '@styles/globals.css'
 
 interface Props {
   title?: string
   description?: string
+  /** Pages that own their full layout (the homepage) opt out of the shell padding. */
+  bare?: boolean
 }
 
-const {
-  title,
-  description = 'A software studio in Austin, Texas. Small-batch software since 2024.',
-} = Astro.props
+const { title, description = SITE.description } = Astro.props
 
-const SITE_NAME = 'mm.coffee'
-const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Software for the Modern Age`
+const pageTitle = title
+  ? `${title} — ${SITE.name}`
+  : `${SITE.name} — Software for the Modern Age`
+const canonical = new URL(Astro.url.pathname, SITE.url).href
 ---
 
 <!doctype html>
@@ -23,6 +27,7 @@ const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Softwa
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="generator" content={Astro.generator} />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="canonical" href={canonical} />
 
     <title>{pageTitle}</title>
     <meta name="description" content={description} />
@@ -30,7 +35,20 @@ const pageTitle = title ? `${title} — ${SITE_NAME}` : `${SITE_NAME} — Softwa
     <Font cssVariable="--font-anton" preload />
     <Font cssVariable="--font-jetbrains" preload />
   </head>
-  <body>
-    <slot />
+  <body class="min-h-dvh">
+    <a
+      href="#main"
+      class="label sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-4 focus:z-50 focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+    >
+      Skip to content
+    </a>
+
+    <Header />
+
+    <main id="main">
+      <slot />
+    </main>
+
+    <Footer />
   </body>
 </html>
