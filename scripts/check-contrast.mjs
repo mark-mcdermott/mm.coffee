@@ -11,10 +11,25 @@ import { readFileSync } from 'node:fs'
 
 const css = readFileSync(new URL('../src/styles/globals.css', import.meta.url), 'utf8')
 
-const token = (name) => {
-  const match = css.match(new RegExp(`--color-${name}:\\s*(#[0-9a-fA-F]{6})`))
+/**
+ * Resolves a colour token to a hex value, following `var()` aliases — some
+ * tokens alias another rather than repeating a literal, so that a change to one
+ * can't silently desync the other.
+ */
+const token = (name, seen = new Set()) => {
+  if (seen.has(name)) throw new Error(`circular alias at --color-${name}`)
+  seen.add(name)
+
+  const match = css.match(new RegExp(`--color-${name}:\\s*([^;]+);`))
   if (!match) throw new Error(`token --color-${name} not found in globals.css`)
-  return match[1]
+
+  const value = match[1].trim()
+  if (/^#[0-9a-fA-F]{6}$/.test(value)) return value
+
+  const alias = value.match(/^var\(\s*--color-([\w-]+)\s*\)$/)
+  if (alias) return token(alias[1], seen)
+
+  throw new Error(`--color-${name} is neither a hex nor a var() alias: ${value}`)
 }
 
 const luminance = (hex) => {
@@ -37,14 +52,16 @@ const CASES = [
   ['ink', paper, 4.5, 'body text'],
   ['blue', paper, 4.5, 'sub-headings and taglines'],
   ['signal', paper, 4.5, 'status text'],
-  ['red-deep', paper, 4.5, 'small red labels'],
-  ['gold-deep', paper, 4.5, 'small gold labels'],
-  ['orange-deep', paper, 4.5, 'small orange labels'],
+  ['red-deep', paper, 4.5, 'small rust labels'],
+  ['gold-deep', paper, 4.5, 'small mustard labels'],
+  ['orange-deep', paper, 4.5, 'small brown labels'],
+  ['blue-deep', paper, 4.5, 'small teal labels'],
+  ['orange', paper, 4.5, 'brown clears AA on its own'],
   ['red', paper, 3, 'display headlines only'],
 ]
 
 /** Printed for reference, not asserted — decorative fills carry no minimum. */
-const DECORATIVE = ['gold', 'orange']
+const DECORATIVE = ['gold']
 
 let failed = 0
 console.log(`background: paper ${paper}\n`)

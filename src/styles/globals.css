@@ -1,28 +1,36 @@
 @import "tailwindcss";
 
 @theme {
-  /* Sampled from the design comps. */
-  --color-paper: #f0dbb7;
-  --color-paper-tint: #f7ead1;
-  --color-ink: #000000;
-  --color-red: #cd2a1c;
-  --color-blue: #145ca9;
-  --color-gold: #edaf16;
-  --color-orange: #e2622a;
+  /* Warmer, earthier palette: rust, deep teal, mustard and brown on a lighter
+     paper. Paper is lighter than the original comp cream — partly to match the
+     newer mockup, and partly because at the old #f0dbb7 the rust only reached
+     2.87:1, below even the 3:1 large-text floor. Lightening the ground fixes
+     that without touching the brand colours themselves. */
+  --color-paper: #efe3cc;
+  --color-paper-tint: #f7f1e4;
+  --color-ink: #333333;
+  --color-red: #e0522f;
+  --color-blue: #0c4c49;
+  --color-gold: #e1b537;
+  --color-orange: #804d37;
   --color-signal: #2c591c;
 
   /* Accessible counterparts, same hue and saturation, darkened until they clear
-     4.5:1 on paper. The comp colours are display colours: on paper, red is
-     3.94:1, orange 2.58:1 and gold 1.44:1 — fine for large type and fills, but
-     they fail AA at label size, and this design sets most of its text at label
-     size. So: bright for display type and graphics, deep for anything small.
-     Verified by `pnpm check:contrast`. */
-  --color-red-deep: #b82519;
-  --color-gold-deep: #7b5b0b;
-  --color-orange-deep: #a0451d;
+     4.5:1 on paper. The brand colours are display colours: rust is 3.05:1 and
+     mustard 1.52:1 — fine for large type and fills, but they fail AA at label
+     size, and this design sets most of its text at label size. So: bright for
+     display type and graphics, deep for anything small.
 
-  /* Ships the "handle with care" bar; paper on this is 4.95:1. */
-  --color-crate: #a8321a;
+     Teal and brown already clear 4.5:1, so they are their own deep variants —
+     aliased rather than duplicated so a change to one can't desync the other.
+     Verified by `pnpm check:contrast`. */
+  --color-red-deep: #ae4024;
+  --color-gold-deep: #78611d;
+  --color-orange-deep: var(--color-orange);
+  --color-blue-deep: var(--color-blue);
+
+  /* Ships the "handle with care" bar; paper on this is 5.45:1. */
+  --color-crate: #804d37;
 
   /* astro:fonts emits --font-anton / --font-jetbrains; map them onto Tailwind's
      font scale so `font-display` and `font-mono` resolve to the self-hosted faces. */
