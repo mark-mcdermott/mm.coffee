@@ -58,8 +58,10 @@ type, rules, and fills — never small text.
   Chrome flag silently drops some elements (it lost the mobile nav button entirely
   in both old and new headless modes) while Playwright renders them correctly. If a
   screenshot disagrees with a passing test, suspect the screenshot.
-- `astro preview` daemonises itself, which races Playwright's readiness probe —
-  hence the plain foreground `scripts/serve.mjs` used by the test config.
+- Both `astro dev` and `astro preview` **daemonise and exit**, which races Playwright's
+  readiness probe. `scripts/test-server.mjs` uses Astro's programmatic `dev()` instead:
+  it stays in the foreground, renders SSR routes (`/contact`, `/api/*`), and reads from
+  source so the suite can't pass against a stale build.
 
 ## Colour and contrast
 
