@@ -1,0 +1,243 @@
+---
+import Layout from '@layouts/Layout.astro'
+import Swoosh from '@components/art/Swoosh.astro'
+import { SITE } from '@lib/site'
+
+// The no-JS path posts to the API and is redirected back with ?sent=1,
+// so this page has to render per-request to read the query string.
+export const prerender = false
+
+const sent = Astro.url.searchParams.has('sent')
+const failed = Astro.url.searchParams.has('error')
+
+const FIELDS = [
+  { name: 'name', label: 'Name', type: 'text', autocomplete: 'name' },
+  { name: 'email', label: 'Email', type: 'email', autocomplete: 'email' },
+] as const
+---
+
+<Layout
+  title="Contact"
+  description="Start a conversation with the studio."
+>
+  <section class="relative overflow-hidden border-b">
+    <Swoosh
+      class="pointer-events-none absolute -right-28 -top-28 w-[min(52vw,34rem)]"
+    />
+    <div class="relative px-6 py-12 lg:px-8 lg:py-16">
+      <p class="label text-red-deep">Contact</p>
+      <h1 class="display mt-3 max-w-[13ch] text-[clamp(2.75rem,9vw,6rem)]">
+        Say something useful.
+      </h1>
+      <p class="label mt-6 max-w-[48ch] text-blue">
+        Work, questions, or a good idea that needs building. Replies come from a
+        person, usually within a couple of days.
+      </p>
+    </div>
+  </section>
+
+  <div class="grid lg:grid-cols-[1fr_20rem]">
+    <div class="border-b px-6 py-10 lg:border-b-0 lg:border-r lg:px-8 lg:py-14">
+      {
+        sent && (
+          <p
+            class="label mb-8 border border-signal bg-paper-tint px-5 py-4 text-signal"
+            role="status"
+          >
+            Message sent. You'll hear back soon.
+          </p>
+        )
+      }
+      {
+        failed && (
+          <p
+            class="label mb-8 border border-red-deep bg-paper-tint px-5 py-4 text-red-deep"
+            role="alert"
+          >
+            That didn't send. Email {SITE.email} directly and it'll get through.
+          </p>
+        )
+      }
+
+      <form
+        id="contact-form"
+        method="POST"
+        action="/api/contact"
+        novalidate
+        class="max-w-[42rem]"
+      >
+        <!-- Honeypot: hidden from people, irresistible to bots. -->
+        <div class="absolute left-[-9999px]" aria-hidden="true">
+          <label>
+            Company
+            <input type="text" name="company" tabindex="-1" autocomplete="off" />
+          </label>
+        </div>
+        <input type="hidden" name="startedAt" id="started-at" value="" />
+
+        <div class="space-y-7">
+          {
+            FIELDS.map(({ name, label, type, autocomplete }) => (
+              <div>
+                <label for={name} class="label block">
+                  {label}
+                </label>
+                <input
+                  id={name}
+                  name={name}
+                  type={type}
+                  autocomplete={autocomplete}
+                  required
+                  aria-describedby={`${name}-error`}
+                  class="mt-2 w-full border bg-transparent px-4 py-3 font-mono text-[0.875rem] outline-none focus-visible:border-red-deep"
+                />
+                <p
+                  id={`${name}-error`}
+                  class="label mt-2 hidden text-red-deep"
+                  data-error-for={name}
+                />
+              </div>
+            ))
+          }
+
+          <div>
+            <label for="message" class="label block">Message</label>
+            <textarea
+              id="message"
+              name="message"
+              rows="7"
+              required
+              aria-describedby="message-error"
+              class="mt-2 w-full resize-y border bg-transparent px-4 py-3 font-mono text-[0.875rem] outline-none focus-visible:border-red-deep"
+            ></textarea>
+            <p
+              id="message-error"
+              class="label mt-2 hidden text-red-deep"
+              data-error-for="message"
+            ></p>
+          </div>
+        </div>
+
+        <p
+          class="label mt-6 hidden border border-red-deep px-5 py-4 text-red-deep"
+          data-form-error
+          role="alert"
+        >
+        </p>
+
+        <button
+          type="submit"
+          class="label mt-8 inline-flex items-center gap-2 bg-ink px-6 py-4 text-paper transition-colors hover:bg-red-deep disabled:opacity-50"
+        >
+          <span data-submit-label>Send message</span>
+          <span aria-hidden="true">&rarr;</span>
+        </button>
+      </form>
+    </div>
+
+    <aside class="px-6 py-10 lg:px-8 lg:py-14">
+      <dl class="space-y-6">
+        <div>
+          <dt class="label opacity-45">Email</dt>
+          <dd class="label mt-1">
+            <a href={`mailto:${SITE.email}`} class="underline hover:text-red-deep">
+              {SITE.email}
+            </a>
+          </dd>
+        </div>
+        <div>
+          <dt class="label opacity-45">Studio</dt>
+          <dd class="label mt-1">{SITE.location}</dd>
+        </div>
+        <div>
+          <dt class="label opacity-45">Elsewhere</dt>
+          <dd class="label mt-1 space-y-1">
+            <a
+              href="https://github.com/mark-mcdermott"
+              class="block underline hover:text-red-deep"
+            >
+              GitHub
+            </a>
+            <a
+              href="https://markmcdermott.io"
+              class="block underline hover:text-red-deep"
+            >
+              markmcdermott.io
+            </a>
+          </dd>
+        </div>
+      </dl>
+
+      <p class="label mt-10 max-w-[28ch] opacity-45">
+        Prefer email? The address above reaches the same inbox.
+      </p>
+    </aside>
+  </div>
+</Layout>
+
+<script>
+  const form = document.getElementById('contact-form') as HTMLFormElement | null
+  const startedAt = document.getElementById('started-at') as HTMLInputElement | null
+
+  if (form && startedAt) {
+    // Stamped on render so the server can tell a considered submission from an
+    // instant one.
+    startedAt.value = String(Date.now())
+
+    const button = form.querySelector('button[type="submit"]') as HTMLButtonElement
+    const label = form.querySelector('[data-submit-label]') as HTMLElement
+    const formError = form.querySelector('[data-form-error]') as HTMLElement
+
+    const showFieldErrors = (errors: Record<string, string>) => {
+      for (const el of form.querySelectorAll<HTMLElement>('[data-error-for]')) {
+        const field = el.dataset.errorFor!
+        const message = errors[field]
+        el.textContent = message ?? ''
+        el.classList.toggle('hidden', !message)
+        form
+          .querySelector(`[name="${field}"]`)
+          ?.setAttribute('aria-invalid', message ? 'true' : 'false')
+      }
+      // Move focus to the first problem so it isn't announced and then lost.
+      form.querySelector<HTMLElement>('[aria-invalid="true"]')?.focus()
+    }
+
+    const setFormError = (message: string) => {
+      formError.textContent = message
+      formError.classList.toggle('hidden', !message)
+    }
+
+    form.addEventListener('submit', async (event) => {
+      event.preventDefault()
+      setFormError('')
+      showFieldErrors({})
+
+      button.disabled = true
+      label.textContent = 'Sending…'
+
+      try {
+        const response = await fetch(form.action, {
+          method: 'POST',
+          headers: { 'content-type': 'application/json', accept: 'application/json' },
+          body: JSON.stringify(Object.fromEntries(new FormData(form))),
+        })
+
+        const body = await response.json().catch(() => ({}))
+
+        if (response.ok && body.ok) {
+          window.location.assign('/contact?sent=1')
+          return
+        }
+
+        if (body.errors) showFieldErrors(body.errors)
+        if (body.message) setFormError(body.message)
+        else if (!body.errors) setFormError("That didn't send. Try again shortly.")
+      } catch {
+        setFormError("That didn't send — check your connection and try again.")
+      } finally {
+        button.disabled = false
+        label.textContent = 'Send message'
+      }
+    })
+  }
+</script>

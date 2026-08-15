@@ -29,9 +29,11 @@ export default defineConfig({
   ],
 
   webServer: {
-    // `pnpm test` builds first. The server only serves whatever is already in
-    // .vercel/output/static — reusing it must never mean skipping a build.
-    command: `node scripts/serve.mjs`,
+    // Astro's programmatic dev server: it renders `/contact` and `/api/*` per
+    // request, which a static file server can't, and it reads from source — so
+    // the suite can't pass against a stale build. `pnpm test` still runs a real
+    // build first, to catch build-time failures.
+    command: `node scripts/test-server.mjs`,
     env: { PORT: String(PORT) },
     url: BASE_URL,
     reuseExistingServer: !process.env.CI,
