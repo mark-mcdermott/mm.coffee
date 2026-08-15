@@ -19,8 +19,9 @@ export function programNumber(order: number): string {
  */
 const ACCENT_TEXT = {
   red: 'text-red-deep',
-  blue: 'text-blue',
+  blue: 'text-blue-deep',
   gold: 'text-gold-deep',
+  orange: 'text-orange-deep',
 } as const
 
 export function accentText(accent: Program['data']['accent']): string {

@@ -8,7 +8,7 @@ stack:
   - Tailwind
 url: https://markmcdermott.io
 status: live
-accent: gold
+accent: orange
 art: chevrons
 ---
 

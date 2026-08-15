@@ -16,7 +16,7 @@ const programs = defineCollection({
     url: z.url(),
     repo: z.url().optional(),
     status: z.enum(['live', 'building', 'paused']),
-    accent: z.enum(['red', 'blue', 'gold']),
+    accent: z.enum(['red', 'blue', 'gold', 'orange']),
     /** Which art component fronts the card. */
     art: z.enum(['wolf', 'waves', 'chevrons']),
   }),
