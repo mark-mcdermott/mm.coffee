@@ -10,6 +10,7 @@ const ROUTES = [
   '/lab/outline-the-logo',
   '/lab/display-colours-arent-text-colours',
   '/about',
+  '/contact',
 ]
 
 test.describe('routes', () => {
