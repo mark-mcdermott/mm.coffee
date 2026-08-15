@@ -2,7 +2,7 @@
 import Globe from '@components/Globe.astro'
 import Barcode from '@components/art/Barcode.astro'
 import { SITE, BUILD } from '@lib/site'
-import { STATUS_TARGETS } from '@lib/status'
+import { STATUS_TARGETS, STATUS_COLOURS } from '@lib/status'
 ---
 
 <footer class="border-t">
@@ -12,7 +12,7 @@ import { STATUS_TARGETS } from '@lib/status'
       <div class="flex items-center gap-2">
         <h2 id="system-status-heading" class="label">System status</h2>
         <span
-          class="inline-block size-2 rounded-full bg-signal"
+          class="inline-block size-2 rounded-full bg-ink opacity-30 transition-colors"
           data-status-light
           aria-hidden="true"></span>
       </div>
@@ -22,7 +22,9 @@ import { STATUS_TARGETS } from '@lib/status'
           STATUS_TARGETS.map(({ id, label }) => (
             <div class="flex items-baseline justify-between gap-6">
               <dt class="label">{label}</dt>
-              <dd class="label text-signal" data-status-for={id}>
+              {/* Starts neutral, not green: nothing has been checked yet, and a
+                  green light before the first response would be a lie. */}
+              <dd class:list={['label', STATUS_COLOURS.unknown]} data-status-for={id}>
                 Checking
               </dd>
             </div>

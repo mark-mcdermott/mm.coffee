@@ -2,6 +2,7 @@
 import { Font } from 'astro:assets'
 import Header from '@components/Header.astro'
 import Footer from '@components/Footer.astro'
+import StatusLive from '@components/StatusLive.astro'
 import { SITE } from '@lib/site'
 import '@styles/globals.css'
 
@@ -60,5 +61,7 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href
     </main>
 
     <Footer />
+
+    <StatusLive />
   </body>
 </html>
