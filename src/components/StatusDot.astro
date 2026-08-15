@@ -1,4 +1,6 @@
 ---
+import { STATUS_COLOURS } from '@lib/status'
+
 interface Props {
   label?: string
   class?: string
@@ -10,10 +12,13 @@ const { label = 'Status', class: className } = Astro.props
 <div class={`flex items-start gap-2 ${className ?? ''}`}>
   <div class="label leading-none">
     <span class="block">{label}</span>
-    <span class="mt-1 block text-signal" data-status-summary>Checking</span>
+    <!-- Neutral until /api/status answers; see Footer for the rationale. -->
+    <span class:list={['mt-1 block', STATUS_COLOURS.unknown]} data-status-summary>
+      Checking
+    </span>
   </div>
   <span
-    class="mt-[1px] inline-block size-2 shrink-0 rounded-full bg-signal"
+    class="mt-[1px] inline-block size-2 shrink-0 rounded-full bg-ink opacity-30 transition-colors"
     data-status-light
     aria-hidden="true"></span>
 </div>

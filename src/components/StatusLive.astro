@@ -1,0 +1,80 @@
+---
+/**
+ * Fetches /api/status once and fills in the strip.
+ *
+ * Rendered markup starts neutral rather than green, so a failed or slow fetch
+ * leaves the page saying "unknown" instead of claiming everything is fine.
+ */
+---
+
+<script>
+  import {
+    STATUS_LABELS,
+    STATUS_COLOURS,
+    type StatusPayload,
+    type StatusState,
+  } from '@lib/status'
+
+  const CLASSES = Object.values(STATUS_COLOURS).flatMap((c) => c.split(' '))
+
+  const paint = (el: Element, state: StatusState, text: string) => {
+    el.classList.remove(...CLASSES)
+    el.classList.add(...STATUS_COLOURS[state].split(' '))
+    el.textContent = text
+  }
+
+  /** Green only when everything that could be checked actually passed. */
+  const summarise = (states: StatusState[]): StatusState => {
+    if (states.some((s) => s === 'offline')) return 'offline'
+    if (states.some((s) => s === 'unknown')) return 'unknown'
+    if (states.every((s) => s === 'unconfigured')) return 'unconfigured'
+    return 'online'
+  }
+
+  const LIGHT = {
+    online: 'bg-signal',
+    offline: 'bg-red-deep',
+    unconfigured: 'bg-ink',
+    unknown: 'bg-ink',
+  } as const
+
+  async function refresh() {
+    let payload: StatusPayload
+
+    try {
+      const response = await fetch('/api/status', { headers: { accept: 'application/json' } })
+      if (!response.ok) throw new Error(String(response.status))
+      payload = await response.json()
+    } catch {
+      // Leave every row reading "unknown" — better than implying health.
+      for (const el of document.querySelectorAll('[data-status-for]')) {
+        paint(el, 'unknown', STATUS_LABELS.unknown)
+      }
+      for (const el of document.querySelectorAll('[data-status-summary]')) {
+        paint(el, 'unknown', STATUS_LABELS.unknown)
+      }
+      return
+    }
+
+    for (const { id, state } of payload.results) {
+      const el = document.querySelector(`[data-status-for="${id}"]`)
+      if (el) paint(el, state, STATUS_LABELS[state])
+    }
+
+    const overall = summarise(payload.results.map((r) => r.state))
+
+    for (const el of document.querySelectorAll('[data-status-summary]')) {
+      paint(el, overall, STATUS_LABELS[overall])
+    }
+
+    for (const el of document.querySelectorAll('[data-status-light]')) {
+      el.classList.remove('bg-signal', 'bg-red-deep', 'bg-ink', 'opacity-30')
+      el.classList.add(LIGHT[overall])
+      if (overall === 'unknown' || overall === 'unconfigured') {
+        el.classList.add('opacity-30')
+      }
+    }
+  }
+
+  refresh()
+</script>
