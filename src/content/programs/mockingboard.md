@@ -10,7 +10,7 @@ stack:
   - shadcn/ui
 url: https://mockingboard.design
 status: live
-accent: blue
+accent: gold
 art: waves
 ---
 
