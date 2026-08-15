@@ -1,0 +1,7 @@
+User-agent: *
+Allow: /
+
+# A working tool, not a page worth indexing.
+Disallow: /styleguide
+
+Sitemap: https://mm.coffee/sitemap-index.xml
