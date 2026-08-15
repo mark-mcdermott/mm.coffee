@@ -2,11 +2,20 @@
 import { defineConfig, fontProviders } from 'astro/config'
 import tailwindcss from '@tailwindcss/vite'
 import vercel from '@astrojs/vercel'
+import sitemap from '@astrojs/sitemap'
 
 // https://astro.build/config
 export default defineConfig({
   site: 'https://mm.coffee',
   adapter: vercel(),
+
+  integrations: [
+    sitemap({
+      // The styleguide is a working tool, not a page anyone should find in
+      // search results.
+      filter: (page) => !page.includes('/styleguide'),
+    }),
+  ],
 
   vite: {
     plugins: [tailwindcss()],

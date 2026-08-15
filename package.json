@@ -13,11 +13,15 @@
     "check": "astro check",
     "check:contrast": "node scripts/check-contrast.mjs",
     "build:icons": "node scripts/build-icons.mjs",
+    "build:og": "node scripts/build-og.mjs",
     "test": "pnpm build && playwright test",
     "astro": "astro"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",
+    "@astrojs/sitemap": "^3.7.3",
+    "@vercel/analytics": "^2.0.1",
+    "@vercel/speed-insights": "^2.0.0",
     "astro": "^7.2.2",
     "resend": "^6.20.0",
     "sharp": "^0.35.3",

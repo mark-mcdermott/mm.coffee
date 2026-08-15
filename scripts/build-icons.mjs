@@ -11,7 +11,7 @@
  *  - touch/PWA icons    the same disc plus the rainbow swoosh. At 180px+ there's
  *                       room for it to read; at 16px it just smears.
  */
-import { mkdirSync, writeFileSync } from 'node:fs'
+import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
@@ -26,8 +26,18 @@ const GLYPH = {
   height: 50.34,
 }
 
-const PAPER = '#F0DBB7'
-const BANDS = ['#edaf16', '#e2622a', '#cd2a1c', '#145ca9']
+/** Read the palette from globals.css so the icons can't drift from the site. */
+const css = readFileSync(join(ROOT, 'src/styles/globals.css'), 'utf8')
+const token = (name) => {
+  const match = css.match(new RegExp(`--color-${name}:\\s*(#[0-9a-fA-F]{6})`))
+  if (!match) throw new Error(`--color-${name} not found in globals.css`)
+  return match[1]
+}
+
+const PAPER = token('paper')
+const INK = token('ink')
+/** Ribbon order matches the hero: mustard, brown, rust, teal. */
+const BANDS = [token('gold'), token('orange'), token('red'), token('blue')]
 const BOX = 64
 
 /** Centre the glyph in the 64-unit box at the given width. */
@@ -37,7 +47,7 @@ function placeGlyph(glyphWidth, offsetY = 0) {
   const h = GLYPH.height * scale
   const x = (BOX - w) / 2
   const y = (BOX - h) / 2 + offsetY
-  return `<g transform="translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(4)})"><path d="${GLYPH.d}" fill="#000"/></g>`
+  return `<g transform="translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(4)})"><path d="${GLYPH.d}" fill="${INK}"/></g>`
 }
 
 /** Swoosh bands arcing across the lower third. */

@@ -73,6 +73,24 @@ So: `red` / `gold` / `orange` for display type and graphics only; `red-deep` /
 `gold-deep` / `orange-deep` for anything at label size. `pnpm check:contrast` reads
 the tokens straight out of `globals.css` and fails the build if this slips.
 
+## SEO
+
+`Seo.astro` owns every meta tag; pages pass `title`, `description`, and — for lab
+posts — `publishedAt` and `tags`, which switch the OG type to `article`. Canonicals
+are always absolute against `SITE.url`, so a preview host can never leak into one.
+
+Generated assets are **built by hand and committed**, not produced at deploy time:
+
+- `pnpm build:icons` — favicon, touch and PWA icons
+- `pnpm build:og` — the 1200×630 share image
+
+Both read the palette out of `globals.css`, so they can't drift from the site. Re-run
+them after any palette change. Note `build:og` rasterises two `<text>` elements with
+whatever font the machine has, so the headline can shift if regenerated elsewhere;
+the wordmark is outlined paths and is immune.
+
+The styleguide is `noindex`, excluded from the sitemap, and disallowed in robots.txt.
+
 ## Before opening a PR
 
 ```sh
