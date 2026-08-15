@@ -1,0 +1,131 @@
+---
+import Layout from '@layouts/Layout.astro'
+import HalftoneStack from '@components/art/HalftoneStack.astro'
+import DotMatrixMark from '@components/art/DotMatrixMark.astro'
+import { SITE } from '@lib/site'
+import { MANIFESTO } from '@lib/content'
+---
+
+<Layout
+  title="About"
+  description="A one-person software studio in Austin, Texas. What we make and how we work."
+>
+  <section class="border-b px-6 py-12 lg:px-8 lg:py-16">
+    <p class="label text-red-deep">About</p>
+    <h1 class="display mt-3 max-w-[14ch] text-[clamp(2.75rem,9vw,6rem)]">
+      Small batch, on purpose.
+    </h1>
+    <p class="label mt-6 max-w-[54ch] text-blue">
+      {SITE.company} is a one-person software studio in {SITE.location}, run by{' '}
+      <a href="https://markmcdermott.io" class="underline hover:text-red-deep">
+        {SITE.author}
+      </a>.
+    </p>
+  </section>
+
+  <div class="grid lg:grid-cols-[1fr_20rem]">
+    <div class="border-b px-6 py-10 lg:border-b-0 lg:border-r lg:px-8 lg:py-14">
+      <div class="prose">
+        <p>
+          Most software is built to be sold, then maintained until it can be sold
+          again. This studio exists to make the other kind: small tools that do
+          one thing, that you can understand, and that don't need a roadmap to
+          justify themselves.
+        </p>
+
+        <h2>How the work happens</h2>
+
+        <p>
+          One person, start to finish. Design and engineering aren't handed
+          between people here, which means the details that usually get lost in
+          translation — the empty state, the keyboard path, the error nobody
+          planned for — belong to the same person who drew the happy path.
+        </p>
+
+        <p>
+          Everything ships small. A tool that's useful at version one is worth
+          more than a platform that's impressive at version three and never
+          arrives.
+        </p>
+
+        <h2>What that rules out</h2>
+
+        <p>
+          No accounts where a file would do. No telemetry that serves the studio
+          rather than the person using the thing.{' '}
+          <a href="https://mockingboard.design">Mockingboard</a> has no backend at
+          all — your images never leave the browser, because there was no good
+          reason for them to.
+        </p>
+
+        <p>
+          It also rules out volume. There's one pair of hands, so the roster stays
+          short on purpose.
+        </p>
+
+        <h2>The name</h2>
+
+        <p>
+          Good software is like good coffee: small batch, made by someone paying
+          attention, and better when it hasn't been sitting around. The packaging
+          conceit is a joke, but the standard isn't.
+        </p>
+      </div>
+    </div>
+
+    <aside class="px-6 py-10 lg:px-8 lg:py-14">
+      <HalftoneStack class="w-24" />
+
+      <dl class="mt-10 space-y-6">
+        <div>
+          <dt class="label opacity-45">Studio</dt>
+          <dd class="label mt-1">{SITE.company}</dd>
+        </div>
+        <div>
+          <dt class="label opacity-45">Established</dt>
+          <dd class="label mt-1">{SITE.established}</dd>
+        </div>
+        <div>
+          <dt class="label opacity-45">Where</dt>
+          <dd class="label mt-1">{SITE.location}</dd>
+        </div>
+        <div>
+          <dt class="label opacity-45">Writing</dt>
+          <dd class="label mt-1">
+            <a href="/lab" class="underline hover:text-red-deep">Lab</a>
+            {' · '}
+            <a href="https://markmcdermott.io" class="underline hover:text-red-deep">
+              markmcdermott.io
+            </a>
+          </dd>
+        </div>
+      </dl>
+
+      <a
+        href="/contact"
+        class="label mt-10 inline-flex items-center gap-2 bg-ink px-5 py-3 text-paper transition-colors hover:bg-red-deep"
+      >
+        Start a conversation
+        <span aria-hidden="true">&rarr;</span>
+      </a>
+    </aside>
+  </div>
+
+  <section class="grid border-t lg:grid-cols-[1fr_auto]">
+    <div class="px-6 py-10 lg:px-8">
+      <h2 class="label">Our manifesto</h2>
+      <div class="mt-5 space-y-4">
+        {MANIFESTO.map((line) => <p class="label max-w-[46ch] text-blue">{line}</p>)}
+      </div>
+    </div>
+    <div
+      class="flex flex-col justify-end gap-4 border-t px-6 py-10 lg:border-l lg:border-t-0 lg:px-10"
+    >
+      <DotMatrixMark class="w-32 text-ink" />
+      <p class="label text-red-deep">
+        Est. {SITE.established}<br />
+        by {SITE.author}
+      </p>
+    </div>
+  </section>
+</Layout>
