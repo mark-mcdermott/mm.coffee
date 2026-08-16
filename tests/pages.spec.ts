@@ -40,6 +40,6 @@ test.describe('404', () => {
     await page.goto('/404')
     const nav = page.getByRole('navigation', { name: 'Where to next' })
     await expect(nav.getByRole('link', { name: 'Home' })).toBeVisible()
-    await expect(nav.getByRole('link', { name: 'Programs' })).toBeVisible()
+    await expect(nav.getByRole('link', { name: 'Batches' })).toBeVisible()
   })
 })

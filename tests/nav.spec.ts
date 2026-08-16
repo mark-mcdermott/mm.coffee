@@ -5,7 +5,7 @@ test.describe('desktop nav', () => {
 
   test('marks the current section', async ({ page }) => {
     await page.goto('/programs')
-    await expect(page.getByRole('link', { name: 'Programs', exact: true })).toHaveAttribute(
+    await expect(page.getByRole('link', { name: 'Batches', exact: true })).toHaveAttribute(
       'aria-current',
       'page'
     )
@@ -14,7 +14,7 @@ test.describe('desktop nav', () => {
   test('links to every section', async ({ page }) => {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Main' })
-    for (const label of ['Programs', 'Lab', 'About', 'Contact']) {
+    for (const label of ['Batches', 'PR', 'About', 'Contact']) {
       await expect(nav.getByRole('link', { name: label, exact: true })).toBeVisible()
     }
   })
@@ -62,7 +62,7 @@ test.describe('mobile nav', () => {
   test('navigates from the panel', async ({ page }) => {
     await page.goto('/')
     await page.getByRole('button', { name: 'Open menu' }).click()
-    await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Programs' }).click()
+    await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Batches' }).click()
     await expect(page).toHaveURL(/\/programs\/?$/)
   })
 })

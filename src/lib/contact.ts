@@ -8,7 +8,7 @@ import { z } from 'zod'
  * submissions take a few seconds, scripted ones are usually instant.
  */
 export const contactSchema = z.object({
-  name: z.string().trim().min(1, 'Tell us your name').max(120, 'That name is too long'),
+  name: z.string().trim().min(1, 'Tell me your name').max(120, 'That name is too long'),
   email: z.email('That email address looks wrong').max(254),
   message: z
     .string()

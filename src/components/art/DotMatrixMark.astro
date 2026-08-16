@@ -25,6 +25,80 @@ const R = 4.6
 const PITCH = 12
 const width = bitmap[0].length * PITCH
 const height = rows * PITCH
+
+type Cell = readonly [row: number, col: number]
+
+/** Left edge of each `m` in the bitmap. */
+const GLYPH_STARTS = [0, 8]
+
+/**
+ * The route the blink crawls, drawn the way a pen would: up the left leg, along
+ * the crossbar to the middle stem, down it and straight back up, along to the
+ * right leg, then down — and the same again on the second `m`.
+ *
+ * Retracing the middle stem means those dots are lit twice per pass, so a dot
+ * holds a list of visits rather than a single offset. That's the reason this
+ * can't be one shared animation with a stagger.
+ *
+ * The full stop takes its turn last, closing the loop before it starts again.
+ */
+const PERIOD: Cell = [rows - 1, bitmap[0].length - 1]
+
+const crawl: Cell[] = [
+  ...GLYPH_STARTS.flatMap((x): Cell[] => [
+    ...[4, 3, 2, 1, 0].map((r): Cell => [r, x]),
+    ...[1, 2, 3].map((c): Cell => [0, x + c]),
+    ...[1, 2, 3, 4].map((r): Cell => [r, x + 3]),
+    ...[3, 2, 1, 0].map((r): Cell => [r, x + 3]),
+    ...[4, 5, 6].map((c): Cell => [0, x + c]),
+    ...[1, 2, 3, 4].map((r): Cell => [r, x + 6]),
+  ]),
+  PERIOD,
+]
+
+const dots = bitmap.flatMap((row, r) =>
+  row.split('').flatMap((cell, c) => (cell === '1' ? [{ r, c }] : []))
+)
+
+/**
+ * A dot drops out for `BLINK`, then the whole mark sits black for `HOLD` before
+ * the next one goes — blink, wait, blink, rather than a hole sliding along the
+ * glyphs. The cycle falls out of those two: one step per dot on the route.
+ */
+const BLINK_SECONDS = 0.5
+const HOLD_SECONDS = 3
+const STEP_SECONDS = BLINK_SECONDS + HOLD_SECONDS
+const CYCLE_SECONDS = crawl.length * STEP_SECONDS
+const DIM = 0.12
+
+const pctAt = (seconds: number) => ((seconds / CYCLE_SECONDS) * 100).toFixed(4)
+
+/**
+ * Stops are held rather than tweened (`step-end`), so each dot sits at full
+ * strength until the crawl reaches it, drops for the blink, and comes straight
+ * back — no fade in either direction.
+ */
+const keyframesFor = ({ r, c }: { r: number; c: number }) => {
+  const visits = crawl.flatMap((cell, i) => (cell[0] === r && cell[1] === c ? [i] : []))
+  if (visits.length === 0) return null
+
+  const stops = new Map<string, number>([[pctAt(0), 1]])
+  for (const v of visits) {
+    stops.set(pctAt(v * STEP_SECONDS), DIM)
+    stops.set(pctAt(v * STEP_SECONDS + BLINK_SECONDS), 1)
+  }
+
+  return [...stops]
+    .sort(([a], [b]) => Number(a) - Number(b))
+    .map(([at, opacity]) => `${at}%{opacity:${opacity}}`)
+    .join('')
+}
+
+const tracks = dots.map((dot) => keyframesFor(dot))
+
+const crawlCss = tracks
+  .map((frames, i) => (frames ? `@keyframes mm-crawl-${i}{${frames}}` : ''))
+  .join('')
 ---
 
 <svg
@@ -35,19 +109,20 @@ const height = rows * PITCH
   class={className}
 >
   {
-    bitmap.map((row, r) =>
-      row
-        .split('')
-        .map((cell, c) =>
-          cell === '1' ? (
-            <circle
-              cx={c * PITCH + PITCH / 2}
-              cy={r * PITCH + PITCH / 2}
-              r={R}
-              fill="currentColor"
-            />
-          ) : null
-        )
-    )
+    dots.map(({ r, c }, i) => (
+      <circle
+        cx={c * PITCH + PITCH / 2}
+        cy={r * PITCH + PITCH / 2}
+        r={R}
+        fill="currentColor"
+        style={
+          tracks[i]
+            ? `animation:mm-crawl-${i} ${CYCLE_SECONDS}s step-end infinite`
+            : undefined
+        }
+      />
+    ))
   }
 </svg>
+
+<style is:inline set:html={crawlCss}></style>

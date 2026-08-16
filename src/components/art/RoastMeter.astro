@@ -1,0 +1,69 @@
+---
+/**
+ * The roast scale a coffee bag prints, with this batch's roast marked.
+ *
+ * Cells are butted together and 1px-ruled like every other cell on the site —
+ * a circular gauge would have been the obvious form and the wrong one here.
+ * The marker position is derived from `SITE.roast`, so the graphic can't drift
+ * from the Roast row printed further down the same panel.
+ */
+import { SITE } from '@lib/site'
+
+interface Props {
+  class?: string
+}
+
+const { class: className } = Astro.props
+
+/** Light to dark. `SITE.roast` has to name one of these. */
+const SCALE = ['Light', 'City', 'City+', 'Full City', 'Vienna', 'French'] as const
+
+const active = (SCALE as readonly string[]).indexOf(SITE.roast)
+
+if (active === -1) {
+  // Failing the build beats shipping a meter with no marker on it.
+  throw new Error(
+    `RoastMeter: SITE.roast is "${SITE.roast}", which is not on the scale (${SCALE.join(', ')}).`
+  )
+}
+
+const CELL = 12
+const CELL_HEIGHT = 12
+const MARKER_HEIGHT = 6
+
+const width = SCALE.length * CELL
+const height = CELL_HEIGHT + MARKER_HEIGHT
+
+/** Ink builds evenly across the scale, so the ramp reads as roast rather than steps. */
+const shade = (i: number) => +(0.08 + (i / (SCALE.length - 1)) * 0.92).toFixed(2)
+
+const markerX = active * CELL + CELL / 2
+---
+
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox={`-0.5 -0.5 ${width + 1} ${height + 1}`}
+  role="img"
+  aria-label={`Roast level: ${SITE.roast}, ${active + 1} of ${SCALE.length}`}
+  class={className}
+>
+  {
+    SCALE.map((_, i) => (
+      <rect
+        x={i * CELL}
+        y="0"
+        width={CELL}
+        height={CELL_HEIGHT}
+        fill="currentColor"
+        fill-opacity={shade(i)}
+        stroke="currentColor"
+        stroke-width="1"
+      />
+    ))
+  }
+
+  <polygon
+    points={`${markerX - 4},${height} ${markerX + 4},${height} ${markerX},${CELL_HEIGHT + 1}`}
+    fill="currentColor"
+  />
+</svg>

@@ -1,9 +1,31 @@
 ---
 interface Props {
   class?: string
+  /**
+   * Turns the globe on hover. The outline and latitudes hold still and only the
+   * meridians sweep — what a sphere spinning on its axis actually does. Rotating
+   * the whole icon instead reads as a wheel.
+   */
+  spin?: boolean
 }
 
-const { class: className } = Astro.props
+const { class: className, spin = false } = Astro.props
+
+/** Matches `--animate-globe`; one half-revolution, after which the wireframe repeats. */
+const CYCLE_SECONDS = 10
+
+/**
+ * Longitude every 45°. Each meridian runs the same sweep a quarter-cycle apart,
+ * and `rx` is its resting projection — 9 lies on the silhouette, 0 is edge-on
+ * down the middle. Front and back halves coincide in projection, which is why
+ * two of the four share a width at rest; that is what a wireframe sphere does.
+ */
+const MERIDIANS = [
+  { rx: 9, phase: 0 },
+  { rx: 6.36, phase: 0.25 },
+  { rx: 0.01, phase: 0.5 },
+  { rx: 6.36, phase: 0.75 },
+]
 ---
 
 <svg
@@ -14,9 +36,20 @@ const { class: className } = Astro.props
   stroke-width="1.3"
   aria-hidden="true"
   focusable="false"
-  class={className}
+  class:list={[className, spin && 'group']}
 >
   <circle cx="12" cy="12" r="9"></circle>
-  <ellipse cx="12" cy="12" rx="4" ry="9"></ellipse>
+  {
+    MERIDIANS.map(({ rx, phase }) => (
+      <ellipse
+        cx="12"
+        cy="12"
+        rx={rx}
+        ry="9"
+        class:list={[spin && 'group-hover:animate-globe']}
+        style={spin ? `animation-delay:${-(phase * CYCLE_SECONDS).toFixed(2)}s` : undefined}
+      />
+    ))
+  }
   <path d="M3 12h18M4.6 6.8h14.8M4.6 17.2h14.8"></path>
 </svg>
