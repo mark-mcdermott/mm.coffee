@@ -4,8 +4,8 @@
   "description": "A software studio in Austin, Texas. Small-batch software, built with care.",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#efe3cc",
-  "theme_color": "#efe3cc",
+  "background_color": "#e8dfcb",
+  "theme_color": "#e8dfcb",
   "icons": [
     {
       "src": "/icon-192.png",

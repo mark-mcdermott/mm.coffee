@@ -48,10 +48,13 @@ undecided — think before doing.
 
 ## Visual direction
 
-- [ ] Consider making the colour palette a little less "amazon retro adhesive
-      car stripes" — **not done.** A palette change means re-running
-      `build:icons` and `build:og`, and `build:og` rasterises text with whatever
-      font the machine has, so the share image can shift. Wanted you in the room
+- [x] Consider making the colour palette a little less "amazon retro adhesive
+      car stripes" — went to **dark roast**: oxblood, forest, ochre and walnut
+      on a deeper paper, picked from three candidates shot against the real
+      homepage. Every colour gained contrast headroom; rust went from 3.05:1 to
+      4.07:1, so display type no longer sits 0.05 above its floor. Icons and the
+      share image regenerated. The ochre band is still the brightest thing on
+      the page — if it keeps reading as a stripe, that's the one token to pull
 - [x] Consider how to make the site a little more grimy — the fine paper grain
       already existed; added a coarse low-frequency mottle over it, which is
       what reads as uneven absorption rather than screen noise

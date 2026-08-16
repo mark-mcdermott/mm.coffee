@@ -1,36 +1,47 @@
 @import "tailwindcss";
 
 @theme {
-  /* Warmer, earthier palette: rust, deep teal, mustard and brown on a lighter
-     paper. Paper is lighter than the original comp cream — partly to match the
-     newer mockup, and partly because at the old #f0dbb7 the rust only reached
-     2.87:1, below even the 3:1 large-text floor. Lightening the ground fixes
-     that without touching the brand colours themselves. */
-  --color-paper: #efe3cc;
-  --color-paper-tint: #f7f1e4;
-  --color-ink: #333333;
-  --color-red: #e0522f;
-  --color-blue: #0c4c49;
-  --color-gold: #e1b537;
-  --color-orange: #804d37;
-  --color-signal: #2c591c;
+  /* Dark roast: oxblood, forest, ochre and walnut on a slightly deeper paper.
+     Replaces a brighter set whose four-band ribbon read as adhesive car stripes
+     rather than print — the old mustard was a near-primary yellow and carried
+     most of that on its own.
+
+     The move also bought headroom everywhere. Rust went from 3.05:1 to 4.07:1,
+     so display type no longer sits 0.05 above its floor, and the deeps cleared
+     4.65 → 5.76. Verified by `pnpm check:contrast`. */
+  --color-paper: #e8dfcb;
+  --color-paper-tint: #f2ebdf;
+  --color-ink: #2b2724;
+  --color-red: #b8442a;
+  --color-blue: #14423f;
+  --color-gold: #c9a23a;
+  --color-orange: #6d4630;
+  --color-signal: #2f5423;
 
   /* Accessible counterparts, same hue and saturation, darkened until they clear
-     4.5:1 on paper. The brand colours are display colours: rust is 3.05:1 and
-     mustard 1.52:1 — fine for large type and fills, but they fail AA at label
-     size, and this design sets most of its text at label size. So: bright for
-     display type and graphics, deep for anything small.
+     4.5:1 on paper. The brand colours are display colours: ochre is 1.82:1 —
+     fine for large type and fills, but nowhere near AA at label size, and this
+     design sets most of its text at label size. So: bright for display type and
+     graphics, deep for anything small.
+
+     Rust now clears 4.5:1 on its own, so `red-deep` is a smaller step down than
+     it used to be — kept as its own token rather than aliased, because the two
+     still do different jobs and the display value is the one free to move if
+     the palette shifts again.
 
      Teal and brown already clear 4.5:1, so they are their own deep variants —
      aliased rather than duplicated so a change to one can't desync the other.
      Verified by `pnpm check:contrast`. */
-  --color-red-deep: #ae4024;
-  --color-gold-deep: #78611d;
+  --color-red-deep: #94331e;
+  --color-gold-deep: #67531f;
   --color-orange-deep: var(--color-orange);
   --color-blue-deep: var(--color-blue);
 
-  /* Ships the "handle with care" bar; paper on this is 5.45:1. */
-  --color-crate: #804d37;
+  /* Ships the "handle with care" bar; paper on this is 6.17:1. Aliased rather
+     than repeated: this used to be a literal copy of orange, so a palette
+     change could leave it behind — and the contrast check wouldn't have caught
+     it, because it validates crate against paper on its own. */
+  --color-crate: var(--color-orange);
 
   /* astro:fonts emits --font-anton / --font-jetbrains; map them onto Tailwind's
      font scale so `font-display` and `font-mono` resolve to the self-hosted faces. */

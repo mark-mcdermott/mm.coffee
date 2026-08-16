@@ -47,7 +47,10 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href
       title={`${SITE.name} — Lab`}
       href="/rss.xml"
     />
-    <meta name="theme-color" content="#efe3cc" />
+    {/* Must match --color-paper. A meta tag can't read a CSS variable, so
+        `pnpm check:contrast` asserts the two agree rather than trusting them
+        to be updated together. */}
+    <meta name="theme-color" content="#e8dfcb" />
 
     <title>{pageTitle}</title>
 
