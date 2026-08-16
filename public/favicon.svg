@@ -1,5 +1,5 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="mm.coffee">
   <title>mm.coffee</title>
   <circle cx="32" cy="32" r="32" fill="#e8dfcb"/>
-  <g transform="translate(15.00 16.52) scale(0.6148)"><path d="M0,0h37.03c12.8,0,18.26,5.97,18.26,18.77v31.57h-13.81v-30.06c0-4.89-1.51-8.2-6.69-8.2H13.81v38.26H0V0ZM21,19.2h13.38v31.14h-13.38v-31.14Z" fill="#2b2724"/></g>
+  <g transform="translate(15.00 16.65) scale(0.2192) translate(-0.02 -148.92)"><path d="M115.88,199.93c-1.07-8.71-5.25-16.51-14.23-16.57l-61.64-.42.03,106.08-40.02-.02v-140.08s117.16.31,117.16.31c22.17,3.08,35.12,17.69,37.49,39.8l.47,99.97h-39.08s-.17-89.07-.17-89.07Z" fill="#2b2724"/><path d="M59.02,202h38v87h-38Z" fill="#2b2724"/></g>
 </svg>

@@ -10,9 +10,11 @@ undecided — think before doing.
 - [x] Remove the period — dropped from the lockup and wordmark. The `mark`
       variant keeps it: at favicon size the dot is a distinguishing feature, and
       removing it means regenerating the committed icon PNGs
-- [ ] Maybe add "Co" at the end — **not done.** Adding a word to the wordmark
-      changes the name the studio goes by, which isn't a call to make on someone
-      else's behalf. Mechanically easy whenever you decide
+- [x] Maybe add "Co" at the end — done, and the name the studio goes by is now
+      **MM Coffee Co**. New artwork also swaps the full stop for a heart. The
+      outlines now live in `src/lib/logo.ts` and the three variants are `viewBox`
+      crops of one drawing, so the component, the icons and the share image can't
+      drift apart the way they did over the full stop
 
 ## Navigation & header
 
