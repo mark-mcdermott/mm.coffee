@@ -1,0 +1,72 @@
+---
+/**
+ * One form control, chosen by the field descriptor the schema produced.
+ *
+ * Nothing here knows what `accent` or `draft` mean — the schema said one is a
+ * fixed set of strings and the other a boolean, and that's the whole basis for
+ * the select and the checkbox.
+ */
+import type { Field } from '@lib/admin/fields'
+
+interface Props {
+  field: Field
+  value: string
+  error?: string
+}
+
+const { field, value, error } = Astro.props
+const id = `field-${field.name}`
+const describedBy = error ? `${id}-error` : undefined
+
+const shared = {
+  id,
+  name: field.name,
+  'aria-invalid': error ? true : undefined,
+  'aria-describedby': describedBy,
+}
+---
+
+<div class="border-b px-6 py-5 lg:px-8">
+  <label for={id} class="label flex flex-wrap items-baseline gap-2">
+    {field.name}
+    {!field.required && <span class="opacity-40">optional</span>}
+    {field.kind === 'list' && <span class="opacity-40">comma separated</span>}
+  </label>
+
+  <div class="mt-3">
+    {
+      field.kind === 'boolean' ? (
+        <input type="checkbox" {...shared} value="on" checked={value === 'true'} class="size-5 accent-[var(--color-ink)]" />
+      ) : field.kind === 'select' ? (
+        <select {...shared} required={field.required} class="input">
+          {!field.required && <option value="">—</option>}
+          {field.options.map((option) => (
+            <option value={option} selected={option === value}>
+              {option}
+            </option>
+          ))}
+        </select>
+      ) : field.kind === 'textarea' ? (
+        <textarea {...shared} required={field.required} rows="4" class="input">{value}</textarea>
+      ) : (
+        <input
+          {...shared}
+          type={field.kind === 'number' ? 'number' : field.kind === 'date' ? 'date' : field.kind === 'url' ? 'url' : 'text'}
+          value={value}
+          required={field.required}
+          min={field.kind === 'number' ? field.min : undefined}
+          step={field.kind === 'number' ? 1 : undefined}
+          class="input"
+        />
+      )
+    }
+  </div>
+
+  {
+    error && (
+      <p id={describedBy} class="label mt-2 text-red-deep">
+        {error}
+      </p>
+    )
+  }
+</div>

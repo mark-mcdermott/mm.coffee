@@ -78,9 +78,12 @@ undecided — think before doing.
 
 ## Features
 
-- [ ] Make a real /admin CMS for all content — **not done, and not a session's
-      work.** Needs auth, a persistence layer and an editing UI on a site whose
-      whole architecture is "static output, no database". Worth its own plan
+- [x] Make a real /admin CMS for all content — the "needs a persistence layer"
+      objection was wrong: git is the persistence layer and GitHub is the
+      identity provider, so nothing about "static output, no database" had to
+      change. Forms are generated from the existing zod schemas, so there's
+      still exactly one definition of a field. See the admin section in
+      CLAUDE.md, and `.env.example` for the GitHub OAuth app it needs
 
 ---
 

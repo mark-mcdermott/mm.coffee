@@ -185,6 +185,32 @@
     text-transform: uppercase;
   }
 
+  /**
+   * Admin form control. The site's rules are 1px ink and its fills are paper,
+   * so a control is the same thing with a caret in it — no radius, no shadow,
+   * no focus ring of its own beyond the global one.
+   */
+  .input {
+    width: 100%;
+    max-width: 46rem;
+    border: 1px solid var(--color-ink);
+    background-color: var(--color-paper);
+    color: var(--color-ink);
+    font-family: var(--font-mono);
+    font-size: 0.875rem;
+    line-height: 1.6;
+    padding: 0.6rem 0.75rem;
+  }
+
+  textarea.input {
+    resize: vertical;
+  }
+
+  .input[aria-invalid='true'] {
+    border-color: var(--color-red-deep);
+    border-width: 2px;
+  }
+
   /* Small uppercase mono label — the workhorse type style of this design. */
   .label {
     font-family: var(--font-mono);

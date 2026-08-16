@@ -1,0 +1,92 @@
+---
+/**
+ * Chrome for the admin.
+ *
+ * Deliberately not the public `Layout`: no header, no footer, no status strip,
+ * no analytics. It's the same paper, rules and mono as the rest of the site so
+ * it doesn't feel like a different product, but nothing here is for visitors.
+ */
+import { Font } from 'astro:assets'
+import Logo from '@components/Logo.astro'
+import { SITE } from '@lib/site'
+import '@styles/globals.css'
+
+interface Props {
+  title: string
+  /** Omitted on the sign-in screen, which has nowhere to go back to. */
+  signedInAs?: string
+  local?: boolean
+  breadcrumb?: { label: string; href: string }[]
+}
+
+const { title, signedInAs, local = false, breadcrumb = [] } = Astro.props
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <link rel="icon" href="/favicon.ico" sizes="32x32" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <title>{title} — {SITE.name} admin</title>
+    <Font cssVariable="--font-anton" preload />
+    <Font cssVariable="--font-jetbrains" preload />
+  </head>
+
+  <body class="min-h-dvh">
+    <header class="border-b">
+      <div class="flex flex-wrap items-center justify-between gap-4 px-6 py-4 lg:px-8">
+        <a href="/admin" aria-label="Admin home" class="shrink-0">
+          <Logo class="w-40 text-ink" />
+        </a>
+
+        <div class="flex items-center gap-4">
+          {
+            local ? (
+              <p class="label text-orange-deep">Local mode — editing the working tree</p>
+            ) : (
+              signedInAs && <p class="label opacity-60">{signedInAs}</p>
+            )
+          }
+
+          {
+            !local && signedInAs && (
+              <form method="POST" action="/api/admin/logout">
+                <button type="submit" class="label underline hover:text-red-deep">
+                  Sign out
+                </button>
+              </form>
+            )
+          }
+        </div>
+      </div>
+
+      {
+        breadcrumb.length > 0 && (
+          <nav aria-label="Breadcrumb" class="border-t px-6 py-3 lg:px-8">
+            <ol class="label flex flex-wrap items-center gap-2">
+              {breadcrumb.map((crumb, i) => (
+                <li class="flex items-center gap-2">
+                  {i > 0 && <span aria-hidden="true" class="opacity-40">/</span>}
+                  {i === breadcrumb.length - 1 ? (
+                    <span aria-current="page">{crumb.label}</span>
+                  ) : (
+                    <a href={crumb.href} class="underline hover:text-red-deep">
+                      {crumb.label}
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ol>
+          </nav>
+        )
+      }
+    </header>
+
+    <main id="main">
+      <slot />
+    </main>
+  </body>
+</html>

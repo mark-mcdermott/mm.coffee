@@ -7,8 +7,8 @@ essays live separately at markmcdermott.io — don't duplicate them here.
 
 Astro 7 (static output) · Tailwind CSS v4 · Vercel · pnpm. No database.
 
-Pages prerender. Only `src/pages/api/*` opts into server rendering with
-`export const prerender = false`.
+Pages prerender. Only `src/pages/api/*` and `src/pages/admin/*` opt into server
+rendering with `export const prerender = false`.
 
 ## Conventions
 
@@ -17,6 +17,11 @@ Pages prerender. Only `src/pages/api/*` opts into server rendering with
   a hex value in a component
 - **Content** is Markdown in `src/content/`. Adding a project is one file in
   `src/content/programs/`; adding a post is one file in `src/content/lab/`
+- **Frontmatter schemas live in `src/lib/schemas.ts`**, not in
+  `content.config.ts` — three things need them and only one can import
+  `astro:content`. Change a schema there and the build, the admin's form and
+  the admin's save validation all follow. Nothing should ever restate a field
+  list; if you're typing one out, you're undoing the point
 - **Lab posts** support `draft: true` — visible in `pnpm dev`, excluded from
   production builds and from the RSS feed. Dates are coerced, so an unquoted
   `date: 2026-08-14` in frontmatter is fine
@@ -72,6 +77,41 @@ design sets most of its text at label size.
 So: `red` / `gold` / `orange` for display type and graphics only; `red-deep` /
 `gold-deep` / `orange-deep` for anything at label size. `pnpm check:contrast` reads
 the tokens straight out of `globals.css` and fails the build if this slips.
+
+## The admin
+
+`/admin` edits the Markdown in `src/content/`. There's no database and no
+second copy of the content: git is the persistence layer and GitHub is the
+identity provider.
+
+It runs in one of two modes, and the header always says which:
+
+- **Local** (`pnpm dev`) — writes straight to the working tree, no sign-in.
+  `isLocalMode()` is `import.meta.env.DEV`, which Vite replaces at build time,
+  so the deployed bundle cannot enter this mode however it's configured.
+- **GitHub** (deployed) — sign in with GitHub, and only `ADMIN_GITHUB_LOGIN`
+  is let through. Saves commit through the Contents API **as the signed-in
+  user**, so the site never holds a write credential of its own. A commit
+  triggers the usual Vercel deploy.
+
+The forms are generated from the zod schemas via `z.toJSONSchema(…, { io: 'input' })`
+— an enum becomes a select, `.optional()` drops the `required`, `.positive()`
+becomes `min="1"`. Anything the type can't express (which strings want a
+textarea, which want a date picker) is a `.meta({ control })` hint on the field
+itself. Add a field to a schema and the form grows a control; no list of fields
+exists anywhere to fall out of sync.
+
+Every write re-validates against that same schema server-side, so the admin
+cannot produce a file that fails the build.
+
+Guards worth not removing: the slug regex is what keeps a URL from addressing a
+path outside its collection, `sameOrigin` is checked on every POST, and the
+session cookie is AES-256-GCM **encrypted** rather than signed because it
+carries a GitHub token. `/admin` is `noindex`, disallowed in robots.txt and
+filtered out of the sitemap.
+
+Setup is in `.env.example`. Unset, `/admin` reports that it isn't wired up
+rather than half working.
 
 ## SEO
 
