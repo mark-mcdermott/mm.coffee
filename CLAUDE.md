@@ -35,8 +35,16 @@ makes **no third-party font requests**, and it should stay that way.
 - `font-display` → Anton (headlines, uppercase)
 - `font-mono` → JetBrains Mono (body copy, labels, the status strip)
 
-The wordmark is R41 Stop, but shipped as an **outlined SVG** (`src/assets/logo.svg`),
-not a webfont. Never reintroduce a font CDN to render it.
+The wordmark is R41 Stop, but shipped as **outlined paths**, not a webfont. Never
+reintroduce a font CDN to render it.
+
+Those paths live in **`src/lib/logo.ts`** and nowhere else. Four things draw the
+mark — the `Logo` component, the icon set, the share image, and whatever comes
+next — and they all import from there. They used to keep private copies, which is
+how `og.png` went on drawing a full stop for two releases after the wordmark
+dropped it. The `lockup` / `wordmark` / `mark` variants are `viewBox` crops of one
+artwork, so there is no second coordinate space to keep in step. Re-run
+`pnpm build:icons` and `pnpm build:og` after any change to it.
 
 ## Design
 
@@ -52,6 +60,10 @@ type, rules, and fills — never small text.
 
 - `astro check` needs **TypeScript 6.x**. TypeScript 7's native compiler doesn't yet
   expose the programmatic API the checker relies on, so don't bump it to 7.
+- `build:icons` and `build:og` import `src/lib/logo.ts` directly and rely on Node's
+  built-in type stripping, so they need **Node 23.6+** — looser than `engines.node`,
+  which stays at 22.12 because it describes the app, and neither script runs at
+  deploy time. Keep the syntax in `logo.ts` erasable (no enums, no namespaces).
 - The `Font` component is imported from `astro:assets` (not `astro:fonts`, which was
   the Astro 5 experimental name).
 - Astro 7 keeps a **persistent background dev server** and reuses it across `pnpm dev`

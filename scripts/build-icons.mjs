@@ -1,8 +1,8 @@
 /**
  * Generates the icon set from a single source glyph.
  *
- * The wordmark `m` is R41 Stop, outlined — same provenance as the logo, so the
- * favicon and the wordmark can never drift apart.
+ * The `m` is imported from `src/lib/logo.ts`, the same module the Logo component
+ * renders from, so the favicon and the wordmark cannot drift apart.
  *
  * Two treatments:
  *  - `favicon.svg`      cream disc + glyph. Legible at 16px, and the disc keeps
@@ -15,16 +15,10 @@ import { mkdirSync, readFileSync, writeFileSync } from 'node:fs'
 import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import sharp from 'sharp'
+import { M_GLYPH } from '../src/lib/logo.ts'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const PUBLIC = join(ROOT, 'public')
-
-/** Outlined `m` from R41 Stop, in its own 55.3 x 50.34 space. */
-const GLYPH = {
-  d: 'M0,0h37.03c12.8,0,18.26,5.97,18.26,18.77v31.57h-13.81v-30.06c0-4.89-1.51-8.2-6.69-8.2H13.81v38.26H0V0ZM21,19.2h13.38v31.14h-13.38v-31.14Z',
-  width: 55.3,
-  height: 50.34,
-}
 
 /** Read the palette from globals.css so the icons can't drift from the site. */
 const css = readFileSync(join(ROOT, 'src/styles/globals.css'), 'utf8')
@@ -40,14 +34,22 @@ const INK = token('ink')
 const BANDS = [token('gold'), token('orange'), token('red'), token('blue')]
 const BOX = 64
 
-/** Centre the glyph in the 64-unit box at the given width. */
+/**
+ * Centre the glyph in the 64-unit box at the given width. The `m` is authored
+ * in the lockup's coordinate space, so the inner translate lifts it to the
+ * origin before it's scaled and placed.
+ */
 function placeGlyph(glyphWidth, offsetY = 0) {
-  const scale = glyphWidth / GLYPH.width
-  const w = GLYPH.width * scale
-  const h = GLYPH.height * scale
+  const scale = glyphWidth / M_GLYPH.width
+  const w = M_GLYPH.width * scale
+  const h = M_GLYPH.height * scale
   const x = (BOX - w) / 2
   const y = (BOX - h) / 2 + offsetY
-  return `<g transform="translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(4)})"><path d="${GLYPH.d}" fill="${INK}"/></g>`
+  const paths = M_GLYPH.paths.map((d) => `<path d="${d}" fill="${INK}"/>`).join('')
+  return (
+    `<g transform="translate(${x.toFixed(2)} ${y.toFixed(2)}) scale(${scale.toFixed(4)}) ` +
+    `translate(${-M_GLYPH.x} ${-M_GLYPH.y})">${paths}</g>`
+  )
 }
 
 /** Swoosh bands arcing across the lower third. */

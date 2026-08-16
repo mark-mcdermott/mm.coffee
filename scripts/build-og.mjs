@@ -16,6 +16,7 @@ import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
 import { readFileSync } from 'node:fs'
 import sharp from 'sharp'
+import { MONOGRAM, NAME, VIEW_BOX } from '../src/lib/logo.ts'
 
 const ROOT = join(dirname(fileURLToPath(import.meta.url)), '..')
 const PUBLIC = join(ROOT, 'public')
@@ -38,24 +39,22 @@ const blue = token('blue')
 const W = 1200
 const H = 630
 
+/** Drawn width of the wordmark. Adding `co` made the name wider, so this is set
+ *  as a span rather than a scale factor — the mark keeps its place on the card
+ *  whatever the letter count. */
+const WORDMARK_SPAN = 940
+
 /**
- * The outlined wordmark, in its own 1041.39 x 145.6 space.
+ * The wordmark, imported rather than restated. This file used to keep its own
+ * copy, which is how the share image went on drawing a full stop for two
+ * releases after `Logo.astro` dropped it — nothing regenerates og.png
+ * automatically, so a stale copy here is invisible until someone looks.
  *
- * No full stop, matching `Logo.astro` — the wordmark reads `mm coffee`, and
- * only the `mark` variant keeps the dot. The share image was carrying one until
- * the palette rework forced a regenerate, because nothing regenerates this file
- * automatically and the wordmark change had gone in without it.
+ * `WORDMARK_TOP` is the y the wordmark's ink starts at in the shared
+ * coordinate space; the inner translate lifts it to the origin.
  */
-const WORDMARK = [
-  'M0,2.8h103c35.6,0,50.8,16.6,50.8,52.2v87.8h-38.4V59.2c0-13.6-4.2-22.8-18.6-22.8h-58.4v106.4H0V2.8ZM58.4,56.2h37.2v86.6h-37.2V56.2Z',
-  'M167.8,2.8h103c35.6,0,50.8,16.6,50.8,52.2v87.8h-38.4V59.2c0-13.6-4.2-22.8-18.6-22.8h-58.4v106.4h-38.4V2.8ZM226.2,56.2h37.2v86.6h-37.2V56.2Z',
-  'M371.2,73c0-42.4,32-70.2,76.4-70.2h18.2v33.4h-11.4c-24.6,0-42.6,12.2-42.6,36.8s18,36.8,42.6,36.8h11.4v33h-18.2c-44.4,0-76.4-27.4-76.4-69.8Z',
-  'M467.8,72.8c0-43.6,30.4-72.8,72.8-72.8s72.8,29.2,72.8,72.8-30.4,72.8-72.8,72.8-72.8-29.2-72.8-72.8ZM572.79,72.8c0-24.8-11.2-40.2-32.2-40.2s-32.2,15.4-32.2,40.2,11.2,40,32.2,40.2,32.2-15.2,32.2-40.2Z',
-  'M623.39,2.8h93v33.6h-93V2.8ZM623.39,56.2h92v33h-53.6v53.6h-38.4V56.2Z',
-  'M730.39,2.8h93v33.6h-93V2.8ZM730.39,56.2h92v33h-53.6v53.6h-38.4V56.2Z',
-  'M837.39,2.8h95v33.6h-95V2.8ZM837.39,56.2h94v33h-55.6v20.6h56.6v33h-95V56.2Z',
-  'M946.39,2.8h95v33.6h-95V2.8ZM946.39,56.2h94v33h-55.6v20.6h56.6v33h-95V56.2Z',
-]
+const WORDMARK = [...MONOGRAM, ...NAME]
+const [, WORDMARK_TOP, WORDMARK_WIDTH] = VIEW_BOX.wordmark.split(' ').map(Number)
 
 /** Ribbon sweeping across the lower right, echoing the hero. */
 const ribbon = [gold, orange, red, blue]
@@ -68,7 +67,7 @@ const ribbon = [gold, orange, red, blue]
 const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" viewBox="0 0 ${W} ${H}">
   <rect width="${W}" height="${H}" fill="${paper}"/>
   <g opacity="0.95">${ribbon}</g>
-  <g transform="translate(80 96) scale(0.72)" fill="${ink}">
+  <g transform="translate(80 96) scale(${(WORDMARK_SPAN / WORDMARK_WIDTH).toFixed(4)}) translate(0 ${-WORDMARK_TOP})" fill="${ink}">
     ${WORDMARK.map((d) => `<path d="${d}"/>`).join('')}
   </g>
   <text x="80" y="300" font-family="Anton, 'Arial Narrow', sans-serif" font-size="86" fill="${ink}" letter-spacing="-1">

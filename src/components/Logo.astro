@@ -1,32 +1,31 @@
 ---
 /**
- * mm.coffee wordmark, set in R41 Stop and shipped as outlined paths.
+ * MM Coffee Co wordmark, set in R41 Stop and shipped as outlined paths.
  * Inlined rather than <img> so it inherits colour via currentColor and costs
  * no extra request. Never swap this for a webfont.
  *
  * Variants:
- *   lockup    the primary mark — the rainbow ribbon arcs in to complete the O
+ *   lockup    the primary mark — ribbon, name and the heart that closes it
  *   wordmark  flat single-colour, for reversed panels and tight spaces where
  *             the ribbon would clash or turn to mush
- *   mark      just `mm.`, for icons
+ *   mark      just `mm`, for icons
  *
- * The ribbon uses palette tokens rather than its authored hexes (which differ
- * by a couple of points) so the logo and the site stay one palette.
+ * All three are crops of the same artwork, so a variant is a `viewBox` and a
+ * subset of shapes — not its own copy of the glyphs. Paths and bounds live in
+ * `@lib/logo`, which the icon and share-image scripts read too.
  */
+import { MONOGRAM, NAME, RIBBON, VIEW_BOX } from '@lib/logo'
+import { SITE } from '@lib/site'
+
 interface Props {
   variant?: 'lockup' | 'wordmark' | 'mark'
   class?: string
   title?: string
 }
 
-const { variant = 'lockup', class: className, title = 'mm.coffee' } = Astro.props
+const { variant = 'lockup', class: className, title = SITE.company } = Astro.props
 
-const VIEW_BOX = {
-  lockup: '0 0 1041.39 288.81',
-  wordmark: '0 0 1041.39 145.6',
-  // Glyph advances in the wordmark: `mm.` ends at x=371.2.
-  mark: '0 0 371.2 145.6',
-} as const
+const letterforms = variant === 'mark' ? MONOGRAM : [...MONOGRAM, ...NAME]
 ---
 
 <svg
@@ -40,63 +39,12 @@ const VIEW_BOX = {
   <title>{title}</title>
 
   {
-    variant === 'lockup' ? (
-      <>
-        <rect x="58.4" y="199.41" width="37.2" height="86.6" />
-        <path d="M103,146.01H0v140h38.4v-106.4h58.4c14.4,0,18.6,9.2,18.6,22.8v83.6h38.4v-87.8c0-35.6-15.2-52.2-50.8-52.2h0Z" />
-        <rect x="226.2" y="199.41" width="37.2" height="86.6" />
-        <path d="M270.8,146.01h-103v140h38.4v-106.4h58.4c14.4,0,18.6,9.2,18.6,22.8v83.6h38.4v-87.8c0-35.6-15.2-52.2-50.8-52.2h0Z" />
-        <path d="M371.2,216.21c0,42.4,32,69.8,76.4,69.8h18.2v-33h-11.4c-24.6,0-42.6-12.2-42.6-36.8s18-36.8,42.6-36.8h11.4v-33.4h-18.2c-44.4,0-76.4,27.8-76.4,70.2Z" />
-        <polygon points="623.39 146.16 623.34 146.16 623.34 286.16 661.74 286.16 661.74 286.01 661.79 286.01 661.79 232.41 715.39 232.41 715.39 199.41 661.74 199.41 661.74 179.61 716.39 179.61 716.39 146.01 623.39 146.01 623.39 146.16" />
-        <polygon points="730.39 146.03 730.37 146.03 730.37 286.03 768.77 286.03 768.77 286.01 768.79 286.01 768.79 232.41 822.39 232.41 822.39 199.41 768.77 199.41 768.77 179.61 823.39 179.61 823.39 146.01 730.39 146.01 730.39 146.03" />
-        <polygon points="837.39 146.07 837.38 146.07 837.38 286.06 875.78 286.06 875.78 286.01 932.39 286.01 932.39 253.01 875.79 253.01 875.79 232.41 931.39 232.41 931.39 199.41 875.78 199.41 875.78 179.61 932.39 179.61 932.39 146.01 837.39 146.01 837.39 146.07" />
-        <polygon points="1041.39 179.61 1041.39 146.01 946.39 146.01 946.39 146.02 946.38 146.02 946.38 286.01 984.78 286.01 984.78 286.01 1041.39 286.01 1041.39 253.01 984.79 253.01 984.79 232.41 1040.39 232.41 1040.39 199.41 984.78 199.41 984.78 179.61 1041.39 179.61" />
-        {/* The O is now the complete glyph rather than the open bowl the ribbon
-            used to close, so the mark still reads with the ribbon lifted clear
-            of it. Authored in wordmark space; 143.21 drops it into the lockup. */}
-        <g transform="translate(0,143.21)">
-          <path d="M467.8,72.8c0-43.6,30.4-72.8,72.8-72.8s72.8,29.2,72.8,72.8-30.4,72.8-72.8,72.8-72.8-29.2-72.8-72.8ZM572.79,72.8c0-24.8-11.2-40.2-32.2-40.2s-32.2,15.4-32.2,40.2,11.2,40,32.2,40.2,32.2-15.2,32.2-40.2Z" />
-        </g>
-        {/* Scaled about the ribbon's own bottom-right, then lifted, so it keeps
-            its relationship to the O while sitting clear above it rather than
-            arcing in to close the bowl. */}
-        <g
-          data-ribbon
-          transform="translate(0,-32) translate(592,172) scale(0.72) translate(-592,-172)"
-        >
-          <path
-            d="M432.6,0c.11.55.67.87,1.6.88l9.05.04c6.02.02,11.95,1.39,17.97-.22l47.05.51c19.67,1.27,38.97,5.35,54.36,17.6l7.76,6.18c4.64,3.7,8.09,8.18,11.64,12.97,11.71,15.83,18.01,34.71,19.84,54.39.09,1,.28,1.52.84,1.99v72.48l-31.08-.02-.13-40.89c-.09-17.53-4.3-33.77-13.21-48.78-7.44-12.54-17.93-22-30.93-28.86-23.95-12.63-49.14-13.16-75.76-11.97-37.03,1.65-86.28,1.95-99.57-36.27h80.57V0h0Z"
-            fill="var(--color-blue)"
-          />
-          <path
-            d="M509.99,166.8l-28.07,1.57c-5.1-41.52-48.55-36.39-76.33-37.55l-28.63.71c-17.79.44-34.85.94-52.51-1.33-22.2-2.86-42.98-10.02-61.15-22.59V42.22c25.84,39.96,69.11,55.64,116.1,54.74l49.69-.95c26.44-.51,54.74,8.13,68.43,31.27.98,1.66,1.58,3.01,2.61,4.55,6.93,10.42,9.48,22.98,9.84,34.97h.02Z"
-            fill="var(--color-gold)"
-          />
-          <path
-            d="M333.92,0c.06,4.08,2.93,7.41,4.7,11.22,12.12,26.14,45.25,38.77,73.57,38.79l32.95.02c10.7,0,21.1-.82,31.6.86,10.08.32,19.31,3.07,28.73,6.8,13.08,5.18,23.9,12.73,32.75,24.32s14.95,27.35,16.93,42.5l.64,4.92c1.61,12.31,1.28,24.5,1.36,36.52l-31.3-.07c-.83-33.21-14.62-62.67-46.35-76.29-9.46-4.06-19.32-6.76-29.82-6.78l-64.46-.11c-32.53-.06-67.01-8.66-89.93-32.04-13.49-13.77-24.92-32.19-27.89-50.67h66.52,0Z"
-            fill="var(--color-red)"
-          />
-        </g>
-      </>
-    ) : (
-      <>
-        <path d="M0,2.8h103c35.6,0,50.8,16.6,50.8,52.2v87.8h-38.4V59.2c0-13.6-4.2-22.8-18.6-22.8h-58.4v106.4H0V2.8ZM58.4,56.2h37.2v86.6h-37.2V56.2Z" />
-        <path d="M167.8,2.8h103c35.6,0,50.8,16.6,50.8,52.2v87.8h-38.4V59.2c0-13.6-4.2-22.8-18.6-22.8h-58.4v106.4h-38.4V2.8ZM226.2,56.2h37.2v86.6h-37.2V56.2Z" />
-        {/* The wordmark drops the full stop — `mm coffee` rather than the domain
-            reading. The icon keeps it: at favicon size the dot is a distinguishing
-            feature, and losing it would mean regenerating the committed PNGs. */}
-        {variant === 'mark' && <path d="M335.6,109.8h35.6v33h-35.6v-33Z" />}
-        {variant === 'wordmark' && (
-          <>
-            <path d="M371.2,73c0-42.4,32-70.2,76.4-70.2h18.2v33.4h-11.4c-24.6,0-42.6,12.2-42.6,36.8s18,36.8,42.6,36.8h11.4v33h-18.2c-44.4,0-76.4-27.4-76.4-69.8Z" />
-            <path d="M467.8,72.8c0-43.6,30.4-72.8,72.8-72.8s72.8,29.2,72.8,72.8-30.4,72.8-72.8,72.8-72.8-29.2-72.8-72.8ZM572.79,72.8c0-24.8-11.2-40.2-32.2-40.2s-32.2,15.4-32.2,40.2,11.2,40,32.2,40.2,32.2-15.2,32.2-40.2Z" />
-            <path d="M623.39,2.8h93v33.6h-93V2.8ZM623.39,56.2h92v33h-53.6v53.6h-38.4V56.2Z" />
-            <path d="M730.39,2.8h93v33.6h-93V2.8ZM730.39,56.2h92v33h-53.6v53.6h-38.4V56.2Z" />
-            <path d="M837.39,2.8h95v33.6h-95V2.8ZM837.39,56.2h94v33h-55.6v20.6h56.6v33h-95V56.2Z" />
-            <path d="M946.39,2.8h95v33.6h-95V2.8ZM946.39,56.2h94v33h-55.6v20.6h56.6v33h-95V56.2Z" />
-          </>
-        )}
-      </>
-    )
+    /* Ribbon first so the letterforms paint over it. Its authored hexes sat a
+       few points off every token, so it takes its colour from the palette
+       instead — the logo and the site stay one palette by construction. */
+    variant === 'lockup' &&
+      RIBBON.map(({ token, d }) => <path d={d} fill={`var(--color-${token})`} />)
   }
+
+  {letterforms.map((d) => <path d={d} />)}
 </svg>
