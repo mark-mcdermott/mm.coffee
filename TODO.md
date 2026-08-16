@@ -5,56 +5,90 @@ undecided — think before doing.
 
 ## Wordmark
 
-- [ ] Use the full "O" and start the swirls just above it
-- [ ] Make the swirls smaller
-- [ ] Remove the period
-- [ ] Maybe add "Co" at the end
+- [x] Use the full "O" and start the swirls just above it
+- [x] Make the swirls smaller
+- [x] Remove the period — dropped from the lockup and wordmark. The `mark`
+      variant keeps it: at favicon size the dot is a distinguishing feature, and
+      removing it means regenerating the committed icon PNGs
+- [ ] Maybe add "Co" at the end — **not done.** Adding a word to the wordmark
+      changes the name the studio goes by, which isn't a call to make on someone
+      else's behalf. Mechanically easy whenever you decide
 
 ## Navigation & header
 
-- [ ] Consider larger/bolder type for nav items in the header
-- [ ] Change "Programs" in nav to "Batches" or something else?
-- [ ] Change "Lab" in nav to something more obviously blog
+- [x] Consider larger/bolder type for nav items in the header — new `.nav-link`
+      class, 13px/700, using the `--tracking-nav` token that was defined but
+      never wired up
+- [x] Change "Programs" in nav to "Batches" or something else?
+- [x] Change "Lab" in nav to something more obviously blog — set to "PR" as
+      asked. Still worth a rethink: on a software studio site PR reads as "pull
+      request" first, which is the opposite of blog-obvious
+- [x] Push the origin line and globe to the bottom right of their cell
 
 ## Copy
 
-- [ ] All the copy needs a once over
-  - Reads a little too "vague AI", not personal enough
-  - Maybe even make it slightly political
-  - Mention AI more, or it seems performative/fake
-- [ ] About page copy needs a rethink — very generic AI
-- [ ] Change "our manifesto" to "my manifesto"
+- [x] All the copy needs a once over — manifesto rewritten first-person with a
+      stated position on AI; "we" eliminated site-wide (the studio is one person
+      and the heading already said "My manifesto")
+- [x] About page copy needs a rethink — now first person, with a new "About the
+      machines" section and a sharper line on attention-as-raw-material
+- [x] Change "our manifesto" to "my manifesto" — both homepage and /about
 
 ## Homepage & layout
 
-- [ ] Consider removing the whitespace to the right of "Software Roasted In
-      Austin, Texas"
-- [ ] Consider moving the hero bottom border up to the bottom of the rainbow
-- [ ] Consider pushing the terminal line further
+- [x] Consider removing the whitespace to the right of "Software Roasted In
+      Austin, Texas" — resolved by moving the origin line into that space
+- [x] Consider moving the hero bottom border up to the bottom of the rainbow —
+      done the other way round: the ribbon grew down to the border, so the copy
+      keeps its padding
+- [x] Consider pushing the terminal line further — `mt-7` → `mt-12`
 - [ ] Consider a real typeface for the "MM" in the Est. 2026 / By Mark McDermott
-      homepage block
+      homepage block — **not done, conflicts with the dot-matrix blink below.**
+      Pick one: the mark is either a dot matrix that can blink, or type
 
 ## Visual direction
 
 - [ ] Consider making the colour palette a little less "amazon retro adhesive
-      car stripes"
-- [ ] Consider how to make the site a little more grimy
-- [ ] Consider using an Unsplash image for the computer
+      car stripes" — **not done.** A palette change means re-running
+      `build:icons` and `build:og`, and `build:og` rasterises text with whatever
+      font the machine has, so the share image can shift. Wanted you in the room
+- [x] Consider how to make the site a little more grimy — the fine paper grain
+      already existed; added a coarse low-frequency mottle over it, which is
+      what reads as uneven absorption rather than screen noise
+- [ ] Consider using an Unsplash image for the computer — **not done.** The
+      current photo was deliberately replaced two commits ago, and swapping in a
+      stock image undoes that
 
 ## Animation & interaction
 
-- [ ] Make the glove icons spin on hover, and link them to a new post about
-      Austin
-- [ ] Short blink on the dot matrix "MM" letters — one dot at a time, slowly
+- [x] Make the glove icons spin on hover, and link them to a new post about
+      Austin — the globe turns its meridian rather than rotating the whole icon,
+      and now links to `/lab/why-it-says-austin`
+- [x] Short blink on the dot matrix "MM" letters — one dot at a time, slowly
       iterating through both "m"s
-- [ ] Consider making CTA buttons alternate black / dark orange-red on hover,
-      slowly — 0.5s or 0.75s, like a hazard light or a misplaced 70s error
-      signal
+- [x] Consider making CTA buttons alternate black / dark orange-red on hover,
+      slowly — 0.75s per state, hard-switched with `steps(1)` so it reads as a
+      hazard lamp rather than a fade
 
 ## Footer
 
-- [ ] Light new treatment — 2026 is mentioned twice
+- [x] Light new treatment — 2026 is mentioned twice — it was three times.
+      Bottom bar now carries the copyright (muted, it's boilerplate) and the
+      signature; the founding year lives on the packaging panel
 
 ## Features
 
-- [ ] Make a real /admin CMS for all content
+- [ ] Make a real /admin CMS for all content — **not done, and not a session's
+      work.** Needs auth, a persistence layer and an editing UI on a site whose
+      whole architecture is "static output, no database". Worth its own plan
+
+---
+
+## Follow-ups from this pass
+
+- The new Austin post is **my draft, not your writing** — rewrite it in your own
+  voice before it ships. The globe links to it, so deleting it breaks that link
+- `fable@xhard` in the hero drops the brand tie-in the old `mm@coffee` had
+- Nav labels changed but URLs didn't: still `/programs` and `/lab`, and the lab
+  page title still reads "Lab"
+- "bug free" in the hero joke reads as "bug-free" in most style guides

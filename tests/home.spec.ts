@@ -12,7 +12,7 @@ test('has one h1, and it is the headline', async ({ page }) => {
 })
 
 test('renders every section', async ({ page }) => {
-  for (const heading of ['Selected programs', 'Brewing now', 'Our manifesto', 'System status']) {
+  for (const heading of ['Selected programs', 'Brewing now', 'My manifesto', 'System status']) {
     await expect(
       page.getByRole('heading', { name: heading, exact: true })
     ).toBeVisible()

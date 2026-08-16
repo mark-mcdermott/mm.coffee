@@ -83,9 +83,11 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
       <a href="/" aria-label="mm.coffee home">
         <Logo class="w-56 text-ink" />
       </a>
-      <div class="flex flex-col gap-2">
-        <p class="label max-w-[11ch]">Software roasted in Austin, Texas</p>
-        <Globe class="size-5" />
+      <div class="ml-auto flex items-end gap-3 self-end">
+        <p class="label">Roasted daily<br />In Austin, Texas</p>
+        <a href="/lab/why-it-says-austin" aria-label="Why it still says Austin">
+          <Globe class="size-5" spin />
+        </a>
       </div>
     </div>
 
@@ -99,7 +101,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
                   href={href}
                   aria-current={isActive(href) ? 'page' : undefined}
                   class:list={[
-                    'label transition-colors hover:text-red-deep',
+                    'nav-link transition-colors hover:text-red-deep',
                     isActive(href) ? 'text-red-deep' : 'text-ink',
                   ]}
                 >

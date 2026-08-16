@@ -8,7 +8,7 @@ import { MANIFESTO } from '@lib/content'
 
 <Layout
   title="About"
-  description="A one-person software studio in Austin, Texas. What we make and how we work."
+  description="A one-person software studio in Austin, Texas. What I make, how I work, and where AI fits."
 >
   <section class="border-b px-6 py-12 lg:px-8 lg:py-16">
     <p class="label text-red-deep">About</p>
@@ -28,9 +28,8 @@ import { MANIFESTO } from '@lib/content'
       <div class="prose">
         <p>
           Most software is built to be sold, then maintained until it can be sold
-          again. This studio exists to make the other kind: small tools that do
-          one thing, that you can understand, and that don't need a roadmap to
-          justify themselves.
+          again. I make the other kind: small tools that do one thing, that you
+          can understand, and that don't need a roadmap to justify themselves.
         </p>
 
         <h2>How the work happens</h2>
@@ -48,14 +47,38 @@ import { MANIFESTO } from '@lib/content'
           arrives.
         </p>
 
+        <h2>About the machines</h2>
+
+        <p>
+          I use AI constantly, and I'd rather say so than let you assume otherwise.
+          It writes tests, sketches the boring three-quarters of a component, and
+          argues with me about naming. It's the best pair I've ever had at two in
+          the morning.
+        </p>
+
+        <p>
+          What it doesn't do is decide. Every line here has been read by me, and
+          anything I couldn't explain to you got deleted rather than shipped. The
+          interesting question was never whether a machine can write the code —
+          it's who stays accountable for it afterwards. That's still a person.
+          It's this one.
+        </p>
+
         <h2>What that rules out</h2>
 
         <p>
-          No accounts where a file would do. No telemetry that serves the studio
-          rather than the person using the thing.{' '}
+          No accounts where a file would do. No telemetry that serves me rather
+          than the person using the thing.{' '}
           <a href="https://mockingboard.design">Mockingboard</a> has no backend at
           all — your images never leave the browser, because there was no good
           reason for them to.
+        </p>
+
+        <p>
+          An industry that treats attention as a raw material has made a lot of
+          software that's very good at being difficult to leave. I'm not
+          interested in building that, and I'd rather lose the work than pretend
+          engagement and usefulness are the same number.
         </p>
 
         <p>
@@ -66,9 +89,9 @@ import { MANIFESTO } from '@lib/content'
         <h2>The name</h2>
 
         <p>
-          Good software is like good coffee: small batch, made by someone paying
-          attention, and better when it hasn't been sitting around. The packaging
-          conceit is a joke, but the standard isn't.
+          Small batch, made by someone paying attention, better when it hasn't
+          been sitting around: the standards a roaster is held to are not a bad
+          set to borrow. The packaging conceit is a joke. The standard isn't.
         </p>
       </div>
     </div>
@@ -103,7 +126,7 @@ import { MANIFESTO } from '@lib/content'
 
       <a
         href="/contact"
-        class="label mt-10 inline-flex items-center gap-2 bg-ink px-5 py-3 text-paper transition-colors hover:bg-red-deep"
+        class="label mt-10 cta inline-flex items-center gap-2 px-5 py-3"
       >
         Start a conversation
         <span aria-hidden="true">&rarr;</span>
@@ -113,7 +136,7 @@ import { MANIFESTO } from '@lib/content'
 
   <section class="grid border-t lg:grid-cols-[1fr_auto]">
     <div class="px-6 py-10 lg:px-8">
-      <h2 class="label">Our manifesto</h2>
+      <h2 class="label">My manifesto</h2>
       <div class="mt-5 space-y-4">
         {MANIFESTO.map((line) => <p class="label max-w-[46ch] text-blue">{line}</p>)}
       </div>

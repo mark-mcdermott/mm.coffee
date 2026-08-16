@@ -1,5 +1,5 @@
 ---
-import Globe from '@components/Globe.astro'
+import RoastMeter from '@components/art/RoastMeter.astro'
 import Barcode from '@components/art/Barcode.astro'
 import { SITE, BUILD } from '@lib/site'
 import { STATUS_TARGETS, STATUS_COLOURS } from '@lib/status'
@@ -57,7 +57,7 @@ import { STATUS_TARGETS, STATUS_COLOURS } from '@lib/status'
           Small-batch software since {SITE.established}
         </p>
 
-        <Globe class="size-5 shrink-0" />
+        <RoastMeter class="h-[18px] w-[72px] shrink-0 text-ink" />
       </div>
 
       <div class="border-t mt-6 pt-4">
@@ -109,11 +109,14 @@ import { STATUS_TARGETS, STATUS_COLOURS } from '@lib/status'
   </div>
 
   <div class="border-t flex flex-wrap items-center justify-between gap-4 px-8 py-4">
-    <p class="label">
+    {/* The founding year is already on the packaging panel above, and the
+        manifesto block sets it in full — so this bar carries the legal line and
+        the signature, nothing more. */}
+    <p class="label opacity-45">
       &copy; {new Date().getFullYear()} {SITE.company}
     </p>
     <p class="label">
-      Est. {SITE.established} by{' '}
+      Built by{' '}
       <a href="https://markmcdermott.io" class="underline hover:text-red-deep">
         {SITE.author}
       </a>
