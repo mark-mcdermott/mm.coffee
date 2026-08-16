@@ -1,0 +1,101 @@
+---
+import AdminLayout from '@layouts/AdminLayout.astro'
+import { COLLECTIONS, type CollectionKey } from '@lib/admin/collections'
+import { access } from '@lib/admin/guard'
+
+export const prerender = false
+
+const SIGN_IN_ERRORS: Record<string, string> = {
+  state: 'That sign-in link had gone stale. Try again.',
+  denied: 'GitHub sign-in was cancelled.',
+  exchange: "GitHub wouldn't complete the sign-in. Try again.",
+  forbidden: 'That GitHub account is not the one this admin is set to.',
+  unconfigured: 'The admin has no GitHub credentials configured yet.',
+}
+
+const gate = access(Astro.cookies)
+const error = SIGN_IN_ERRORS[Astro.url.searchParams.get('error') ?? '']
+
+// Only counted once we know who's asking — an entry count is still information.
+const counts = gate.ok
+  ? await Promise.all(
+      (Object.keys(COLLECTIONS) as CollectionKey[]).map(async (key) => ({
+        key,
+        total: (await gate.store.slugs(key)).length,
+      }))
+    )
+  : []
+---
+
+<AdminLayout
+  title={gate.ok ? 'Content' : 'Sign in'}
+  signedInAs={gate.ok ? gate.login : undefined}
+  local={gate.ok && gate.local}
+>
+  {
+    error && (
+      <p class="label border-b bg-red-deep px-6 py-4 text-paper lg:px-8" role="alert">
+        {error}
+      </p>
+    )
+  }
+
+  {
+    !gate.ok && gate.reason === 'unconfigured' ? (
+      <section class="px-6 py-12 lg:px-8 lg:py-16">
+        <h1 class="display text-[clamp(2.5rem,7vw,4rem)]">Not wired up</h1>
+        <div class="prose mt-6">
+          <p>
+            The admin needs a GitHub OAuth app before it can sign anyone in. Set
+            <code>GITHUB_CLIENT_ID</code>, <code>GITHUB_CLIENT_SECRET</code>,
+            <code>SESSION_SECRET</code>, <code>ADMIN_GITHUB_LOGIN</code> and
+            <code>GITHUB_REPO</code>, then redeploy.
+          </p>
+          <p>
+            Locally you don't need any of that — <code>pnpm dev</code> edits the
+            working tree directly.
+          </p>
+        </div>
+      </section>
+    ) : !gate.ok ? (
+      <section class="px-6 py-12 lg:px-8 lg:py-16">
+        <h1 class="display text-[clamp(2.5rem,7vw,4rem)]">Sign in</h1>
+        <p class="label mt-6 max-w-[46ch] text-blue">
+          The admin authenticates against the repo. Only the account that owns it
+          gets in, and edits are committed as that account.
+        </p>
+        <a href="/api/admin/login" class="label cta mt-10 inline-flex items-center gap-2 px-6 py-4">
+          Continue with GitHub
+          <span aria-hidden="true">&rarr;</span>
+        </a>
+      </section>
+    ) : (
+      <section>
+        <div class="border-b px-6 py-10 lg:px-8 lg:py-12">
+          <p class="label text-red-deep">Admin</p>
+          <h1 class="display mt-3 text-[clamp(2.5rem,7vw,4rem)]">Content</h1>
+        </div>
+
+        <ul class="grid lg:grid-cols-2">
+          {counts.map(({ key, total }, i) => (
+            <li class:list={['border-b', i % 2 === 0 && 'lg:border-r']}>
+              <a
+                href={`/admin/${key}`}
+                class="group block px-6 py-8 transition-colors hover:bg-ink hover:text-paper lg:px-8 lg:py-10"
+              >
+                <p class="label opacity-60">{COLLECTIONS[key].blurb}</p>
+                <h2 class="display mt-2 text-[clamp(1.75rem,4vw,2.5rem)]">
+                  {COLLECTIONS[key].label}
+                </h2>
+                <p class="label mt-3">
+                  {total} {total === 1 ? 'entry' : 'entries'}
+                  <span aria-hidden="true" class="ml-2">&rarr;</span>
+                </p>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+</AdminLayout>

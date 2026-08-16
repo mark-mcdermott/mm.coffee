@@ -11,9 +11,9 @@ export default defineConfig({
 
   integrations: [
     sitemap({
-      // The styleguide is a working tool, not a page anyone should find in
-      // search results.
-      filter: (page) => !page.includes('/styleguide'),
+      // The styleguide is a working tool and the admin is behind a login —
+      // neither is a page anyone should find in search results.
+      filter: (page) => !page.includes('/styleguide') && !page.includes('/admin'),
     }),
   ],
 

@@ -4,4 +4,8 @@ Allow: /
 # A working tool, not a page worth indexing.
 Disallow: /styleguide
 
+# Behind a login, and nothing a crawler should be pulling on.
+Disallow: /admin
+Disallow: /api/admin
+
 Sitemap: https://mm.coffee/sitemap-index.xml

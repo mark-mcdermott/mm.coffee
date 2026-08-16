@@ -1,0 +1,80 @@
+---
+import AdminLayout from '@layouts/AdminLayout.astro'
+import { COLLECTIONS, isCollectionKey } from '@lib/admin/collections'
+import { listEntries } from '@lib/admin/entries'
+import { access } from '@lib/admin/guard'
+
+export const prerender = false
+
+const { collection } = Astro.params
+
+if (!collection || !isCollectionKey(collection)) {
+  return new Response(null, { status: 404 })
+}
+
+const gate = access(Astro.cookies)
+if (!gate.ok) return Astro.redirect('/admin', 303)
+
+const meta = COLLECTIONS[collection]
+const entries = await listEntries(gate.store, collection)
+const deleted = Astro.url.searchParams.get('deleted')
+---
+
+<AdminLayout
+  title={meta.label}
+  signedInAs={gate.login}
+  local={gate.local}
+  breadcrumb={[
+    { label: 'Content', href: '/admin' },
+    { label: meta.label, href: `/admin/${collection}` },
+  ]}
+>
+  {
+    deleted && (
+      <p class="label border-b bg-ink px-6 py-4 text-paper lg:px-8" role="status">
+        Deleted {deleted}
+      </p>
+    )
+  }
+
+  <div class="flex flex-wrap items-end justify-between gap-6 border-b px-6 py-10 lg:px-8 lg:py-12">
+    <div>
+      <p class="label text-red-deep">{meta.blurb}</p>
+      <h1 class="display mt-3 text-[clamp(2.5rem,7vw,4rem)]">{meta.label}</h1>
+    </div>
+
+    <a
+      href={`/admin/${collection}/new`}
+      class="label cta inline-flex items-center gap-2 px-5 py-3"
+    >
+      New entry
+      <span aria-hidden="true">+</span>
+    </a>
+  </div>
+
+  {
+    entries.length === 0 ? (
+      <p class="label px-6 py-12 opacity-60 lg:px-8">Nothing here yet.</p>
+    ) : (
+      <ul>
+        {entries.map((entry) => (
+          <li class="border-b">
+            <a
+              href={`/admin/${collection}/${entry.slug}`}
+              class="flex flex-wrap items-baseline justify-between gap-x-6 gap-y-2 px-6 py-6 transition-colors hover:bg-ink hover:text-paper lg:px-8"
+            >
+              <span class="flex flex-wrap items-baseline gap-3">
+                <span class="label font-bold">{entry.title}</span>
+                {entry.draft && <span class="label text-orange-deep">Draft</span>}
+              </span>
+              <span class="label opacity-60">
+                {entry.date ?? entry.slug}
+                <span aria-hidden="true" class="ml-3">&rarr;</span>
+              </span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    )
+  }
+</AdminLayout>

@@ -1,0 +1,257 @@
+---
+/**
+ * The editor, for both new and existing entries.
+ *
+ * It handles its own POST rather than posting to an API route, so a rejected
+ * save can re-render with the submitted values still in the boxes. Bouncing
+ * through `/api` would mean either losing what was typed or smuggling it
+ * through the query string.
+ */
+import AdminLayout from '@layouts/AdminLayout.astro'
+import FieldControl from '@components/admin/Field.astro'
+import {
+  COLLECTIONS,
+  isCollectionKey,
+  isSlug,
+  slugify,
+  type CollectionKey,
+} from '@lib/admin/collections'
+import { displayValue, fieldsFor, valuesFrom } from '@lib/admin/fields'
+import { access, sameOrigin } from '@lib/admin/guard'
+import { parseDocument, serializeDocument } from '@lib/admin/markdown'
+import { ConflictError } from '@lib/admin/storage'
+
+export const prerender = false
+
+const { collection, slug: routeSlug } = Astro.params
+
+if (!collection || !isCollectionKey(collection) || !routeSlug) {
+  return new Response(null, { status: 404 })
+}
+
+const gate = access(Astro.cookies)
+if (!gate.ok) return Astro.redirect('/admin', 303)
+
+const key: CollectionKey = collection
+const meta = COLLECTIONS[key]
+const fields = fieldsFor(meta.schema)
+const isNew = routeSlug === 'new'
+
+if (!isNew && !isSlug(routeSlug)) return new Response(null, { status: 404 })
+
+const listUrl = `/admin/${key}`
+
+let values: Record<string, string> = {}
+let body = ''
+let sha: string | undefined
+let slug = isNew ? '' : routeSlug
+let errors: Record<string, string> = {}
+let notice: string | undefined
+
+const readInto = async (): Promise<boolean> => {
+  const file = await gate.store.read(key, routeSlug)
+  if (!file) return false
+
+  const doc = parseDocument(file.text)
+  sha = file.sha
+  body = doc.body
+  values = Object.fromEntries(
+    fields.map((field) => [field.name, displayValue(field, doc.data[field.name])])
+  )
+  return true
+}
+
+if (Astro.request.method === 'POST') {
+  if (!sameOrigin(Astro.request, Astro.url)) {
+    return new Response('Bad origin', { status: 403 })
+  }
+
+  const form = await Astro.request.formData()
+  const intent = form.get('intent')
+
+  if (intent === 'delete') {
+    if (isNew) return Astro.redirect(listUrl, 303)
+    await gate.store.remove({
+      collection: key,
+      slug: routeSlug,
+      sha: typeof form.get('sha') === 'string' ? String(form.get('sha')) : undefined,
+      message: `chore(content): remove ${key}/${routeSlug}`,
+    })
+    return Astro.redirect(`${listUrl}?deleted=${encodeURIComponent(routeSlug)}`, 303)
+  }
+
+  body = typeof form.get('body') === 'string' ? String(form.get('body')) : ''
+  sha = typeof form.get('sha') === 'string' && form.get('sha') !== '' ? String(form.get('sha')) : undefined
+
+  const parsed = valuesFrom(fields, form)
+  values = Object.fromEntries(
+    fields.map((field) => [field.name, displayValue(field, form.get(field.name) ?? '')])
+  )
+  // Checkboxes have no submitted value when unchecked, so they're read from the
+  // parsed side where that absence has already become `false`.
+  for (const field of fields) {
+    if (field.kind === 'boolean') values[field.name] = String(parsed[field.name] === true)
+  }
+
+  const requested = String(form.get('slug') ?? '').trim()
+  slug = isNew ? (requested === '' ? slugify(String(form.get('title') ?? '')) : slugify(requested)) : routeSlug
+
+  // The same schema the build validates against — a form that passes here
+  // cannot produce a file that fails `astro check`.
+  const result = meta.schema.safeParse(parsed)
+
+  if (!result.success) {
+    errors = Object.fromEntries(
+      result.error.issues.map((issue) => [String(issue.path[0] ?? ''), issue.message])
+    )
+  }
+
+  if (isNew && !isSlug(slug)) {
+    errors.slug = slug === '' ? 'Needs a slug.' : `"${slug}" is not a usable slug.`
+  }
+
+  if (isNew && isSlug(slug) && (await gate.store.read(key, slug))) {
+    errors.slug = `${slug} already exists.`
+  }
+
+  if (Object.keys(errors).length === 0 && result.success) {
+    const text = serializeDocument({ data: result.data as Record<string, unknown>, body })
+
+    try {
+      await gate.store.write({
+        collection: key,
+        slug,
+        text,
+        sha,
+        message: `${isNew ? 'feat' : 'chore'}(content): ${isNew ? 'add' : 'update'} ${key}/${slug}`,
+      })
+      return Astro.redirect(`/admin/${key}/${slug}?saved=1`, 303)
+    } catch (cause) {
+      if (cause instanceof ConflictError) {
+        notice = cause.message
+      } else {
+        console.error('Admin save failed:', cause)
+        notice = "That didn't save. The error is in the function logs."
+      }
+    }
+  }
+} else if (isNew) {
+  values = Object.fromEntries(fields.map((field) => [field.name, '']))
+} else if (!(await readInto())) {
+  return new Response(null, { status: 404 })
+}
+
+const saved = Astro.url.searchParams.get('saved') === '1'
+const title = isNew ? 'New entry' : (values.title || routeSlug)
+---
+
+<AdminLayout
+  title={title}
+  signedInAs={gate.login}
+  local={gate.local}
+  breadcrumb={[
+    { label: 'Content', href: '/admin' },
+    { label: meta.label, href: listUrl },
+    { label: title, href: Astro.url.pathname },
+  ]}
+>
+  {
+    saved && (
+      <p class="label border-b bg-signal px-6 py-4 text-paper lg:px-8" role="status">
+        Saved{gate.local ? ' to the working tree' : ' and committed'}
+      </p>
+    )
+  }
+
+  {
+    notice && (
+      <p class="label border-b bg-red-deep px-6 py-4 text-paper lg:px-8" role="alert">
+        {notice}
+      </p>
+    )
+  }
+
+  {
+    Object.keys(errors).length > 0 && (
+      <p class="label border-b bg-red-deep px-6 py-4 text-paper lg:px-8" role="alert">
+        Nothing was saved — {Object.keys(errors).length}{' '}
+        {Object.keys(errors).length === 1 ? 'field needs' : 'fields need'} another look.
+      </p>
+    )
+  }
+
+  <form method="POST" class="pb-16">
+    <input type="hidden" name="intent" value="save" />
+    {sha && <input type="hidden" name="sha" value={sha} />}
+
+    <div class="border-b px-6 py-8 lg:px-8 lg:py-10">
+      <p class="label text-red-deep">{meta.label}</p>
+      <h1 class="display mt-2 text-[clamp(2rem,5vw,3rem)]">{title}</h1>
+    </div>
+
+    {
+      isNew && (
+        <div class="border-b px-6 py-5 lg:px-8">
+          <label for="field-slug" class="label flex flex-wrap items-baseline gap-2">
+            slug
+            <span class="opacity-40">from the title if blank</span>
+          </label>
+          <div class="mt-3">
+            <input
+              id="field-slug"
+              name="slug"
+              type="text"
+              value={slug}
+              class="input"
+              aria-invalid={errors.slug ? 'true' : undefined}
+              aria-describedby={errors.slug ? 'field-slug-error' : undefined}
+            />
+          </div>
+          {errors.slug && (
+            <p id="field-slug-error" class="label mt-2 text-red-deep">
+              {errors.slug}
+            </p>
+          )}
+        </div>
+      )
+    }
+
+    {
+      fields.map((field) => (
+        <FieldControl field={field} value={values[field.name] ?? ''} error={errors[field.name]} />
+      ))
+    }
+
+    <div class="border-b px-6 py-5 lg:px-8">
+      <label for="field-body" class="label">body — markdown</label>
+      <div class="mt-3">
+        <textarea id="field-body" name="body" rows="18" class="input">{body}</textarea>
+      </div>
+    </div>
+
+    <div class="flex flex-wrap items-center gap-4 px-6 py-8 lg:px-8">
+      <button type="submit" class="label cta inline-flex items-center gap-2 px-6 py-4">
+        {isNew ? 'Create entry' : 'Save changes'}
+        <span aria-hidden="true">&rarr;</span>
+      </button>
+
+      <a href={listUrl} class="label underline hover:text-red-deep">Cancel</a>
+    </div>
+  </form>
+
+  {
+    !isNew && (
+      <form
+        method="POST"
+        class="border-t px-6 py-8 lg:px-8"
+        onsubmit="return confirm('Delete this entry?')"
+      >
+        <input type="hidden" name="intent" value="delete" />
+        {sha && <input type="hidden" name="sha" value={sha} />}
+        <button type="submit" class="label text-red-deep underline hover:text-ink">
+          Delete this entry
+        </button>
+      </form>
+    )
+  }
+</AdminLayout>
