@@ -98,6 +98,37 @@ for (const name of DECORATIVE) {
   console.log(`      ${name.padEnd(12)} ${hex}  ${contrast(hex, paper).toFixed(2)}:1`)
 }
 
+/**
+ * Two places name the paper colour outside the stylesheet, because neither can
+ * read a CSS variable: the `theme-color` meta tag and the web manifest. They
+ * are the only hardcoded colours left in the project, so they're asserted here
+ * rather than left to be remembered during a palette change.
+ */
+const PAPER_COPIES = [
+  ['src/layouts/Layout.astro', /<meta name="theme-color" content="(#[0-9a-fA-F]{6})"/],
+  ['public/site.webmanifest', /"background_color":\s*"(#[0-9a-fA-F]{6})"/],
+  ['public/site.webmanifest', /"theme_color":\s*"(#[0-9a-fA-F]{6})"/],
+]
+
+console.log('\npaper is also named outside globals.css:')
+for (const [file, pattern] of PAPER_COPIES) {
+  const source = readFileSync(new URL(`../${file}`, import.meta.url), 'utf8')
+  const found = source.match(pattern)?.[1]
+
+  if (!found) {
+    failed++
+    console.log(`FAIL  ${file.padEnd(26)} no colour matched — did the markup change?`)
+    continue
+  }
+
+  const ok = found.toLowerCase() === paper.toLowerCase()
+  if (!ok) failed++
+  console.log(
+    `${ok ? 'PASS' : 'FAIL'}  ${file.padEnd(26)} ${found}` +
+      (ok ? '  matches --color-paper' : `  should be ${paper}`)
+  )
+}
+
 if (failed > 0) {
   console.error(`\n${failed} contrast check(s) failed`)
   process.exit(1)
