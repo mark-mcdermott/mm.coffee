@@ -28,13 +28,25 @@ import Swoosh from '@components/art/Swoosh.astro'
       <div class="min-w-0">
         <!-- Explicit breaks: the comps set this as four short columnar lines. -->
         <!--
-          Capped below `lg`. The ribbon is a fixed size on mobile, so `11vw`
-          keeps growing the headline into it: clear to ~490px, 5px over at 500,
-          137px over at 700. 2.875rem is the largest cap that still clears — 3rem
-          leaves 8px, because the circles step up to `sm:w-28` at 640 and push the
-          headline 32px right — so this sits under the ceiling with room to spare.
-          Desktop re-raises it; the ribbon moves to the top right there and this
-          constraint doesn't apply.
+          Four steps, because the room the ribbon leaves changes underneath them.
+
+          Below `sm` the ribbon is a fixed size anchored left, so an uncapped
+          `11vw` walks the headline straight into it — measured ink against ink,
+          clear to ~490px, 5px over at 500, 137px over at 700. 2.875rem is the
+          largest cap that still clears everywhere (3rem leaves 8px, because the
+          circles step up to `sm:w-28` at 640 and shift the headline 32px right);
+          this sits under that.
+
+          From 560 the ribbon anchors right and pulls away, which is what pays
+          for the larger `sm` and `md` sizes. Both middle terms are straight
+          lines solved from their band edges rather than picked by eye —
+          slope `100 × (size₂ − size₁) / (width₂ − width₁)` as the `vw` term,
+          offset whatever puts the line through the lower anchor. `md` meets both
+          rails exactly, 4.5rem at 768 to 6.5rem at 1024. `sm` is deliberately
+          flat over its first 32px, holding 3.3rem until 672 before it climbs.
+
+          `lg` is fixed at 6.5rem, which is where `md` arrives at 1023, so the
+          last step is continuous rather than a jump.
         -->
         <h1
           class="display max-w-[11ch] text-[clamp(2.6rem,11vw,2.7rem)] sm:text-[clamp(3.3rem,calc(15vw_-_3rem),4.7rem)] md:text-[clamp(4.5rem,calc(12.5vw_-_1.5rem),6.5rem)] lg:text-[6.5rem]"
