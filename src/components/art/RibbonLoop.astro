@@ -57,44 +57,59 @@ const onCircle = (r: number, deg: number) => [
 ]
 
 /**
- * The angle at which a ring of radius `r` sits `dy` below the centre, on its
- * left-hand side. Degrees clockwise from east, which is how SVG measures them
- * with y pointing down.
+ * The cut the ribbon's ends are trimmed to: one paper-gap above the topmost
+ * run, and parallel to it. Every ring stops on this line, so the four ends read
+ * as one level cut rather than four slants at four heights.
  */
-const leftAngle = (r: number, dy: number) => DEG * Math.atan2(dy, -Math.sqrt(r * r - dy * dy))
+const CUT_Y = BANDS[0].y - THICKNESS / 2 - SEPARATION
 
-/**
- * The angular span a ring spends inside one run — the run's full width plus the
- * paper either side of it, since the casing has to clear both. Taking the
- * crossing's centre angle and padding it is not the same thing: the ring meets a
- * run obliquely, so the span is wider on the shallow side.
- */
-const crossingSpan = (r: number, y: number) => {
-  // Half the run, plus half the casing sweeping across it: the gap has to clear
-  // the run's edge, not its centreline, or the arc's end cap lands on the run
-  // and slices a flat across it.
-  const half = THICKNESS / 2 + (THICKNESS + SEPARATION) / 2
-  const reach = Math.min(r, Math.abs(y + half - CY))
-  const near = Math.abs(y - half - CY)
-  return [leftAngle(r, reach), leftAngle(r, near)].sort((a, b) => a - b)
+/** Where a circle of radius `r` meets the cut, on the ribbon's left-hand side. */
+const cutAngle = (r: number) => {
+  const dy = CUT_Y - CY
+  return DEG * Math.atan2(dy, -Math.sqrt(r * r - dy * dy))
 }
 
-/** How far the innermost ring's own end tucks, having nothing to pass behind. */
-const END_TUCK = 5
+/**
+ * One band of the coil, as a filled sector rather than a stroked arc.
+ *
+ * A stroke can only end square to its own direction, which put a slanted cap on
+ * the ribbon's end and left a wedge poking out of the run at the bottom. Filling
+ * it means both ends are ours to place: the far end is trimmed flat along
+ * `CUT_Y`, and the near end is cut radially at the tangent point, where the runs
+ * cover it exactly.
+ *
+ * Closing the path draws the flat itself, and the inner arc carries on past it
+ * to the right — which is what keeps the end reading as part of a circle rather
+ * than a shape that has been sawn off.
+ */
+const sector = (radius: number, half: number) => {
+  const outer = radius + half
+  const inner = radius - half
+  const from = cutAngle(outer)
+  const innerFrom = cutAngle(inner)
+  /** The tangent point, a full turn on, so the sweep is always the long way. */
+  const to = 450
 
-const rings = BANDS.map(({ token, y }, i) => {
+  const [ox, oy] = onCircle(outer, from)
+  const [oex, oey] = onCircle(outer, to)
+  const [iex, iey] = onCircle(inner, to)
+  const [ix, iy] = onCircle(inner, innerFrom)
+
+  return (
+    `M${round(ox)},${round(oy)}` +
+    `A${round(outer)},${round(outer)} 0 ${to - from > 180 ? 1 : 0} 1 ${round(oex)},${round(oey)}` +
+    `L${round(iex)},${round(iey)}` +
+    `A${round(inner)},${round(inner)} 0 ${to - innerFrom > 180 ? 1 : 0} 0 ${round(ix)},${round(iy)}` +
+    'Z'
+  )
+}
+
+const rings = BANDS.map(({ token, y }) => {
   const r = y - CY
-  const spans = BANDS.slice(0, i).map((band) => crossingSpan(r, band.y))
-  const from = spans.length ? Math.min(...spans.map((s) => s[0])) : 137 - END_TUCK
-  const to = spans.length ? Math.max(...spans.map((s) => s[1])) : 137 + END_TUCK
-
-  const [x0, y0] = onCircle(r, to)
-  const [x1, y1] = onCircle(r, from + 360)
-  const sweep = from + 360 - to
-
   return {
     token,
-    arc: `M${round(x0)},${round(y0)}A${round(r)},${round(r)} 0 ${sweep > 180 ? 1 : 0} 1 ${round(x1)},${round(y1)}`,
+    ring: sector(r, THICKNESS / 2),
+    casing: sector(r, (THICKNESS + SEPARATION) / 2),
     // Split at the tangent point, because the two halves stack differently: the
     // ribbon passes behind the coil on the way in and in front of it on the way
     // out, which no single paint order can say.
@@ -121,10 +136,10 @@ const rings = BANDS.map(({ token, y }, i) => {
 
   {/* Then the coil, innermost first, each ring carrying its own paper gap. */}
   {
-    rings.map(({ token, arc }) => (
+    rings.map(({ token, ring, casing }) => (
       <>
-        <path d={arc} stroke="var(--color-paper)" stroke-width={THICKNESS + SEPARATION} />
-        <path d={arc} stroke={`var(--color-${token})`} stroke-width={THICKNESS} />
+        <path d={casing} fill="var(--color-paper)" />
+        <path d={ring} fill={`var(--color-${token})`} />
       </>
     ))
   }
