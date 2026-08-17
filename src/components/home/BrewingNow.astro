@@ -15,10 +15,16 @@ import { EXPERIMENTS } from '@lib/content'
     </span>
   </a>
 
+  {/*
+    Full width below `lg`, 22rem beside the programs column above it — so the
+    candidates cover a 352px cell at 2x and a phone-width cell at up to 2x.
+    The previous master was 260px wide and could not fill either without
+    upscaling; the largest here is the master's own width.
+  */}
   <Image
     src={brewing}
-    alt="A period desktop terminal beside an mm.coffee mug and a notebook."
-    widths={[260, 520]}
+    alt="A Poly-88 microcomputer and terminal on a workbench, beside an mm mug and a handwritten Altair 8800 boot loader listing."
+    widths={[352, 704, 946]}
     sizes="(min-width: 1024px) 22rem, 100vw"
     class="w-full border-y object-cover"
     loading="lazy"
