@@ -44,7 +44,7 @@ const canonical = new URL(Astro.url.pathname, SITE.url).href
     <link
       rel="alternate"
       type="application/rss+xml"
-      title={`${SITE.name} — Lab`}
+      title={`${SITE.name} — ${SITE.feedTitle}`}
       href="/rss.xml"
     />
     {/* Must match --color-paper. A meta tag can't read a CSS variable, so

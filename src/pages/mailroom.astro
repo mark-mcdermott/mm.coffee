@@ -225,7 +225,7 @@ const FIELDS = [
         const body = await response.json().catch(() => ({}))
 
         if (response.ok && body.ok) {
-          window.location.assign('/contact?sent=1')
+          window.location.assign('/mailroom?sent=1')
           return
         }
 

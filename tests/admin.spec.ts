@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { COLLECTIONS } from '../src/lib/admin/collections'
 
 /**
  * The suite runs against Astro's dev server, so the admin is in local mode:
@@ -16,8 +17,13 @@ test.describe('admin shell', () => {
     await page.goto('/admin')
 
     await expect(page.getByRole('heading', { name: 'Content', exact: true })).toBeVisible()
-    await expect(page.getByRole('link', { name: /Batches/ })).toBeVisible()
-    await expect(page.getByRole('link', { name: /PR/ })).toBeVisible()
+
+    // Labels come from the registry rather than being restated: they are copy,
+    // and a rename should not read as a broken admin.
+    for (const { label } of Object.values(COLLECTIONS)) {
+      await expect(page.getByRole('link', { name: new RegExp(label) })).toBeVisible()
+    }
+
     await expect(page.getByText(/entries/).first()).toBeVisible()
   })
 

@@ -2,7 +2,7 @@ import { test, expect } from '@playwright/test'
 
 test.describe('about', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/about')
+    await page.goto('/company')
   })
 
   test('renders with a single h1', async ({ page }) => {
@@ -18,13 +18,13 @@ test.describe('about', () => {
     if (await toggle.isVisible()) await toggle.click()
 
     await expect(
-      page.locator('a[href="/about"][aria-current="page"]:visible')
+      page.locator('a[href="/company"][aria-current="page"]:visible')
     ).toHaveCount(1)
   })
 
   test('links out to the contact page and the personal site', async ({ page }) => {
     const main = page.locator('main')
-    await expect(main.locator('a[href="/contact"]').first()).toBeVisible()
+    await expect(main.locator('a[href="/mailroom"]').first()).toBeVisible()
     await expect(main.locator('a[href="https://markmcdermott.io"]').first()).toBeVisible()
   })
 })

@@ -19,7 +19,7 @@ const wantsJson = (request: Request) =>
   (request.headers.get('accept') ?? '').includes('application/json')
 
 const redirect = (url: URL, params: Record<string, string>) => {
-  const target = new URL('/contact', url.origin)
+  const target = new URL('/mailroom', url.origin)
   for (const [key, value] of Object.entries(params)) {
     target.searchParams.set(key, value)
   }

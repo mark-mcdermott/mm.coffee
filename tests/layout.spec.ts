@@ -2,15 +2,15 @@ import { test, expect } from '@playwright/test'
 
 const ROUTES = [
   '/',
-  '/programs',
-  '/programs/fullstack-wolfpack',
-  '/programs/mockingboard',
-  '/programs/markmcdermott-io',
-  '/lab',
-  '/lab/outline-the-logo',
-  '/lab/display-colours-arent-text-colours',
-  '/about',
-  '/contact',
+  '/batches',
+  '/batches/fullstack-wolfpack',
+  '/batches/mockingboard',
+  '/batches/markmcdermott-io',
+  '/press',
+  '/press/outline-the-logo',
+  '/press/display-colours-arent-text-colours',
+  '/company',
+  '/mailroom',
 ]
 
 test.describe('routes', () => {

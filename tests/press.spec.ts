@@ -1,8 +1,9 @@
 import { test, expect } from '@playwright/test'
+import { SITE } from '../src/lib/site'
 
-test.describe('lab index', () => {
+test.describe('press index', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/lab')
+    await page.goto('/press')
   })
 
   test('lists posts newest first', async ({ page }) => {
@@ -16,7 +17,7 @@ test.describe('lab index', () => {
 
   test('every post links to a page that exists', async ({ page, request }) => {
     const hrefs = await page
-      .locator('a[href^="/lab/"]')
+      .locator('a[href^="/press/"]')
       .evaluateAll((els) => els.map((el) => el.getAttribute('href')!))
 
     expect(hrefs.length).toBeGreaterThan(0)
@@ -28,7 +29,7 @@ test.describe('lab index', () => {
 
 test.describe('a post', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/lab/outline-the-logo')
+    await page.goto('/press/outline-the-logo')
   })
 
   test('renders its title, date and body', async ({ page }) => {
@@ -47,7 +48,7 @@ test.describe('a post', () => {
 
   test('offers navigation to adjacent posts', async ({ page }) => {
     await expect(page.getByRole('navigation', { name: 'More posts' })).toBeVisible()
-    await expect(page.locator('a[href="/lab"]').last()).toBeVisible()
+    await expect(page.locator('a[href="/press"]').last()).toBeVisible()
   })
 })
 
@@ -59,8 +60,8 @@ test.describe('feed', () => {
 
     const body = await response.text()
     expect(body).toContain('<rss')
-    expect(body).toContain('mm.coffee — Lab')
-    expect(body).toContain('https://mm.coffee/lab/outline-the-logo')
+    expect(body).toContain(`${SITE.name} — ${SITE.feedTitle}`)
+    expect(body).toContain('https://mm.coffee/press/outline-the-logo')
   })
 
   test('excludes drafts', async ({ request }) => {

@@ -16,9 +16,9 @@ test.describe('desktop nav', () => {
   test.skip(({ viewport }) => (viewport?.width ?? 0) < 1024, 'desktop only')
 
   test('marks the current section', async ({ page }) => {
-    await page.goto('/programs')
+    await page.goto('/batches')
     await expect(
-      page.getByRole('link', { name: labelFor('/programs'), exact: true })
+      page.getByRole('link', { name: labelFor('/batches'), exact: true })
     ).toHaveAttribute('aria-current', 'page')
   })
 
@@ -75,8 +75,8 @@ test.describe('mobile nav', () => {
     await page.getByRole('button', { name: 'Open menu' }).click()
     await page
       .getByRole('navigation', { name: 'Main' })
-      .getByRole('link', { name: labelFor('/programs') })
+      .getByRole('link', { name: labelFor('/batches') })
       .click()
-    await expect(page).toHaveURL(/\/programs\/?$/)
+    await expect(page).toHaveURL(/\/batches\/?$/)
   })
 })

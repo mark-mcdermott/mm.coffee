@@ -25,7 +25,7 @@ export const COLLECTIONS = {
     blurb: 'Projects on the roster',
   },
   lab: {
-    label: 'PR',
+    label: 'Press',
     dir: 'src/content/lab',
     schema: labSchema,
     blurb: 'Posts and writing',

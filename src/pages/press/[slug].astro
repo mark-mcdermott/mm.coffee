@@ -48,7 +48,7 @@ const { Content } = await render(post)
       <div>
         {
           older && (
-            <a href={`/lab/${older.id}`} class="label group hover:text-red-deep">
+            <a href={`/press/${older.id}`} class="label group hover:text-red-deep">
               <span class="block opacity-45">Older</span>
               <span class="mt-1 block">&larr; {older.data.title}</span>
             </a>
@@ -58,7 +58,7 @@ const { Content } = await render(post)
       <div class="sm:text-right">
         {
           newer && (
-            <a href={`/lab/${newer.id}`} class="label group hover:text-red-deep">
+            <a href={`/press/${newer.id}`} class="label group hover:text-red-deep">
               <span class="block opacity-45">Newer</span>
               <span class="mt-1 block">{newer.data.title} &rarr;</span>
             </a>
@@ -68,7 +68,7 @@ const { Content } = await render(post)
     </nav>
 
     <p class="border-t px-6 py-6 lg:px-8">
-      <a href="/lab" class="label hover:text-red-deep">&larr; All notes</a>
+      <a href="/press" class="label hover:text-red-deep">&larr; All notes</a>
     </p>
   </article>
 </Layout>

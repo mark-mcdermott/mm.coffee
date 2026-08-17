@@ -9,6 +9,27 @@ export default defineConfig({
   site: 'https://mm.coffee',
   adapter: vercel(),
 
+  /**
+   * The sections were renamed after the site was live, so the old paths still
+   * exist in search results, in anything anyone linked, and — for the lab —
+   * in the item URLs of a feed people may already be subscribed to. These keep
+   * them working; without them every one of those becomes a 404.
+   *
+   * The `[slug]` forms forward the entries too, so `/lab/why-it-says-austin`
+   * lands on its post rather than on the index. The parameter has to be spelled
+   * the way the destination route spells it — `[slug]`, not `[...slug]`, or the
+   * build rejects it. 301, because these moves are permanent and search engines
+   * should transfer rather than index both.
+   */
+  redirects: {
+    '/programs': { status: 301, destination: '/batches' },
+    '/programs/[slug]': { status: 301, destination: '/batches/[slug]' },
+    '/lab': { status: 301, destination: '/press' },
+    '/lab/[slug]': { status: 301, destination: '/press/[slug]' },
+    '/about': { status: 301, destination: '/company' },
+    '/contact': { status: 301, destination: '/mailroom' },
+  },
+
   integrations: [
     sitemap({
       // The styleguide is a working tool and the admin is behind a login —

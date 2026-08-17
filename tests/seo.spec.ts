@@ -10,7 +10,7 @@ import { join } from 'node:path'
 const buildOutput = (file: string) =>
   readFileSync(join(process.cwd(), '.vercel/output/static', file), 'utf8')
 
-const PAGES = ['/', '/programs', '/lab', '/about', '/contact']
+const PAGES = ['/', '/batches', '/press', '/company', '/mailroom']
 
 test.describe('metadata', () => {
   for (const path of PAGES) {
@@ -70,7 +70,7 @@ test.describe('metadata', () => {
   })
 
   test('lab posts declare themselves as articles', async ({ page }) => {
-    await page.goto('/lab/outline-the-logo')
+    await page.goto('/press/outline-the-logo')
 
     await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article')
     await expect(page.locator('meta[property="article:published_time"]')).toHaveAttribute(
@@ -115,7 +115,7 @@ test.describe('crawlability', () => {
 
     expect(locs.length).toBeGreaterThan(5)
     expect(locs.some((l) => l.includes('/styleguide'))).toBe(false)
-    for (const path of ['/', '/about/', '/lab/', '/programs/']) {
+    for (const path of ['/', '/company/', '/press/', '/batches/']) {
       expect(locs, `sitemap missing ${path}`).toContain(`https://mm.coffee${path}`)
     }
   })
