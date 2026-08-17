@@ -108,6 +108,22 @@
     }
   }
 
+  /* A slow breath for the terminal line, stepped rather than eased — `steps(8)`
+     applies to each keyframe segment, so the 4s in and the 4s out are each cut
+     into eight 0.5s holds. Sixteen instant changes of exactly 0.1 opacity per
+     cycle; nothing ever moves, it just sits at a level and then is at the next
+     one. An eased fade reads as a glow, which is the opposite of the joke. */
+  --animate-breathe: breathe 8s steps(8, end) infinite;
+
+  @keyframes breathe {
+    0%,
+    100% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
 }
 
 @layer base {
