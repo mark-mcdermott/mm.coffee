@@ -19,39 +19,42 @@ const batches = await getBatches()
   -->
   <section class="overflow-hidden border-b">
     {/*
-      The headline has to stop before the coil, which begins at 63.6% of the
-      artwork's width. `max-w-[58%]` reserves that, and the size ramp is solved
-      against it — see the clamp below.
+      The headline sits in the gap to the coil's left, so its size is solved
+      against where the coil starts rather than picked per breakpoint.
+
+      Below `lg` the coil begins at 67.4% of the frame and the text starts 24px
+      in, so the room is `0.674·W − 24`. "What the studio" — the longer line —
+      measures 6.316em, which gives `10.6vw − 8px` for a standing ~30px of air
+      between the two. It caps at 4.6rem, which is exactly what `lg` opens at, so
+      the breakpoint is a continuation rather than a jump.
+
+      At `lg` the artwork is full-width and the coil moves out to 63.6% of a
+      wider frame, so `max-w-[58%]` is enough to reserve.
     */}
     <div class="px-6 pt-16 lg:px-8 lg:pt-24">
       <p class="label text-red-deep">Selected batches</p>
       <h1
-        class="display mt-3 text-[clamp(2.1rem,7.4vw,3.1rem)] md:text-[clamp(3.1rem,6.2vw,4.6rem)] lg:max-w-[58%] lg:text-[clamp(4.6rem,6.4vw,6rem)]"
+        class="display mt-3 text-[clamp(1.5rem,calc(10.6vw_-_8px),4.6rem)] lg:max-w-[58%] lg:text-[clamp(4.6rem,6.4vw,6rem)]"
       >
         What the studio<br />has shipped.
       </h1>
     </div>
 
     {/*
-      The coil lives at the right of the artwork, so on narrow screens the whole
-      thing is scaled up and pulled left until its right edge is flush with the
-      frame — 150% wide against -50% of margin, which cancel exactly at any
-      width. The coil stays in view at its full size and the run-in bands are
-      what gets cropped, which is the right way round: they are stripes, and it
-      is the shape.
+      The coil sits at 63.6%–83.6% of the artwork, so where the artwork is
+      placed decides where the coil lands. Below `lg` it is scaled to 150% and
+      pulled left by 28%, which puts the coil at roughly 67%–97% of the frame —
+      near the right edge, with the run-in bands cropped off the left. They are
+      stripes; it is the shape, so that is the right way round.
 
-      From `lg` the negative top margin lifts the ribbon so its coil rises
-      alongside the headline rather than sitting in a band of its own — the
+      The negative top margin then lifts the ribbon into the headline's row. The
       bands occupy only the bottom third of the artwork, so the space above them
-      is empty except for the coil. It is a percentage because percentage
-      margins resolve against the container's width, which is what the artwork
-      scales with; a rem would drift out of step at every other width.
-
-      Below `lg` it stays clear instead. There the artwork is at 150% and the
-      coil is wide enough to sit under the headline rather than beside it, so
-      overlapping puts type on top of the shape.
+      is empty apart from the coil, and the headline drops into that gap to the
+      coil's left. Percentages throughout: they resolve against the container's
+      width, which is exactly what the artwork scales with, so the two stay in
+      step at every width where a rem would drift.
     */}
-    <RibbonLoop class="pointer-events-none -ml-[50%] mt-8 block w-[150%] max-w-none lg:ml-0 lg:-mt-[11%] lg:w-full" />
+    <RibbonLoop class="pointer-events-none -ml-[28%] -mt-[17%] block w-[150%] max-w-none lg:ml-0 lg:-mt-[11%] lg:w-full" />
 
     <div class="px-6 pb-12 lg:px-8 lg:pb-16">
       <p class="label mt-10 max-w-[46ch] text-blue lg:mt-14">
