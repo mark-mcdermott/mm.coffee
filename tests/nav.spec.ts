@@ -1,20 +1,31 @@
 import { test, expect } from '@playwright/test'
+import { NAV } from '../src/lib/nav'
+
+/**
+ * Labels come from `NAV` rather than being restated here: these are copy, they
+ * have already been reworded several times, and a test that hardcodes them fails
+ * on a rename instead of on a regression.
+ */
+const labelFor = (href: string) => {
+  const item = NAV.find((entry) => entry.href === href)
+  if (!item) throw new Error(`nav has no entry for ${href}`)
+  return item.label
+}
 
 test.describe('desktop nav', () => {
   test.skip(({ viewport }) => (viewport?.width ?? 0) < 1024, 'desktop only')
 
   test('marks the current section', async ({ page }) => {
     await page.goto('/programs')
-    await expect(page.getByRole('link', { name: 'Batches', exact: true })).toHaveAttribute(
-      'aria-current',
-      'page'
-    )
+    await expect(
+      page.getByRole('link', { name: labelFor('/programs'), exact: true })
+    ).toHaveAttribute('aria-current', 'page')
   })
 
   test('links to every section', async ({ page }) => {
     await page.goto('/')
     const nav = page.getByRole('navigation', { name: 'Main' })
-    for (const label of ['Batches', 'PR', 'About', 'Contact']) {
+    for (const { label } of NAV) {
       await expect(nav.getByRole('link', { name: label, exact: true })).toBeVisible()
     }
   })
@@ -62,7 +73,10 @@ test.describe('mobile nav', () => {
   test('navigates from the panel', async ({ page }) => {
     await page.goto('/')
     await page.getByRole('button', { name: 'Open menu' }).click()
-    await page.getByRole('navigation', { name: 'Main' }).getByRole('link', { name: 'Batches' }).click()
+    await page
+      .getByRole('navigation', { name: 'Main' })
+      .getByRole('link', { name: labelFor('/programs') })
+      .click()
     await expect(page).toHaveURL(/\/programs\/?$/)
   })
 })
