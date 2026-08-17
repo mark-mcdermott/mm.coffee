@@ -4,40 +4,85 @@ import Swoosh from '@components/art/Swoosh.astro'
 ---
 
 <section class="relative overflow-hidden border-b">
-  <!-- Ribbon bleeds off the right edge, behind the type. -->
+  <!--
+    Ribbon sweeps the full hero: in at the top right, out at the bottom left,
+    where its tail meets the section rule. Sized off the hero's own height
+    rather than the viewport — a vw width would reach ~1580px at 1023px, just
+    below the `lg` breakpoint — and anchored to the bottom so the tail lands on
+    the rule at any width.
+
+    That fixed size is 574.7px, so left-anchored it runs out of window at 559px
+    and its cut top-right edge starts showing paper beyond it. From 560 it
+    anchors right instead: same artwork, same size, now flush to the window and
+    the slack opens on the left where there's nothing to collide with.
+  -->
   <Swoosh
-    class="pointer-events-none absolute -right-20 -top-24 w-[min(62vw,46rem)] lg:-right-10 lg:-top-32 lg:w-[50rem]"
+    class="pointer-events-none absolute -left-4 bottom-0 h-[125%] w-auto min-[560px]:left-auto min-[560px]:right-0 lg:-right-10 lg:-top-32 lg:bottom-auto lg:left-auto lg:h-auto lg:w-[50rem]"
   />
 
-  <div class="relative px-6 py-10 lg:px-8 lg:py-14">
+  <div class="relative min-h-[28rem] px-6 py-10 lg:min-h-0 lg:px-8 lg:py-14">
     <!-- Circles sit alongside the headline at every width, as in the comps. -->
     <div class="grid grid-cols-[auto_1fr] items-start gap-6 lg:gap-12">
       <HalftoneStack class="w-20 shrink-0 sm:w-28 lg:w-40" />
 
       <div class="min-w-0">
         <!-- Explicit breaks: the comps set this as four short columnar lines. -->
-        <h1 class="display max-w-[11ch] text-[clamp(2.6rem,11vw,7.5rem)]">
+        <!--
+          Capped below `lg`. The ribbon is a fixed size on mobile, so `11vw`
+          keeps growing the headline into it: clear to ~490px, 5px over at 500,
+          137px over at 700. 2.875rem is the largest cap that still clears — 3rem
+          leaves 8px, because the circles step up to `sm:w-28` at 640 and push the
+          headline 32px right — so this sits under the ceiling with room to spare.
+          Desktop re-raises it; the ribbon moves to the top right there and this
+          constraint doesn't apply.
+        -->
+        <h1
+          class="display max-w-[11ch] text-[clamp(2.6rem,11vw,2.7rem)] sm:text-[clamp(3.3rem,calc(15vw_-_3rem),4.7rem)] md:text-[clamp(4.5rem,calc(12.5vw_-_1.5rem),6.5rem)] lg:text-[6.5rem]"
+        >
           <span class="text-red">Software</span><br />
           for the<br />
           modern<br />
           age.
         </h1>
 
-        <p class="label mt-7 text-blue">
+        <!--
+          Left-aligned under the headline from `lg` up, as in the comps. Narrow
+          screens hang it off the bottom right instead. Out of flow, so it needs
+          the section to hold its own height — that's what the `min-h` on the
+          padded wrapper is for, and the offsets here are its padding. Drop the
+          min-height and this lands on the headline.
+        -->
+        <!--
+          Shrinks to stay clear of the ribbon on narrow screens.
+
+          Full `.label` size down to ~369px, then shrinks to an 8px floor at
+          ~306px. It starts backing off well before it has to: the text only
+          actually touches the ribbon at 348px, but easing in early reads as
+          deliberate rather than as a last-moment snap.
+
+          To move where shrinking begins, change the `6.7px` — bigger starts it
+          wider, smaller starts it narrower. The `4.8vw` is the rate, tuned so
+          the text still fits the gap all the way down to the floor.
+        -->
+        <p
+          class="label absolute bottom-2 right-3 text-right text-[clamp(0.5rem,calc(4.8vw_-_6.7px),0.6875rem)] text-blue lg:static lg:mt-7 lg:text-label lg:text-left min-[1024px]:hidden min-[1056px]:block"
+        >
           Helpful apps &amp; tools<br />
-          Easing the complexity<br />
-          of the here and now
+          For easing complexity<br />
+          in the modern world
         </p>
 
-        <p class="label mt-12 text-signal">fable@xhard:~$ just breathe</p>
+        <p class="label mt-12 hidden text-signal min-[1175px]:block">
+          opus_5@xhard:~$ just breathe
+        </p>
       </div>
     </div>
 
     <p
-      class="label mt-10 ml-auto max-w-[47ch] text-right lg:absolute lg:bottom-12 lg:right-10 lg:mt-0"
+      class="label mt-10 ml-auto hidden max-w-[47ch] text-right lg:absolute lg:bottom-4 lg:right-4 lg:mt-0 min-[1056px]:block"
     >
-      I like my software how I like my coffee.<br />
-      Robust, bug free and ethically sourced
+      I like my software how I like my coffee:<br />
+      Robust, bug free and ethically sourced.&nbsp;
     </p>
   </div>
 </section>
