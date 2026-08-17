@@ -1,28 +1,28 @@
 ---
 import { render } from 'astro:content'
 import Layout from '@layouts/Layout.astro'
-import ProgramArt from '@components/ProgramArt.astro'
-import { getPrograms, programNumber, accentText } from '@lib/programs'
+import BatchArt from '@components/BatchArt.astro'
+import { getBatches, batchNumber, accentText } from '@lib/batches'
 
 export async function getStaticPaths() {
-  const programs = await getPrograms()
-  return programs.map((program) => ({
-    params: { slug: program.id },
-    props: { program },
+  const batches = await getBatches()
+  return batches.map((batch) => ({
+    params: { slug: batch.id },
+    props: { batch },
   }))
 }
 
-const { program } = Astro.props
+const { batch } = Astro.props
 const { title, order, tagline, summary, stack, url, repo, status, accent, art } =
-  program.data
-const { Content } = await render(program)
+  batch.data
+const { Content } = await render(batch)
 ---
 
 <Layout title={title} description={summary}>
   <article>
     <header class="border-b px-6 py-12 lg:px-8 lg:py-16">
       <p class:list={['label', accentText(accent)]}>
-        Program {programNumber(order)}
+        Batch {batchNumber(order)}
       </p>
       <h1 class="display mt-3 text-[clamp(2.75rem,10vw,7rem)]">{title}</h1>
       <p class="label mt-4 max-w-[52ch] text-blue">{tagline}</p>
@@ -30,7 +30,7 @@ const { Content } = await render(program)
 
     <div class="grid lg:grid-cols-[1fr_20rem]">
       <div class="border-b px-6 py-10 lg:border-b-0 lg:border-r lg:px-8">
-        <ProgramArt art={art} class="mb-10 h-56 lg:h-72" />
+        <BatchArt art={art} class="mb-10 h-56 lg:h-72" />
 
         <div
           class="max-w-[62ch] space-y-5 [&_h2]:display [&_h2]:mt-10 [&_h2]:text-[1.75rem] [&_p]:text-[0.9rem] [&_p]:leading-[1.75]"
@@ -86,7 +86,7 @@ const { Content } = await render(program)
       </aside>
     </div>
 
-    <nav class="border-t px-6 py-6 lg:px-8" aria-label="Programs">
+    <nav class="border-t px-6 py-6 lg:px-8" aria-label="Batches">
       <a href="/batches" class="label hover:text-red-deep">&larr; All batches</a>
     </nav>
   </article>

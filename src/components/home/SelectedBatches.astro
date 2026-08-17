@@ -1,0 +1,22 @@
+---
+import BatchCard from '@components/BatchCard.astro'
+import { getBatches } from '@lib/batches'
+
+const batches = await getBatches()
+---
+
+<section aria-labelledby="batches-heading">
+  <a
+    href="/batches"
+    class="group flex items-center gap-3 px-6 py-5 hover:text-red-deep lg:px-8"
+  >
+    <h2 id="batches-heading" class="label">Selected batches</h2>
+    <span class="transition-transform group-hover:translate-x-1" aria-hidden="true">
+      &rarr;
+    </span>
+  </a>
+
+  <div class="grid grid-cols-1 border-t lg:grid-cols-3">
+    {batches.map((batch) => <BatchCard batch={batch} />)}
+  </div>
+</section>

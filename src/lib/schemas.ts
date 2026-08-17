@@ -22,9 +22,9 @@ export type Control = 'textarea' | 'date' | 'markdown'
 
 const renderedAs = (control: Control) => ({ control })
 
-export const programSchema = z.object({
+export const batchSchema = z.object({
   title: z.string().min(1),
-  /** Controls display order and the PROGRAM 00N number in the comps. */
+  /** Controls display order and the BATCH 00N number in the comps. */
   order: z.number().int().positive(),
   tagline: z.string().min(1),
   summary: z.string().min(1).meta(renderedAs('textarea')),

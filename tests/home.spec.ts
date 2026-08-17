@@ -12,14 +12,14 @@ test('has one h1, and it is the headline', async ({ page }) => {
 })
 
 test('renders every section', async ({ page }) => {
-  for (const heading of ['Selected programs', 'Brewing now', 'My manifesto', 'System status']) {
+  for (const heading of ['Selected batches', 'Brewing now', 'My manifesto', 'System status']) {
     await expect(
       page.getByRole('heading', { name: heading, exact: true })
     ).toBeVisible()
   }
 })
 
-test('lists all three programs, each linking to its page', async ({ page }) => {
+test('lists all three batches, each linking to its page', async ({ page }) => {
   const cards = page.locator('article')
   await expect(cards).toHaveCount(3)
 
@@ -28,7 +28,7 @@ test('lists all three programs, each linking to its page', async ({ page }) => {
   }
 })
 
-test('program cards are equal height and bottom-aligned', async ({ page }, testInfo) => {
+test('batch cards are equal height and bottom-aligned', async ({ page }, testInfo) => {
   test.skip(testInfo.project.name !== 'desktop', 'grid is single-column below lg')
 
   // Retried: the admin suite writes real files into src/content, which makes the

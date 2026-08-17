@@ -1,14 +1,14 @@
 ---
-import ProgramArt from '@components/ProgramArt.astro'
-import { programNumber, accentText, type Program } from '@lib/programs'
+import BatchArt from '@components/BatchArt.astro'
+import { batchNumber, accentText, type Batch } from '@lib/batches'
 
 interface Props {
-  program: Program
+  batch: Batch
 }
 
-const { program } = Astro.props
-const { title, order, tagline, stack, accent, art } = program.data
-const href = `/batches/${program.id}`
+const { batch } = Astro.props
+const { title, order, tagline, stack, accent, art } = batch.data
+const href = `/batches/${batch.id}`
 ---
 
 <article class="group flex min-w-0 flex-col border-t lg:border-l lg:border-t-0">
@@ -20,14 +20,14 @@ const href = `/batches/${program.id}`
     <div
       class="grid flex-1 grid-cols-[7rem_1fr] items-start gap-4 px-6 pt-6 sm:grid-cols-[11rem_1fr] sm:gap-5 lg:flex lg:flex-col lg:gap-0 lg:px-0"
     >
-      <ProgramArt
+      <BatchArt
         art={art}
         class="h-28 w-full sm:h-36 lg:order-2 lg:mt-6 lg:h-44 lg:px-6"
       />
 
       <div class="min-w-0 lg:order-1 lg:px-6">
         <p class:list={['label', accentText(accent)]}>
-          Batch {programNumber(order)}
+          Batch {batchNumber(order)}
         </p>
         <!-- Titles can be one long unbreakable token (markmcdermott.io), so let
              them shrink, and break rather than push the page sideways. -->
