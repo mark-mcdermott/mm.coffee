@@ -57,7 +57,17 @@ import { STATUS_TARGETS, STATUS_COLOURS } from '@lib/status'
           Small-batch software since {SITE.established}
         </p>
 
-        <RoastMeter class="h-[18px] w-[72px] shrink-0 text-ink" />
+        {/*
+          Caption sits below because the meter's marker is a triangle pointing
+          down at it. Named from `SITE.roast` like the marker itself, so the
+          three places this panel states the roast can't disagree. Hidden from
+          assistive tech: the meter's own label already reads "Roast level:
+          <name>, N of 6", which says strictly more.
+        */}
+        <div class="flex shrink-0 flex-col items-end gap-2">
+          <RoastMeter class="h-[18px] w-[72px] text-ink" />
+          <p class="label" aria-hidden="true">{SITE.roast} roast</p>
+        </div>
       </div>
 
       <div class="border-t mt-6 pt-4">

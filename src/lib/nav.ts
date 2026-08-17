@@ -4,8 +4,8 @@ export interface NavItem {
 }
 
 export const NAV: NavItem[] = [
-  { href: '/programs', label: 'Batches' },
-  { href: '/lab', label: 'PR' },
-  { href: '/about', label: 'About' },
-  { href: '/contact', label: 'Contact' },
+  { href: '/batches', label: 'Batches' },
+  { href: '/press', label: 'Press' },
+  { href: '/company', label: 'Company' },
+  { href: '/mailroom', label: 'Mailroom' },
 ]

@@ -6,7 +6,7 @@
  * that isn't content.
  */
 import type { ZodType } from 'zod'
-import { labSchema, programSchema } from '@lib/schemas'
+import { labSchema, batchSchema } from '@lib/schemas'
 
 export interface AdminCollection {
   readonly label: string
@@ -18,14 +18,14 @@ export interface AdminCollection {
 }
 
 export const COLLECTIONS = {
-  programs: {
+  batches: {
     label: 'Batches',
-    dir: 'src/content/programs',
-    schema: programSchema,
+    dir: 'src/content/batches',
+    schema: batchSchema,
     blurb: 'Projects on the roster',
   },
   lab: {
-    label: 'PR',
+    label: 'Press',
     dir: 'src/content/lab',
     schema: labSchema,
     blurb: 'Posts and writing',

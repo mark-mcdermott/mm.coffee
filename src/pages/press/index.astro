@@ -6,11 +6,11 @@ const posts = await getPosts()
 ---
 
 <Layout
-  title="Lab"
+  title="Press"
   description="Build logs and technical notes from the studio — what we're making and what it taught us."
 >
   <section class="border-b px-6 py-12 lg:px-8 lg:py-16">
-    <p class="label text-red-deep">Lab</p>
+    <p class="label text-red-deep">Press</p>
     <h1 class="display mt-3 text-[clamp(2.75rem,9vw,6rem)]">
       Notes from<br />the bench.
     </h1>
@@ -30,7 +30,7 @@ const posts = await getPosts()
         {posts.map((post) => (
           <li class="border-b">
             <a
-              href={`/lab/${post.id}`}
+              href={`/press/${post.id}`}
               class="group grid gap-2 px-6 py-8 transition-colors hover:bg-paper-tint lg:grid-cols-[9rem_1fr_auto] lg:items-baseline lg:gap-8 lg:px-8"
             >
               <time datetime={post.data.date} class="label opacity-45">

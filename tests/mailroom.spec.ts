@@ -123,7 +123,7 @@ test.describe('the api endpoint', () => {
     })
 
     expect(response.status()).toBe(303)
-    expect(response.headers()['location']).toContain('/contact?sent=1')
+    expect(response.headers()['location']).toContain('/mailroom?sent=1')
   })
 
   test('blocks a cross-origin form post', async ({ request }) => {
@@ -151,7 +151,7 @@ test.describe('the api endpoint', () => {
 
 test.describe('the contact page', () => {
   test.beforeEach(async ({ page }) => {
-    await page.goto('/contact')
+    await page.goto('/mailroom')
   })
 
   test('labels every field', async ({ page }) => {
@@ -186,12 +186,12 @@ test.describe('the contact page', () => {
   })
 
   test('confirms a send via the query string, for the no-JS path', async ({ page }) => {
-    await page.goto('/contact?sent=1')
+    await page.goto('/mailroom?sent=1')
     await expect(page.getByRole('status')).toContainText('Message sent')
   })
 
   test('reports a failure via the query string', async ({ page }) => {
-    await page.goto('/contact?error=1')
+    await page.goto('/mailroom?error=1')
     await expect(page.getByRole('alert').first()).toContainText("didn't send")
   })
 })

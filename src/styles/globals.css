@@ -108,6 +108,26 @@
     }
   }
 
+  /* A slow breath, stepped rather than eased — `steps(8)` applies to each
+     keyframe segment, so the climb and the fall are each cut into eight holds.
+     Sixteen instant changes of exactly 0.1 opacity per cycle; nothing ever
+     moves, it just sits at a level and then is at the next one. An eased fade
+     reads as a glow, which is the opposite of the joke.
+
+     53.333s is a whole breath, so each hold is 3.33s — long enough that the
+     change reads as a change rather than as motion. Only the phrase animates,
+     not the prompt in front of it. */
+  --animate-breathe: breathe 53.333s steps(8, end) infinite;
+
+  @keyframes breathe {
+    0%,
+    100% {
+      opacity: 0.2;
+    }
+    50% {
+      opacity: 1;
+    }
+  }
 }
 
 @layer base {
@@ -363,6 +383,25 @@
     text-transform: uppercase;
     line-height: 0.86;
     letter-spacing: -0.005em;
+  }
+
+  /**
+   * Three leading tiers, tightest first. The tighter the setting the more the
+   * lines fuse into one typographic shape — which is what a poster wants and
+   * what a headline someone has to actually read does not.
+   *
+   *   .display-poster  0.80  the homepage hero, which is a supergraphic before
+   *                          it is a sentence
+   *   .display         0.86  section mastheads, whose wording is fixed and short
+   *   .display-title   0.90  entry titles — arbitrary length, arbitrary wording,
+   *                          and the words are the point
+   */
+  .display-poster {
+    line-height: 0.8;
+  }
+
+  .display-title {
+    line-height: 0.9;
   }
 }
 

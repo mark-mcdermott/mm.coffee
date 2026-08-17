@@ -1,4 +1,5 @@
 import { expect, test } from '@playwright/test'
+import { COLLECTIONS } from '../src/lib/admin/collections'
 
 /**
  * The suite runs against Astro's dev server, so the admin is in local mode:
@@ -16,8 +17,13 @@ test.describe('admin shell', () => {
     await page.goto('/admin')
 
     await expect(page.getByRole('heading', { name: 'Content', exact: true })).toBeVisible()
-    await expect(page.getByRole('link', { name: /Batches/ })).toBeVisible()
-    await expect(page.getByRole('link', { name: /PR/ })).toBeVisible()
+
+    // Labels come from the registry rather than being restated: they are copy,
+    // and a rename should not read as a broken admin.
+    for (const { label } of Object.values(COLLECTIONS)) {
+      await expect(page.getByRole('link', { name: new RegExp(label) })).toBeVisible()
+    }
+
     await expect(page.getByText(/entries/).first()).toBeVisible()
   })
 
@@ -35,14 +41,14 @@ test.describe('admin shell', () => {
   })
 
   test('lists the entries in a collection', async ({ page }) => {
-    await page.goto('/admin/programs')
+    await page.goto('/admin/batches')
     await expect(page.getByRole('link', { name: /Mockingboard/ })).toBeVisible()
   })
 })
 
 test.describe('the form is derived from the schema', () => {
   test('renders a control per field, typed by what the schema says', async ({ page }) => {
-    await page.goto('/admin/programs/mockingboard')
+    await page.goto('/admin/batches/mockingboard')
 
     // An enum becomes a select carrying exactly the schema's members.
     const accent = page.locator('#field-accent')
@@ -77,7 +83,7 @@ test.describe('refusing bad input', () => {
    * a trim does not.
    */
   test('rejects a save, keeps what was typed, and writes nothing', async ({ page }) => {
-    await page.goto('/admin/programs/mockingboard')
+    await page.goto('/admin/batches/mockingboard')
 
     await page.locator('#field-title').fill('   ')
     await page.locator('#field-tagline').fill('Edited but not saved')
@@ -90,7 +96,7 @@ test.describe('refusing bad input', () => {
     await expect(page.locator('#field-tagline')).toHaveValue('Edited but not saved')
 
     // And the entry on disk is untouched.
-    await page.goto('/admin/programs/mockingboard')
+    await page.goto('/admin/batches/mockingboard')
     await expect(page.locator('#field-title')).toHaveValue('Mockingboard')
     await expect(page.locator('#field-tagline')).toHaveValue(
       'Drop mockups. Arrange freely. Export one PNG.'
@@ -103,7 +109,7 @@ test.describe('refusing bad input', () => {
     request,
     baseURL,
   }) => {
-    const response = await request.post('/admin/programs/mockingboard', {
+    const response = await request.post('/admin/batches/mockingboard', {
       headers: { origin: new URL(baseURL ?? '').origin },
       form: {
         intent: 'save',
@@ -125,7 +131,7 @@ test.describe('refusing bad input', () => {
     expect(html).toContain('field-title-error')
     expect(html).toContain('field-url-error')
 
-    await page.goto('/admin/programs/mockingboard')
+    await page.goto('/admin/batches/mockingboard')
     await expect(page.locator('#field-url')).toHaveValue('https://mockingboard.design')
   })
 

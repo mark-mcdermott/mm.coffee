@@ -1,0 +1,67 @@
+---
+import Layout from '@layouts/Layout.astro'
+import BatchCard from '@components/BatchCard.astro'
+import RibbonLoop from '@components/art/RibbonLoop.astro'
+import { getBatches } from '@lib/batches'
+
+const batches = await getBatches()
+---
+
+<Layout
+  title="Batches"
+  description="Software the studio has shipped and is shipping — what each one is, and how it's built."
+>
+  <!--
+    Three stacked rows rather than one padded block: the ribbon has to bleed to
+    both edges, and it cannot do that from inside the padding without a negative
+    margin that has to be kept in step with it. As its own full-width row it just
+    spans, and the copy above and below keeps the section's padding.
+  -->
+  <section class="overflow-hidden border-b">
+    {/*
+      The headline has to stop before the coil, which begins at 63.6% of the
+      artwork's width. `max-w-[58%]` reserves that, and the size ramp is solved
+      against it — see the clamp below.
+    */}
+    <div class="px-6 pt-16 lg:px-8 lg:pt-24">
+      <p class="label text-red-deep">Selected batches</p>
+      <h1
+        class="display mt-3 text-[clamp(2.1rem,7.4vw,3.1rem)] md:text-[clamp(3.1rem,6.2vw,4.6rem)] lg:max-w-[58%] lg:text-[clamp(4.6rem,6.4vw,6rem)]"
+      >
+        What the studio<br />has shipped.
+      </h1>
+    </div>
+
+    {/*
+      The coil lives at the right of the artwork, so on narrow screens the whole
+      thing is scaled up and pulled left until its right edge is flush with the
+      frame — 150% wide against -50% of margin, which cancel exactly at any
+      width. The coil stays in view at its full size and the run-in bands are
+      what gets cropped, which is the right way round: they are stripes, and it
+      is the shape.
+
+      From `lg` the negative top margin lifts the ribbon so its coil rises
+      alongside the headline rather than sitting in a band of its own — the
+      bands occupy only the bottom third of the artwork, so the space above them
+      is empty except for the coil. It is a percentage because percentage
+      margins resolve against the container's width, which is what the artwork
+      scales with; a rem would drift out of step at every other width.
+
+      Below `lg` it stays clear instead. There the artwork is at 150% and the
+      coil is wide enough to sit under the headline rather than beside it, so
+      overlapping puts type on top of the shape.
+    */}
+    <RibbonLoop class="pointer-events-none -ml-[50%] mt-8 block w-[150%] max-w-none lg:ml-0 lg:-mt-[11%] lg:w-full" />
+
+    <div class="px-6 pb-12 lg:px-8 lg:pb-16">
+      <p class="label mt-10 max-w-[46ch] text-blue lg:mt-14">
+        Small, useful things. Each one is a real product with a real URL — not a
+        case study for something that never launched.
+      </p>
+    </div>
+  </section>
+
+  <div class="grid grid-cols-1 lg:grid-cols-3">
+    {batches.map((batch) => <BatchCard batch={batch} />)}
+  </div>
+</Layout>

@@ -4,7 +4,7 @@
  * The comps label these rows API / DATABASE / AUTH / STORAGE / EMAIL, but this
  * site has no database, auth, or storage — with real checks those rows would be
  * permanently dark or simply untrue. So the rows are the things that genuinely
- * can be checked: the studio's live programs, and mail delivery.
+ * can be checked: the studio's live batches, and mail delivery.
  */
 export type StatusKind = 'http' | 'email'
 

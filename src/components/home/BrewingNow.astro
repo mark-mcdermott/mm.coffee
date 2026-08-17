@@ -1,12 +1,16 @@
 ---
 import { Image } from 'astro:assets'
 import brewing from '@assets/brewing-now.png'
-import { EXPERIMENTS } from '@lib/content'
+// Commented out with the "Experiments in" block below — restore both together.
+// import { EXPERIMENTS } from '@lib/content'
 ---
 
-<section class="border-t lg:border-l lg:border-t-0" aria-labelledby="brewing-heading">
+<section
+  class="flex flex-col border-t lg:border-l lg:border-t-0"
+  aria-labelledby="brewing-heading"
+>
   <a
-    href="/lab"
+    href="/press"
     class="group flex items-center gap-3 px-6 py-5 hover:text-red-deep lg:px-8"
   >
     <h2 id="brewing-heading" class="label">Brewing now</h2>
@@ -15,19 +19,35 @@ import { EXPERIMENTS } from '@lib/content'
     </span>
   </a>
 
+  {/*
+    Full width below `lg`, 22rem beside the batches column above it — so the
+    candidates cover a 352px cell at 2x and a phone-width cell at up to 2x.
+    The previous master was 260px wide and could not fill either without
+    upscaling; the largest here is the master's own width.
+
+    `flex-1` takes the rest of the column. At `lg` this cell is a grid item
+    stretched to the height of the batches column beside it, which leaves ~38px
+    over once the header is placed; the image crops to absorb it rather than
+    leaving a band of paper, since the grid is meant to butt together.
+
+    Rule on top only. Manifesto opens with its own `border-t`, so a `border-b`
+    here would land on it and draw 2px.
+  */}
   <Image
     src={brewing}
-    alt="A period desktop terminal beside an mm.coffee mug and a notebook."
-    widths={[260, 520]}
+    alt="A Poly-88 microcomputer and terminal on a workbench, beside an mm mug and a handwritten Altair 8800 boot loader listing."
+    widths={[352, 704, 946]}
     sizes="(min-width: 1024px) 22rem, 100vw"
-    class="w-full border-y object-cover"
+    class="w-full flex-1 border-t object-cover"
     loading="lazy"
   />
 
+  {/*
   <div class="px-6 py-6 lg:px-8">
     <h3 class="label opacity-45">Experiments in:</h3>
     <ul class="mt-3 space-y-1">
       {EXPERIMENTS.map((item) => <li class="label text-red-deep">{item}</li>)}
     </ul>
   </div>
+  */}
 </section>

@@ -7,7 +7,7 @@ export async function GET(context: APIContext) {
   const posts = await getPosts()
 
   return rss({
-    title: `${SITE.name} — Lab`,
+    title: `${SITE.name} — ${SITE.feedTitle}`,
     description: 'Build logs and technical notes from the studio.',
     site: context.site ?? SITE.url,
     trailingSlash: false,
@@ -19,7 +19,7 @@ export async function GET(context: APIContext) {
         description: post.data.subtitle,
         pubDate: new Date(`${post.data.date}T00:00:00Z`),
         categories: [...post.data.tags],
-        link: `/lab/${post.id}`,
+        link: `/press/${post.id}`,
       })),
     customData: '<language>en-gb</language>',
   })

@@ -1,0 +1,100 @@
+---
+import BatchArt from '@components/BatchArt.astro'
+import { batchNumber, accentText, type Batch } from '@lib/batches'
+
+interface Props {
+  batch: Batch
+}
+
+const { batch } = Astro.props
+const { title, order, tagline, stack, accent, art } = batch.data
+const href = `/batches/${batch.id}`
+
+/**
+ * The widest the title can be set and still fit its card.
+ *
+ * A title can be one unbreakable token — `markmcdermott.io` — and at `lg` the
+ * card is a third of a row that also carries the brewing panel, so the token can
+ * be wider than the card. `break-words` does not help: it wraps, but an
+ * element's min-content width is still its longest word, so the box keeps its
+ * full width and the text is clipped rather than shrunk.
+ *
+ * So the size is solved instead. Anton runs about 0.48em per character, and the
+ * card's content box is its own width less the 1.5rem of padding on each side —
+ * hence `(100cqw - 3rem) / (chars × 0.48)`, capped at the design size. Container
+ * units rather than viewport ones because the same card is narrower on the
+ * homepage, beside the brewing column, than it is on the batches page.
+ *
+ * Only titles that would actually overflow come down; the rest sit at the cap.
+ */
+const longestToken = title.split(/\s+/).reduce((a, w) => (w.length > a.length ? w : a), '')
+const titleFit = `calc((100cqw - 3rem) / ${(longestToken.length * 0.48).toFixed(2)})`
+---
+
+<!--
+  Three compositions, not one stretched three ways:
+
+  `lg` and up  three columns, art under the heading — the comp's card
+  `sm` to `lg` a horizontal row, art at the left, deliberately dense
+  below `sm`   the same row, scaled down
+
+  The middle one used to be the desktop card squashed sideways, which left the
+  art small inside an enormous row. It is now its own thing: the art is bigger
+  and the whitespace much tighter, so it reads as an editorial row.
+-->
+<article class="group @container flex min-w-0 flex-col border-t lg:border-l lg:border-t-0">
+  <a href={href} class="flex flex-1 flex-col">
+    <div
+      class="flex flex-1 items-center gap-5 px-6 py-4 sm:gap-7 sm:py-3.5 lg:flex-col lg:items-stretch lg:gap-0 lg:px-0 lg:pb-0 lg:pt-6"
+    >
+      {/*
+        The art is `object-contain`, so its rendered size is set by the box's
+        constraining side — for these near-square pieces, the height. A landscape
+        box would letterbox and make them smaller, so the box stays tall and the
+        row gets its density from the padding instead.
+      */}
+      <BatchArt
+        art={art}
+        class="h-24 w-28 shrink-0 sm:h-40 sm:w-48 lg:order-2 lg:mt-6 lg:h-44 lg:w-full lg:px-6"
+      />
+
+      <div class="min-w-0 flex-1 lg:order-1 lg:flex-none lg:px-6">
+        <p class:list={['label', accentText(accent)]}>
+          Batch {batchNumber(order)}
+        </p>
+        <h3
+          class="display mt-2 break-words text-[clamp(1.15rem,5vw,1.75rem)]"
+          style={`--fit: ${titleFit}`}
+        >
+          {title}
+        </h3>
+        <p class="label mt-2 text-blue sm:mt-3">{tagline}</p>
+      </div>
+    </div>
+
+    {/* The arrow sets this bar's height below `lg` — `text-lg` carries a 28px
+        line box — so it is the thing that shrinks to make the row denser. */}
+    <div
+      class="flex items-center justify-between gap-4 border-t px-6 py-2.5 lg:mt-auto lg:min-h-[4.25rem] lg:py-4"
+    >
+      <p class:list={['label', accentText(accent)]}>
+        Stack: {stack.join(' / ')}
+      </p>
+      <span
+        class="shrink-0 text-base leading-none transition-transform group-hover:translate-x-1 lg:text-lg lg:leading-normal"
+        aria-hidden="true">&rarr;</span
+      >
+    </div>
+  </a>
+</article>
+
+<style>
+  /* The solved size only binds at `lg`, where the card is narrow enough for a
+     long token to overflow it. Below that the card is a full-width row and the
+     title has room to spare. */
+  @media (min-width: 1024px) {
+    h3 {
+      font-size: min(2.1rem, var(--fit));
+    }
+  }
+</style>

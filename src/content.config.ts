@@ -2,11 +2,11 @@ import { defineCollection } from 'astro:content'
 import { glob } from 'astro/loaders'
 // Shared with the admin, which builds its forms from the same definitions and
 // re-validates against them before it commits anything. See `@lib/schemas`.
-import { labSchema, programSchema } from '@lib/schemas'
+import { labSchema, batchSchema } from '@lib/schemas'
 
-const programs = defineCollection({
-  loader: glob({ pattern: '**/*.md', base: './src/content/programs' }),
-  schema: programSchema,
+const batches = defineCollection({
+  loader: glob({ pattern: '**/*.md', base: './src/content/batches' }),
+  schema: batchSchema,
 })
 
 const lab = defineCollection({
@@ -14,4 +14,4 @@ const lab = defineCollection({
   schema: labSchema,
 })
 
-export const collections = { programs, lab }
+export const collections = { batches, lab }
