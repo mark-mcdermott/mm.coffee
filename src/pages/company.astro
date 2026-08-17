@@ -1,5 +1,6 @@
 ---
 import Layout from '@layouts/Layout.astro'
+import RibbonHeader from '@components/RibbonHeader.astro'
 import HalftoneStack from '@components/art/HalftoneStack.astro'
 import DotMatrixMark from '@components/art/DotMatrixMark.astro'
 import { SITE } from '@lib/site'
@@ -10,18 +11,18 @@ import { MANIFESTO } from '@lib/content'
   title="About"
   description="A one-person software studio in Austin, Texas. What I make, how I work, and where AI fits."
 >
-  <section class="border-b px-6 py-12 lg:px-8 lg:py-16">
-    <p class="label text-red-deep">About</p>
-    <h1 class="display mt-3 max-w-[14ch] text-[clamp(2.75rem,9vw,6rem)]">
+  <RibbonHeader>
+    <p class="label text-red-deep">Company</p>
+    <h1 class="display mt-3 max-w-[14ch] text-[clamp(1.9rem,calc(9vw_-_8px),4.6rem)] lg:text-[clamp(4rem,5.4vw,5.4rem)]">
       Small batch, on purpose.
     </h1>
-    <p class="label mt-6 max-w-[54ch] text-blue">
+    <p slot="tail" class="label mt-10 max-w-[54ch] text-blue lg:mt-14">
       {SITE.company} is a one-person software studio in {SITE.location}, run by{' '}
       <a href="https://markmcdermott.io" class="underline hover:text-red-deep">
         {SITE.author}
       </a>.
     </p>
-  </section>
+  </RibbonHeader>
 
   <div class="grid lg:grid-cols-[1fr_20rem]">
     <div class="border-b px-6 py-10 lg:border-b-0 lg:border-r lg:px-8 lg:py-14">

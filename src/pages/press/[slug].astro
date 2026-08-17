@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content'
 import Layout from '@layouts/Layout.astro'
+import RibbonHeader from '@components/RibbonHeader.astro'
 import { getPosts, formatLongDate } from '@lib/lab'
 
 export async function getStaticPaths() {
@@ -23,19 +24,21 @@ const { Content } = await render(post)
 
 <Layout title={title} description={subtitle} publishedAt={date} tags={tags}>
   <article>
-    <header class="border-b px-6 py-12 lg:px-8 lg:py-16">
+    <RibbonHeader as="header">
       <div class="flex flex-wrap items-center gap-x-4 gap-y-2">
         <time datetime={date} class="label opacity-45">{formatLongDate(date)}</time>
         {tags.map((tag) => <span class="label text-blue">#{tag}</span>)}
         {draft && <span class="label text-red-deep">Draft</span>}
       </div>
 
-      <h1 class="display display-title mt-4 max-w-[18ch] text-[clamp(2.25rem,8vw,5rem)]">
+      {/* Article titles are arbitrary, so this sits a step below the section
+          mastheads and wraps rather than being solved to a line count. */}
+      <h1 class="display display-title mt-4 max-w-[18ch] text-[clamp(1.75rem,calc(8vw_-_8px),3.6rem)] lg:text-[clamp(3.2rem,4.6vw,4.6rem)]">
         {title}
       </h1>
 
-      {subtitle && <p class="label mt-5 max-w-[56ch] text-blue">{subtitle}</p>}
-    </header>
+      {subtitle && <p slot="tail" class="label mt-10 max-w-[56ch] text-blue lg:mt-14">{subtitle}</p>}
+    </RibbonHeader>
 
     <div class="prose px-6 py-10 lg:px-8 lg:py-14">
       <Content />

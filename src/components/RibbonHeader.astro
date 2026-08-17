@@ -1,0 +1,55 @@
+---
+/**
+ * A page header with the ribbon running through it.
+ *
+ * Three stacked rows rather than one padded block: the ribbon has to bleed to
+ * both edges, and it cannot do that from inside the padding without a negative
+ * margin kept in step with it. As its own full-width row it simply spans, and
+ * the copy above and below keeps the section's padding.
+ *
+ * Where the ribbon sits is the whole trick, so it lives here rather than in six
+ * pages. The coil occupies 63.6%–83.6% of the artwork, so placing the artwork
+ * places the coil:
+ *
+ *   below `lg`  scaled to 150% and pulled left 28%, putting the coil at roughly
+ *               67%–97% of the frame. The run-in bands crop off the left, which
+ *               is the right thing to lose — they are stripes, the coil is the
+ *               shape.
+ *   `lg` and up full width, coil at 63.6%.
+ *
+ * The negative top margin then lifts the ribbon into the heading's row. The
+ * bands occupy only the bottom third of the artwork, so the space above them is
+ * empty apart from the coil, and the heading drops into that gap to its left.
+ * Percentages throughout: they resolve against the container's width, which is
+ * exactly what the artwork scales with, so the two stay in step at every width
+ * where a rem would drift.
+ *
+ * `max-w-[58%]` on the heading column is what keeps it clear of the coil at
+ * `lg`. Anything longer wraps rather than running into it.
+ */
+import RibbonLoop from '@components/art/RibbonLoop.astro'
+
+interface Props {
+  /** `header` inside an `article`, `section` for a standalone page. */
+  as?: 'section' | 'header'
+  class?: string
+}
+
+const { as: Tag = 'section', class: className }: Props = Astro.props
+---
+
+<Tag class:list={['overflow-hidden border-b', className]}>
+  <div class="px-6 pt-16 lg:px-8 lg:pt-24">
+    <div class="lg:max-w-[58%]">
+      <slot />
+    </div>
+  </div>
+
+  <RibbonLoop
+    class="pointer-events-none -ml-[28%] -mt-[17%] block w-[150%] max-w-none lg:ml-0 lg:-mt-[11%] lg:w-full"
+  />
+
+  <div class="px-6 pb-12 lg:px-8 lg:pb-16">
+    <slot name="tail" />
+  </div>
+</Tag>
