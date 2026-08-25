@@ -66,7 +66,7 @@ test.describe('the form is derived from the schema', () => {
   })
 
   test('honours the control hints the schema carries', async ({ page }) => {
-    await page.goto('/admin/lab/why-it-says-austin')
+    await page.goto('/admin/lab/twenty-years-in-austin')
 
     await expect(page.locator('#field-date')).toHaveAttribute('type', 'date')
     await expect(page.locator('#field-date')).toHaveValue('2026-08-15')
@@ -137,7 +137,7 @@ test.describe('refusing bad input', () => {
 
   test('refuses a slug that already exists', async ({ page }) => {
     await page.goto('/admin/lab/new')
-    await page.locator('#field-slug').fill('why-it-says-austin')
+    await page.locator('#field-slug').fill('twenty-years-in-austin')
     await page.locator('#field-title').fill('Dupe')
     await page.locator('#field-date').fill('2026-08-16')
     await page.getByRole('button', { name: /Create entry/ }).click()

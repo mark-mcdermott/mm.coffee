@@ -15,7 +15,7 @@ export default defineConfig({
    * in the item URLs of a feed people may already be subscribed to. These keep
    * them working; without them every one of those becomes a 404.
    *
-   * The `[slug]` forms forward the entries too, so `/lab/why-it-says-austin`
+   * The `[slug]` forms forward the entries too, so `/lab/twenty-years-in-austin`
    * lands on its post rather than on the index. The parameter has to be spelled
    * the way the destination route spells it — `[slug]`, not `[...slug]`, or the
    * build rejects it. 301, because these moves are permanent and search engines

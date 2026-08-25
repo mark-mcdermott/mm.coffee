@@ -68,7 +68,7 @@ undecided — think before doing.
 
 - [x] Make the glove icons spin on hover, and link them to a new post about
       Austin — the globe turns its meridian rather than rotating the whole icon,
-      and now links to `/lab/why-it-says-austin`
+      and now links to `/press/twenty-years-in-austin`
 - [x] Short blink on the dot matrix "MM" letters — one dot at a time, slowly
       iterating through both "m"s
 - [x] Consider making CTA buttons alternate black / dark orange-red on hover,
