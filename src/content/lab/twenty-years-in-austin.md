@@ -28,9 +28,9 @@ My first web dev job was with a two-man company called S Collective. I took a pa
 
 I also made sites on the side, usually for free, for some non-profits in this era. I was working the phones for the Austin GI Rights hotline and built their site, which I always liked. I built a site for an anarchist thrift shop in Drupal that was always a nightmare to maintain.
 
-After S Collective was uShip. I remember wearing a suit to the interview and they said they'd hire me but I couldn't wear the suit to work. I would ride my bike to the Austin Metrorail and take my bike on the train to get to the office downtown. I remember my first days walking into their office on 2nd street. I really felt like a bigshot, working downtown and walking past the skyscrapers to get to work.
+After S Collective was uShip. I remember wearing a suit to the interview and they said they'd hire me but I couldn't wear the suit to work. I would ride my bike to the Austin Metrorail and take my bike on the train to get to the office downtown. I remember my first days walking into their office downtown near 3rd and Brazos. I really felt like a bigshot, working downtown and walking past the skyscrapers to get to work.
 
-uShip had Razor scooters around the office, although I seemed to be the only person who actually used them. I'd ride one from my desk to the coffee station. I was so new to office life that I didn't know you weren't supposed to put an empty coffee carafe back on the hot plate, and I broke a couple before they made an announcement about it.
+uShip had Razor scooters around the office, although I seemed to be the only person who actually used them. I'd ride one from my desk to the coffee station. I actually got pretty good at riding one with a full cup of coffee. I was so new to office life that I didn’t know you weren’t supposed to put an empty coffee carafe back on the hot plate, and I broke a couple before they made an announcement about it.
 
 I always felt awkward at uShip. It was a pretty hip crowd that hosted local bands for SXSW, tapped office kegs on Friday afternoons and rented Lake Travis party barges for offsites. I had never worked in large codebases and felt like a WWII codebreaker trying to decipher what these thousands of .NET C# files were doing.
 
