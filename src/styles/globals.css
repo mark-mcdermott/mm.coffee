@@ -364,6 +364,17 @@
     font-weight: 700;
   }
 
+  /* Portrait scans run tall, so images are bounded on the height and let the
+     width follow; a 1px ink border keeps them inside the ruled grid rather
+     than floating on the paper. */
+  .prose img {
+    display: block;
+    width: auto;
+    max-width: 100%;
+    max-height: 34rem;
+    border: 1px solid var(--color-ink);
+  }
+
   .prose blockquote {
     border-left: 3px solid var(--color-red);
     padding-left: 1.1rem;
