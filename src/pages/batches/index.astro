@@ -1,7 +1,7 @@
 ---
 import Layout from '@layouts/Layout.astro'
 import BatchCard from '@components/BatchCard.astro'
-import RibbonLoop from '@components/art/RibbonLoop.astro'
+import RibbonHeader from '@components/RibbonHeader.astro'
 import { getBatches } from '@lib/batches'
 
 const batches = await getBatches()
@@ -11,58 +11,29 @@ const batches = await getBatches()
   title="Batches"
   description="Software the studio has shipped and is shipping — what each one is, and how it's built."
 >
-  <!--
-    Three stacked rows rather than one padded block: the ribbon has to bleed to
-    both edges, and it cannot do that from inside the padding without a negative
-    margin that has to be kept in step with it. As its own full-width row it just
-    spans, and the copy above and below keeps the section's padding.
-  -->
-  <section class="overflow-hidden border-b">
+  <RibbonHeader>
     {/*
-      The headline sits in the gap to the coil's left, so its size is solved
+      The heading sits in the gap to the coil's left, so its size is solved
       against where the coil starts rather than picked per breakpoint.
 
       Below `lg` the coil begins at 67.4% of the frame and the text starts 24px
       in, so the room is `0.674·W − 24`. "What the studio" — the longer line —
       measures 6.316em, which gives `10.6vw − 8px` for a standing ~30px of air
-      between the two. It caps at 4.6rem, which is exactly what `lg` opens at, so
-      the breakpoint is a continuation rather than a jump.
-
-      At `lg` the artwork is full-width and the coil moves out to 63.6% of a
-      wider frame, so `max-w-[58%]` is enough to reserve.
+      between the two. It caps at 4.6rem, which is exactly what `lg` opens at,
+      so the breakpoint is a continuation rather than a jump.
     */}
-    <div class="px-6 pt-16 lg:px-8 lg:pt-24">
-      <p class="label text-red-deep">Selected batches</p>
-      <h1
-        class="display mt-3 text-[clamp(1.5rem,calc(10.6vw_-_8px),4.6rem)] lg:max-w-[58%] lg:text-[clamp(4.6rem,6.4vw,6rem)]"
-      >
-        What the studio<br />has shipped.
-      </h1>
-    </div>
+    <p class="label text-red-deep">Selected batches</p>
+    <h1
+      class="display mt-3 text-[clamp(1.5rem,calc(10.6vw_-_8px),4.6rem)] lg:text-[clamp(4.6rem,6.4vw,6rem)]"
+    >
+      What the studio<br />has shipped.
+    </h1>
 
-    {/*
-      The coil sits at 63.6%–83.6% of the artwork, so where the artwork is
-      placed decides where the coil lands. Below `lg` it is scaled to 150% and
-      pulled left by 28%, which puts the coil at roughly 67%–97% of the frame —
-      near the right edge, with the run-in bands cropped off the left. They are
-      stripes; it is the shape, so that is the right way round.
-
-      The negative top margin then lifts the ribbon into the headline's row. The
-      bands occupy only the bottom third of the artwork, so the space above them
-      is empty apart from the coil, and the headline drops into that gap to the
-      coil's left. Percentages throughout: they resolve against the container's
-      width, which is exactly what the artwork scales with, so the two stay in
-      step at every width where a rem would drift.
-    */}
-    <RibbonLoop class="pointer-events-none -ml-[28%] -mt-[17%] block w-[150%] max-w-none lg:ml-0 lg:-mt-[11%] lg:w-full" />
-
-    <div class="px-6 pb-12 lg:px-8 lg:pb-16">
-      <p class="label mt-10 max-w-[46ch] text-blue lg:mt-14">
-        Small, useful things. Each one is a real product with a real URL — not a
-        case study for something that never launched.
-      </p>
-    </div>
-  </section>
+    <p slot="tail" class="label mt-10 max-w-[46ch] text-blue lg:mt-14">
+      Small, useful things. Each one is a real product with a real URL — not a
+      case study for something that never launched.
+    </p>
+  </RibbonHeader>
 
   <div class="grid grid-cols-1 lg:grid-cols-3">
     {batches.map((batch) => <BatchCard batch={batch} />)}

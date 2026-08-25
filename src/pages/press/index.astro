@@ -1,5 +1,6 @@
 ---
 import Layout from '@layouts/Layout.astro'
+import RibbonHeader from '@components/RibbonHeader.astro'
 import { getPosts, formatDate } from '@lib/lab'
 
 const posts = await getPosts()
@@ -9,18 +10,19 @@ const posts = await getPosts()
   title="Press"
   description="Build logs and technical notes from the studio — what we're making and what it taught us."
 >
-  <section class="border-b px-6 py-12 lg:px-8 lg:py-16">
+  <RibbonHeader>
     <p class="label text-red-deep">Press</p>
-    <h1 class="display mt-3 text-[clamp(2.75rem,9vw,6rem)]">
+    <h1 class="display mt-3 text-[clamp(1.9rem,calc(9vw_-_8px),4.6rem)] lg:text-[clamp(4.6rem,6.4vw,6rem)]">
       Notes from<br />the bench.
     </h1>
-    <p class="label mt-6 max-w-[52ch] text-blue">
+
+    <p slot="tail" class="label mt-10 max-w-[52ch] text-blue lg:mt-14">
       Build logs and technical notes. Essays and longer writing live at{' '}
       <a href="https://markmcdermott.io" class="underline hover:text-red-deep">
         markmcdermott.io
       </a>.
     </p>
-  </section>
+  </RibbonHeader>
 
   {
     posts.length === 0 ? (

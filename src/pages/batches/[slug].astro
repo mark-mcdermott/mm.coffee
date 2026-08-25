@@ -1,6 +1,7 @@
 ---
 import { render } from 'astro:content'
 import Layout from '@layouts/Layout.astro'
+import RibbonHeader from '@components/RibbonHeader.astro'
 import BatchArt from '@components/BatchArt.astro'
 import { getBatches, batchNumber, accentText } from '@lib/batches'
 
@@ -20,13 +21,18 @@ const { Content } = await render(batch)
 
 <Layout title={title} description={summary}>
   <article>
-    <header class="border-b px-6 py-12 lg:px-8 lg:py-16">
+    <RibbonHeader as="header">
       <p class:list={['label', accentText(accent)]}>
         Batch {batchNumber(order)}
       </p>
-      <h1 class="display display-title mt-3 text-[clamp(2.75rem,10vw,7rem)]">{title}</h1>
-      <p class="label mt-4 max-w-[52ch] text-blue">{tagline}</p>
-    </header>
+      {/* Batch titles are arbitrary too, and one of them is a domain with no
+          break in it, so this stays modest and lets `break-words` do its job. */}
+      <h1 class="display display-title mt-3 break-words text-[clamp(1.75rem,calc(9vw_-_8px),4rem)] lg:text-[clamp(3.4rem,5vw,5rem)]">
+        {title}
+      </h1>
+
+      <p slot="tail" class="label mt-10 max-w-[52ch] text-blue lg:mt-14">{tagline}</p>
+    </RibbonHeader>
 
     <div class="grid lg:grid-cols-[1fr_20rem]">
       <div class="border-b px-6 py-10 lg:border-b-0 lg:border-r lg:px-8">
