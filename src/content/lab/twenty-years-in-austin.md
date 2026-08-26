@@ -81,7 +81,7 @@ My wife and I got married at a lovely wedding venue in South Austin. I think it 
 All non-native Austinites claim that Austin's prime was right when they got there and that it's all been downhill since. My early Austin era smelled like a dive bar and sounded like tinnitus. Skrillex played Cheer Up Charlie's packed outdoor stage, followed by Moby. Tycho played in a SXSW tent the size of my bedroom. Ghostland Observatory played a packed parking lot show with kids hanging from the set rafters. My wife and I saw Daikaiju play three times: sweaty, tattooed dudes with no shirts wearing kabuki masks lighting their cymbals on fire with lighter fluid. My buddy broke his glasses at their show when a crowdsurfer accidentally kicked him in the face. My wife and I went and saw This Will Destroy You, but she thought the music was too slow and boring and we left (I had told her prior that their music would be slow and boring).
 
 ![Daikaiju playing an outdoor stage in kabuki masks, shirtless, guitars slung high](../../assets/lab/daikaiju.jpg "aside")
-Daikaiju at an East Austin surf-rock show.
+Daikaiju at Surf By Surf East, The Vortex, 3/14/15.
 
 There were other little coffeeshops I'd go to, too. Monkey Nest was there on Burnet. It was always really loud with undergrad students. Later Summer Moon coffeeshops started popping up around Austin. There was something decidedly un-Austin about Summer Moon. Beautiful, expensive looking branding. Coffee tasting more like a sugary dessert than a watery, black all-nighter patio coffee at Epoch. But we eventually succumbed to temptations.
 
