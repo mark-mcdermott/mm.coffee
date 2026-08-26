@@ -364,14 +364,18 @@
     font-weight: 700;
   }
 
-  /* Portrait scans run tall, so images are bounded on the height and let the
-     width follow; a 1px ink border keeps them inside the ruled grid rather
-     than floating on the paper. */
+  /* A 1px ink border keeps images inside the ruled grid rather than floating
+     on the paper.
+
+     Width is deliberately left alone: the width/height attributes reach the
+     element as presentational hints, and that definite width is what lets the
+     aspect ratio reserve the space before a lazy image loads. Setting
+     `width: auto` here collapses every unloaded image to its border and shifts
+     the page by however tall it turns out to be. */
   .prose img {
     display: block;
-    width: auto;
     max-width: 100%;
-    max-height: 34rem;
+    height: auto;
     border: 1px solid var(--color-ink);
   }
 
