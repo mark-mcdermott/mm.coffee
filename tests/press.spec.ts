@@ -1,5 +1,6 @@
 import { test, expect, type Page } from '@playwright/test'
 import { SITE } from '../src/lib/site'
+import { buildOutput } from './support/build-output'
 
 test.describe('press index', () => {
   test.beforeEach(async ({ page }) => {
@@ -24,6 +25,46 @@ test.describe('press index', () => {
     for (const href of hrefs) {
       expect((await request.get(href)).status(), `${href} is missing`).toBe(200)
     }
+  })
+})
+
+/**
+ * What the site lists is decided at build time, so these read the build output
+ * rather than the dev server. The admin suite writes a scratch entry into
+ * `src/content/lab/` while it runs, which makes the dev server re-sync the
+ * collection underneath whatever else is mid-request — and a listing read
+ * during that window is a coin toss. The built pages can't move.
+ */
+test.describe('an unlisted post', () => {
+  const UNLISTED = '/press/twenty-years-in-austin'
+
+  /** Post links inside a built page's `<main>`, in document order. */
+  const postLinks = (page: string) => {
+    const main = buildOutput(page).match(/<main[^>]*>([\s\S]*)<\/main>/)![1]
+    return [...main.matchAll(/href="(\/press\/[a-z0-9-]+)"/g)].map((m) => m[1])
+  }
+
+  test('is kept off the index and the feed', () => {
+    const listed = postLinks('press/index.html')
+
+    expect(listed.length).toBeGreaterThan(0)
+    expect(listed).not.toContain(UNLISTED)
+
+    expect(buildOutput('rss.xml')).not.toContain(`${SITE.url}${UNLISTED}`)
+  })
+
+  test('is stepped over by the older/newer chain', () => {
+    // The newest listed post would otherwise have it as its older neighbour.
+    expect(postLinks('press/outline-the-logo/index.html')).not.toContain(UNLISTED)
+  })
+
+  test('is still a real page, in the sitemap and linked to', async ({ page, request }) => {
+    expect((await request.get(UNLISTED)).status()).toBe(200)
+    expect(buildOutput('sitemap-0.xml')).toContain(`${SITE.url}${UNLISTED}`)
+
+    // The origin line in the header is what carries people to it.
+    await page.goto('/')
+    await expect(page.locator(`header a[href="${UNLISTED}"]`)).toHaveCount(1)
   })
 })
 

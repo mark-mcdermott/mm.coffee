@@ -25,6 +25,12 @@ rendering with `export const prerender = false`.
 - **Lab posts** support `draft: true` — visible in `pnpm dev`, excluded from
   production builds and from the RSS feed. Dates are coerced, so an unquoted
   `date: 2026-08-14` in frontmatter is fine
+- **`unlisted: true`** is the other half of that: the post still builds, keeps
+  its URL and its place in the sitemap, but drops out of the press index, the
+  feed and the older/newer chain. For a piece that belongs on the site but not
+  in the run of build logs — something links to it on purpose. `getPosts()` is
+  everything; `getListedPosts()` is what the site lists, and is what a listing
+  should call
 - **Longform posts** set `layout: longform` in frontmatter, which widens the
   measure from 61 characters to 71 and unlocks plates. Everything else stays on
   the standard measure
