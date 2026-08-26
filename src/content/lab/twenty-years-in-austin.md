@@ -41,7 +41,7 @@ After S Collective was uShip. I remember wearing a suit to the interview and the
 uShip had Razor scooters around the office, although I seemed to be the only person who actually used them. I'd ride one from my desk to the coffee station. I actually got pretty good at riding one with a full cup of coffee. I was so new to office life that I didn’t know you weren’t supposed to put an empty coffee carafe back on the hot plate, and I broke a couple before they made an announcement about it.
 
 ![Three of us around a table in a dim coffeeshop, two laptops open and a glass mug of black coffee in the foreground](../../assets/lab/eastside-coffeeshop.jpg)
-An East Austin coffeeshop. Possibly Rio Rita?
+An Austin coffeeshop, circa 2010. Name lost to memory.
 
 I always felt awkward at uShip. It was a pretty hip crowd that hosted local bands for SXSW, tapped office kegs on Friday afternoons and rented Lake Travis party barges for offsites. I had never worked in large codebases and felt like a WWII codebreaker trying to decipher what these thousands of .NET C# files were doing.
 
