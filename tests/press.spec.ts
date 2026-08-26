@@ -1,4 +1,4 @@
-import { test, expect } from '@playwright/test'
+import { test, expect, type Page } from '@playwright/test'
 import { SITE } from '../src/lib/site'
 
 test.describe('press index', () => {
@@ -74,5 +74,101 @@ test.describe('feed', () => {
     await expect(
       page.locator('link[rel="alternate"][type="application/rss+xml"]')
     ).toHaveCount(1)
+  })
+})
+
+/**
+ * The longform layout is opted into per post and a treatment per image, so
+ * these check both halves: that an aside leaves the measure when there is room,
+ * that it falls back into the column when there is not, and that neither
+ * happens to a post that never asked for it.
+ *
+ * One of them guards the rule that treatment is a decision written down per
+ * image, never read off the image itself.
+ */
+test.describe('the longform layout', () => {
+  const geometry = (page: Page) =>
+    page.evaluate(() => {
+      const box = (sel: string) => document.querySelector(sel)!.getBoundingClientRect()
+      return {
+        textRight: Math.round(box('.prose > p:not([data-treatment])').right),
+        asideLeft: Math.round(box('.prose > [data-treatment="aside"]').left),
+        scrollWidth: document.documentElement.scrollWidth,
+        clientWidth: document.documentElement.clientWidth,
+      }
+    })
+
+  test('breaks an aside out of the measure when the window is wide enough', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.goto('/press/twenty-years-in-austin')
+
+    const { textRight, asideLeft, scrollWidth, clientWidth } = await geometry(page)
+
+    expect(asideLeft).toBeGreaterThan(textRight)
+    // Breaking out must not be the same thing as pushing the page sideways.
+    expect(scrollWidth).toBe(clientWidth)
+  })
+
+  test('keeps the aside in the column when there is no room beside it', async ({ page }) => {
+    await page.setViewportSize({ width: 1024, height: 900 })
+    await page.goto('/press/twenty-years-in-austin')
+
+    const { textRight, asideLeft, scrollWidth, clientWidth } = await geometry(page)
+
+    expect(asideLeft).toBeLessThan(textRight)
+    expect(scrollWidth).toBe(clientWidth)
+  })
+
+  test('leaves a post that did not ask for it on the standard measure', async ({ page }) => {
+    await page.goto('/press/outline-the-logo')
+
+    await expect(page.locator('.prose')).toHaveCount(1)
+    await expect(page.locator('.prose-longform')).toHaveCount(0)
+  })
+
+  test('gives every treated image a treatment from the vocabulary', async ({ page }) => {
+    await page.goto('/press/twenty-years-in-austin')
+
+    const treatments = await page
+      .locator('.prose [data-treatment]')
+      .evaluateAll((els) => els.map((el) => el.getAttribute('data-treatment')))
+
+    expect(treatments.length).toBeGreaterThan(0)
+    expect(treatments.every((t) => t === 'aside' || t === 'wide')).toBe(true)
+
+    // Untreated images are the default, so the two counts have to add up.
+    const total = await page.locator('.prose img').count()
+    const treated = await page.locator('.prose [data-treatment] img').count()
+    expect(treated).toBe(treatments.length)
+    expect(total).toBeGreaterThan(treated)
+  })
+
+  test('does not derive treatment from the shape of the image', async ({ page }) => {
+    await page.goto('/press/twenty-years-in-austin')
+
+    // Astro sets width/height on every image, so shape is readable without
+    // waiting for any of them to load.
+    const images = await page.locator('.prose img').evaluateAll((imgs) =>
+      imgs.map((img) => ({
+        aside: img.closest('[data-treatment="aside"]') !== null,
+        portrait: Number(img.getAttribute('height')) > Number(img.getAttribute('width')),
+      }))
+    )
+
+    // Both treatments carry both shapes. No rule keyed on aspect ratio could
+    // produce this article, which is the point — the Markdown decides.
+    for (const aside of [true, false]) {
+      for (const portrait of [true, false]) {
+        expect(images.some((i) => i.aside === aside && i.portrait === portrait)).toBe(true)
+      }
+    }
+  })
+
+  test('leaves no treatment marker behind on the image', async ({ page }) => {
+    await page.goto('/press/twenty-years-in-austin')
+
+    // The marker is written as the image title; the plugin has to strip it or
+    // it surfaces as a tooltip reading "aside".
+    await expect(page.locator('.prose img[title]')).toHaveCount(0)
   })
 })

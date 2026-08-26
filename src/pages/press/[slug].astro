@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 }
 
 const { post, newer, older } = Astro.props
-const { title, subtitle, date, tags, draft } = post.data
+const { title, subtitle, date, tags, draft, layout } = post.data
 const { Content } = await render(post)
 ---
 
@@ -40,7 +40,9 @@ const { Content } = await render(post)
       {subtitle && <p slot="tail" class="label mt-10 max-w-[56ch] text-blue lg:mt-14">{subtitle}</p>}
     </RibbonHeader>
 
-    <div class="prose px-6 py-10 lg:px-8 lg:py-14">
+    <div
+      class:list={['prose', layout === 'longform' && 'prose-longform', 'px-6 py-10 lg:px-8 lg:py-14']}
+    >
       <Content />
     </div>
 

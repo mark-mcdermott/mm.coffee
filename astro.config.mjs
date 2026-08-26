@@ -3,6 +3,8 @@ import { defineConfig, fontProviders } from 'astro/config'
 import tailwindcss from '@tailwindcss/vite'
 import vercel from '@astrojs/vercel'
 import sitemap from '@astrojs/sitemap'
+import { satteri } from '@astrojs/markdown-satteri'
+import { satteriImageTreatment } from './src/lib/satteri-image-treatment.mjs'
 
 // https://astro.build/config
 export default defineConfig({
@@ -43,6 +45,11 @@ export default defineConfig({
   },
 
   markdown: {
+    // Sätteri is Astro 7's default Markdown processor; naming it explicitly is
+    // what allows a plugin to be added. Features are left at their defaults, so
+    // this parses exactly as it did before.
+    processor: satteri({ mdastPlugins: [satteriImageTreatment] }),
+
     shikiConfig: {
       // Muted and low-chroma, so highlighted code sits beside the palette
       // rather than competing with it. The block's background is overridden to

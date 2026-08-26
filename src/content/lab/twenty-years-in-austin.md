@@ -5,6 +5,7 @@ date: 2026-08-15
 tags:
   - studio
   - writing
+layout: longform
 draft: false
 ---
 
@@ -42,21 +43,29 @@ I started wondering if having a CS degree would help me. I considered a second u
 
 For many years in this era, I'd study late into the night (often at coffeeshops), then sleep 3 or 4 hours and then slam espressos the next day to get through work. I was never proud of it and knew it couldn't be improving my body.
 
+![A laptop, an open textbook, a legal pad and a Starbucks cup on a cafe table](../../assets/lab/studying-at-starbucks.jpg "aside")
+
 For years I lived on the drag in Austin near University of Texas at 30th and Guadalupe in a brown-brick apartment building with faded beige trim and burnt-orange doors. It was actually about 100 feet from the drag, behind the old firehouse, which was then a dance studio. I lived across the street from El Patio, a family run TexMex place, and half a block from Wheatsville, the worker-owned organic food co-op.
+
+![Me standing barefoot in the doorway of apartment 113, a brick building with green trim](../../assets/lab/3000-guadalupe-apt.jpg)
 
 I lived in an efficiency unit and next to me lived a guitar player who I could hear practicing through the walls. It never bothered me. I grew up listening to my dad practicing clarinet every day. His childhood aspiration had been to play like Benny Goodman, who was sort of a rock star to my dad. There is always something soothing to me about hearing people play scales over and over.
 
-![My dad standing at a music stand, playing clarinet](../../assets/lab/dad-playing-clarinet.jpg)
+![My dad standing at a music stand, playing clarinet](../../assets/lab/dad-playing-clarinet.jpg "aside")
 
 I first met my wife at Spider House Cafe, about a block from my apartment. I used to go there all the time and study and drink coffee and eat nachos. It was a quirky place with weird decorations like a rusty bumper car and a fountain with a cherub urinating into an old bathtub. There was a random tattoo parlor at the back of the patio and later, a delicious crêpe food truck appeared called DJ Crepes with a Miami Vice-inspired logo. Spider House closed during Covid.
 
+![The Spider House patio: mismatched tables, a plaster statue and a giant letter A studded with bulbs](../../assets/lab/spider-house.jpg)
+
 My wife and I used to hang out with friends I'd met in my graduate program. We'd all go to Epoch coffeeshop on South Congress and laugh a lot and work on our laptops. I also spent a lot of late nights around then studying at the 24-7 Epoch on North Loop. I always thought their coffee was kind of watery, but the music was always good. There were often other web developers there on their laptops, too. One time I met an artist there who painted a picture of me while I was working. I took art lessons from her for a bit after that.
 
-![An oil portrait of me in profile, glasses on, painted at Epoch while I worked](../../assets/lab/portrait-at-epoch.jpg)
+![An oil portrait of me in profile, glasses on, painted at Epoch while I worked](../../assets/lab/portrait-at-epoch.jpg "aside")
 
 My wife and I got married at a lovely wedding venue in South Austin. I think it was 114 degrees. At the last minute, we rented big fans, but they barely helped. Heat aside, it was a beautiful day. I got to chat with family members I hadn't seen for years and many whom I haven't seen since. I don't think I've ever seen a more beautiful woman than my wife on that day.
 
 All non-native Austinites claim that Austin's prime was right when they got there and that it's all been downhill since. My early Austin era smelled like a dive bar and sounded like tinnitus. Skrillex played Cheer Up Charlie's packed outdoor stage, followed by Moby. Tycho played in a SXSW tent the size of my bedroom. Ghostland Observatory played a packed parking lot show with kids hanging from the set rafters. My wife and I saw Daikaiju play three times: sweaty, tattooed dudes with no shirts wearing kabuki masks lighting their cymbals on fire with lighter fluid. My buddy broke his glasses at their show when a crowdsurfer accidentally kicked him in the face. My wife and I went and saw This Will Destroy You, but she thought the music was too slow and boring and we left (I had told her prior that their music would be slow and boring).
+
+![Daikaiju playing an outdoor stage in kabuki masks, shirtless, guitars slung high](../../assets/lab/daikaiju.jpg "aside")
 
 There were other little coffeeshops I'd go to, too. Monkey Nest was there on Burnet. It was always really loud with undergrad students. Later Summer Moon coffeeshops started popping up around Austin. There was something decidedly un-Austin about Summer Moon. Beautiful, expensive looking branding. Coffee tasting more like a sugary dessert than a watery, black all-nighter patio coffee at Epoch. But we eventually succumbed to temptations.
 
@@ -66,7 +75,11 @@ When the Occupy movement happened, people started sleeping in front of City Hall
 
 In the aughts, there was a tug of war in Austin between the '90s slacker Austin and the 2010s hustle hard, tech hub, "mini San Francisco" Austin. I would relax at Twin Falls on the weekends and would dutifully watch Linklater's "Slacker" once a year. But then I'd bust my butt learning web development and going to programmer meetups. I'd go to the Thich Nhat Hanh meditation group every Sunday and try to learn to be less type A. I'd go to Deer Park monastery in California and try to learn from the way the monastics walked so lightly.
 
+![A laptop, shoes and bare feet on the rock ledge beside the falls at Twin Falls](../../assets/lab/twin-falls.jpg)
+
 For my graduate program, I had the option of doing a thesis or taking some extra classes. Of course I chose the hard route, the thesis. I ended up building the software for it from scratch, and it took me an extra year and a half. I may have learned more writing that code than I did from anything else in the degree.
+
+![A hand-painted board nailed to a tree at Deer Park, reading "breathe you are alive"](../../assets/lab/deer-park-monastery.jpg "aside")
 
 After Schwab I thought I finally caught my white whale. A buddy from Texas State helped me get a programmer gig where he worked at Axzon, an engineering company. He and I were the whole software department. With his help, I set up a Jenkins CI/CD box and was writing a testing suite in Java. But a couple months in, the sales department had a rough quarter and half the company got laid off, including the entire software department.
 
