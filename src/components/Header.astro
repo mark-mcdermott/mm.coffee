@@ -83,12 +83,19 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
       <a href="/" aria-label="mm.coffee home">
         <Logo class="w-[16.8rem] text-ink" />
       </a>
-      <div class="ml-auto flex items-end gap-3 self-end">
+      {/* The origin line is the link, not just the globe beside it — a 20px
+          target was a lot to ask of anyone. `group` sits here rather than on the
+          globe so the meridians turn wherever in the line the pointer is. The
+          visible text says where the studio is, not where the link goes, so the
+          destination is spelled out for a screen reader after it. */}
+      <a
+        href="/press/twenty-years-in-austin"
+        class="group ml-auto flex items-end gap-3 self-end"
+      >
         <p class="label">Roasted daily<br />In Austin, Texas</p>
-        <a href="/press/twenty-years-in-austin" aria-label="Twenty years in Austin">
-          <Globe class="size-5" spin />
-        </a>
-      </div>
+        <Globe class="size-5" spin />
+        <span class="sr-only">Read the essay: Twenty Years in Austin</span>
+      </a>
     </div>
 
     <div class="flex items-center justify-between gap-8 border-l px-8 py-6">
