@@ -172,3 +172,59 @@ test.describe('the longform layout', () => {
     await expect(page.locator('.prose img[title]')).toHaveCount(0)
   })
 })
+
+/**
+ * A caption is set to the width of its picture rather than to the column, so
+ * these check the geometry that makes that true — several of the article's
+ * photos are narrower than the measure, and a caption running past its own
+ * image reads as a stray paragraph.
+ */
+test.describe('image captions', () => {
+  test('sets a caption to its image rather than to the column', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.goto('/press/twenty-years-in-austin')
+
+    const measure = await page
+      .locator('.prose > p:not([data-treatment])')
+      .first()
+      .evaluate((el) => el.getBoundingClientRect().width)
+
+    const figures = await page
+      .locator('.prose figure:not([data-treatment])')
+      .evaluateAll((els) =>
+        els.map((el) => ({
+          image: el.querySelector('img')!.getBoundingClientRect().width,
+          caption: el.querySelector('figcaption')!.getBoundingClientRect().width,
+        }))
+      )
+
+    expect(figures.length).toBeGreaterThan(0)
+    for (const { image, caption } of figures) {
+      expect(Math.round(caption)).toBe(Math.round(image))
+    }
+
+    // And at least one of them is genuinely narrower than the column, or the
+    // assertion above would hold whether or not the rule works.
+    expect(figures.some((f) => f.image < measure - 1)).toBe(true)
+  })
+
+  test('gives the caption something the alt text does not already say', async ({ page }) => {
+    await page.goto('/press/twenty-years-in-austin')
+
+    const figures = await page.locator('.prose figure').evaluateAll((els) =>
+      els.map((el) => ({
+        alt: el.querySelector('img')!.getAttribute('alt') ?? '',
+        caption: el.querySelector('figcaption')!.textContent!.trim(),
+      }))
+    )
+
+    expect(figures.length).toBeGreaterThan(0)
+    for (const { alt, caption } of figures) {
+      // The alt describes the picture for someone who can't see it; the caption
+      // says what it has to do with the paragraph above. Never the same string.
+      expect(alt.length).toBeGreaterThan(0)
+      expect(caption.length).toBeGreaterThan(0)
+      expect(caption).not.toBe(alt)
+    }
+  })
+})

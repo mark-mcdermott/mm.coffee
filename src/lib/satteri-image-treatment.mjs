@@ -1,7 +1,9 @@
 /**
- * Gives an image an explicit layout treatment, written as its title:
+ * Gives an image an explicit layout treatment, written as its title, and an
+ * optional caption, written on the line under it:
  *
  *     ![A photo of the thing](./thing.jpg "aside")
+ *     The thing, in the summer it was still standing.
  *
  * - `inline` — in the column, at the measure. The default; needs no marker.
  * - `aside`  — breaks out into the empty right-hand side of a longform post.
@@ -19,20 +21,49 @@
  * writes. A title that names no treatment is left alone and still renders as a
  * title.
  *
+ * The caption is the rest of the paragraph, so it stays ordinary Markdown and
+ * can carry a link. It can't share the title with the treatment, and it can't
+ * be the alt either: the two say different things to different people. The alt
+ * describes the picture for someone who can't see it; the caption tells
+ * everyone what it has to do with the paragraph above it. A captioned image
+ * becomes a `<figure>`; an uncaptioned one stays the paragraph it was.
+ *
  * Both halves have to happen here, on the Markdown AST. Astro tags each image
  * for `vite-plugin-markdown`, which replaces the element's attributes wholesale
  * with the processed image's — so a title cleared any later comes back as
- * `title=""`. Replacing the node is what drops it: `setProperty` does not take
- * `title`.
+ * `title=""`. Rebuilding the image node is what drops it: `setProperty` does
+ * not take `title`.
  *
  * @typedef {NonNullable<
  *   import('@astrojs/markdown-satteri').SatteriProcessorOptions['mdastPlugins']
  * >[number]} MdastPlugin
+ * @typedef {import('mdast').PhrasingContent} PhrasingContent
  */
 
 /** The default carries no attribute, so only the two that change layout are listed. */
 const TREATMENTS = new Set(['aside', 'wide'])
 const DEFAULT_TREATMENT = 'inline'
+
+/**
+ * The caption trailing an image, or `null` when what trails it isn't one.
+ *
+ * The line break between the two arrives as a newline on the front of the next
+ * text node, or as a `break` node if the line was ended with two spaces. Text
+ * carrying on from the image on the same line is neither, and means the
+ * paragraph is prose that happens to open with an image — left alone.
+ *
+ * @param {readonly PhrasingContent[]} nodes
+ * @returns {PhrasingContent[] | null}
+ */
+function captionFrom(nodes) {
+  const [first, ...rest] = nodes
+  if (!first) return []
+  if (first.type === 'break') return rest
+  if (first.type !== 'text' || !first.value.startsWith('\n')) return null
+
+  const value = first.value.slice(1)
+  return value ? [{ type: 'text', value }, ...rest] : rest
+}
 
 /** @type {MdastPlugin} */
 export const satteriImageTreatment = {
@@ -40,14 +71,25 @@ export const satteriImageTreatment = {
 
   paragraph(node, ctx) {
     const [image, ...rest] = node.children
-    if (rest.length || image?.type !== 'image' || !image.title) return
+    if (image?.type !== 'image') return
 
     const treatment = image.title
-    if (treatment !== DEFAULT_TREATMENT && !TREATMENTS.has(treatment)) return
+    if (treatment && treatment !== DEFAULT_TREATMENT && !TREATMENTS.has(treatment)) return
 
-    ctx.replaceNode(image, { type: 'image', url: image.url, alt: image.alt })
-    if (TREATMENTS.has(treatment)) {
-      ctx.setProperty(node, 'data', { hProperties: { 'data-treatment': treatment } })
-    }
+    const caption = captionFrom(rest)
+    if (!caption || (!caption.length && !treatment)) return
+
+    ctx.setProperty(node, 'children', [
+      { type: 'image', url: image.url, alt: image.alt },
+      ...(caption.length
+        ? [{ type: 'emphasis', data: { hName: 'figcaption' }, children: caption }]
+        : []),
+    ])
+
+    /** @type {Record<string, unknown>} */
+    const data = {}
+    if (caption.length) data.hName = 'figure'
+    if (TREATMENTS.has(treatment)) data.hProperties = { 'data-treatment': treatment }
+    ctx.setProperty(node, 'data', data)
   },
 }
