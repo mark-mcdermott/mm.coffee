@@ -7,6 +7,7 @@ tags:
   - writing
 layout: longform
 draft: false
+unlisted: true
 ---
 
 I'm an East-coaster, born and raised, who's also lived in Austin, Texas for two decades. I've lived in Austin now for as long as I lived in Pennsylvania. I wish I knew how many hours I've spent in Austin coffeeshops working on my laptop. It could easily be a whole year of my life.
@@ -28,12 +29,12 @@ One of the interviews I went to ended up being for a "psychic" who had written b
 
 My first web dev job was with a two-man company called S Collective. I took a pay cut from bagging groceries to get a foot in the door of the industry. I started in their office above the TV store and eventually they let me work from home (a couple blocks from the office). Stressful job, but we built some nice WordPress sites. We worked on the local Discount Electronics' website and built a site for the first city-wide initiative to get wifi in local restaurants and small businesses.
 
-![My bio on the S Collective team page: a photo of me in a suit at night with city lights behind me, headed "Mark McDermott, senior front end developer"](../../assets/lab/scollective-bio.png)
+![My bio on the S Collective team page: a photo of me in a suit at night with city lights behind me, headed "Mark McDermott, senior front end developer"](../../assets/lab/scollective-bio.png "aside")
 My bio on the S Collective team page. I did not write the copy.
 
 I also made sites on the side, usually for free, for some non-profits in this era. I was working the phones for the Austin GI Rights hotline and built their site, which I always liked. I also built a site for Under the Hood, a coffeehouse near Fort Hood started by antiwar veterans as a gathering place for soldiers. I built a site for an anarchist thrift shop in Drupal that was always a nightmare to maintain.
 
-![The Under The Hood Outreach Center and Cafe homepage on the Wayback Machine — a camouflage banner with dog tags and a cup of coffee over a wood-plank background, beside panels headed "Our Mission" and "House Rules"](../../assets/lab/under-the-hood-wayback.jpg)
+![The Under The Hood Outreach Center and Cafe homepage on the Wayback Machine — a camouflage banner with dog tags and a cup of coffee, over notices pinned to a corkboard: the Killeen address and opening hours, an "I want you" donation poster, and panels headed "Our Mission" and "House Rules"](../../assets/lab/under-the-hood-wayback.jpg)
 Under the Hood website, via the Internet Archive.
 
 After S Collective was uShip. I remember wearing a suit to the interview and they said they'd hire me but I couldn't wear the suit to work. I would ride my bike to the Austin Metrorail and take my bike on the train to get to the office downtown. I remember my first days walking into their office downtown near 3rd and Brazos. I really felt like a bigshot, working downtown and walking past the skyscrapers to get to work.
@@ -81,7 +82,7 @@ My wife and I got married at a lovely wedding venue in South Austin. I think it 
 All non-native Austinites claim that Austin's prime was right when they got there and that it's all been downhill since. My early Austin era smelled like a dive bar and sounded like tinnitus. Skrillex played Cheer Up Charlie's packed outdoor stage, followed by Moby. Tycho played in a SXSW tent the size of my bedroom. Ghostland Observatory played a packed parking lot show with kids hanging from the set rafters. My wife and I saw Daikaiju play three times: sweaty, tattooed dudes with no shirts wearing kabuki masks lighting their cymbals on fire with lighter fluid. My buddy broke his glasses at their show when a crowdsurfer accidentally kicked him in the face. My wife and I went and saw This Will Destroy You, but she thought the music was too slow and boring and we left (I had told her prior that their music would be slow and boring).
 
 ![Daikaiju playing an outdoor stage in kabuki masks, shirtless, guitars slung high](../../assets/lab/daikaiju.jpg "aside")
-Daikaiju at Surf By Surf East, The Vortex, 3/14/15.
+Daikaiju at Surf By Surf East, The Vortex, March 2015.
 
 There were other little coffeeshops I'd go to, too. Monkey Nest was there on Burnet. It was always really loud with undergrad students. Later Summer Moon coffeeshops started popping up around Austin. There was something decidedly un-Austin about Summer Moon. Beautiful, expensive looking branding. Coffee tasting more like a sugary dessert than a watery, black all-nighter patio coffee at Epoch. But we eventually succumbed to temptations.
 
