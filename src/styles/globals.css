@@ -315,6 +315,7 @@
 
     .prose-longform > [data-treatment='wide'] {
       width: 68rem;
+      max-width: none;
     }
 
     /* Floats leave the flow, so without this an aside hanging past the last
