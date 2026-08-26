@@ -440,6 +440,38 @@
     border: 1px solid var(--color-ink);
   }
 
+  /**
+   * A captioned image. The figure shrinks to the picture so the caption is set
+   * to the picture's width rather than the column's — several of these photos
+   * are narrower than the measure, and a caption running past its own image
+   * reads as a stray paragraph.
+   *
+   * `width: 0` is what keeps that honest: it takes the caption out of the
+   * figure's own width calculation, so the picture alone decides how wide the
+   * figure is, and `min-width` then pours the caption back across it. The
+   * 44rem ceiling is for a `wide` image, whose figure is far past a sensible
+   * line length for text this small.
+   */
+  .prose figure {
+    width: fit-content;
+    max-width: 100%;
+  }
+
+  /* Set as printed captions are: smaller than the copy, in the sepia rather
+     than the ink, so it reads as annotation and never as a paragraph that lost
+     its indent. Sentence case — the uppercase label voice is for two or three
+     words, not a sentence. */
+  .prose figcaption {
+    width: 0;
+    min-width: min(100%, 44rem);
+    margin-top: 0.65rem;
+    font-size: var(--text-label);
+    line-height: 1.6;
+    letter-spacing: 0.015em;
+    color: var(--color-orange-deep);
+    text-wrap: pretty;
+  }
+
   .prose blockquote {
     border-left: 3px solid var(--color-red);
     padding-left: 1.1rem;

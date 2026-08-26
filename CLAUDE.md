@@ -36,6 +36,14 @@ rendering with `export const prerender = false`.
   not from its aspect ratio, its size or its position. It is a decision written
   down per image, and asides are meant to stay occasional: the whitespace beside
   the column is part of the design, not a column waiting to be filled
+- **Image captions** are the line directly under the image, inside the same
+  paragraph — no blank line between them. A captioned image renders as a
+  `<figure>`; an uncaptioned one stays the paragraph it was. The caption is
+  ordinary Markdown, so it can carry a link. **It is never the alt text and
+  never repeats it**: the alt describes the picture for someone who can't see
+  it, the caption says what it has to do with the paragraph above. Captions are
+  set to the width of their picture rather than the column, so an image
+  narrower than the measure doesn't get a caption overhanging it
 - **TypeScript is strict.** No `any`
 
 ## Typography
