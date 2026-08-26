@@ -31,7 +31,7 @@ test.describe('press index', () => {
 /**
  * What the site lists is decided at build time, so these read the build output
  * rather than the dev server. The admin suite writes a scratch entry into
- * `src/content/lab/` while it runs, which makes the dev server re-sync the
+ * `src/content/press/` while it runs, which makes the dev server re-sync the
  * collection underneath whatever else is mid-request — and a listing read
  * during that window is a coin toss. The built pages can't move.
  */

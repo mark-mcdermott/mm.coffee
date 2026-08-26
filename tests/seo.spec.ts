@@ -60,7 +60,7 @@ test.describe('metadata', () => {
     expect(response.headers()['content-type']).toContain('image/png')
   })
 
-  test('lab posts declare themselves as articles', async ({ page }) => {
+  test('press posts declare themselves as articles', async ({ page }) => {
     await page.goto('/press/outline-the-logo')
 
     await expect(page.locator('meta[property="og:type"]')).toHaveAttribute('content', 'article')

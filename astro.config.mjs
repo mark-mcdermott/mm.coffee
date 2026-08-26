@@ -13,7 +13,7 @@ export default defineConfig({
 
   /**
    * The sections were renamed after the site was live, so the old paths still
-   * exist in search results, in anything anyone linked, and — for the lab —
+   * exist in search results, in anything anyone linked, and — for the press —
    * in the item URLs of a feed people may already be subscribed to. These keep
    * them working; without them every one of those becomes a 404.
    *

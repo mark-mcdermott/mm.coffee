@@ -1,13 +1,13 @@
 import { getCollection, type CollectionEntry } from 'astro:content'
 
-export type Post = CollectionEntry<'lab'>
+export type Post = CollectionEntry<'press'>
 
 /**
  * Posts newest first. Drafts are visible while developing and dropped from
  * production builds, so an unfinished post can live in the repo safely.
  */
 export async function getPosts(): Promise<Post[]> {
-  const posts = await getCollection('lab', ({ data }) => import.meta.env.DEV || !data.draft)
+  const posts = await getCollection('press', ({ data }) => import.meta.env.DEV || !data.draft)
   return posts.sort((a, b) => b.data.date.localeCompare(a.data.date))
 }
 

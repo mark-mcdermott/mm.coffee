@@ -35,14 +35,14 @@ src/
   assets/       logo and imagery
   components/   ui and svg art
   content/
-    programs/   one markdown file per project
-    lab/        blog posts
+    batches/    one markdown file per project
+    press/      blog posts
   layouts/
   pages/
   styles/
 ```
 
-Adding a project is a single Markdown file in `src/content/programs/`.
+Adding a project is a single Markdown file in `src/content/batches/`.
 
 ## Typography
 

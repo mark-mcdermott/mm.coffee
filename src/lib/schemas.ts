@@ -37,7 +37,7 @@ export const batchSchema = z.object({
   art: z.enum(['wolf', 'waves', 'chevrons']),
 })
 
-export const labSchema = z.object({
+export const pressSchema = z.object({
   title: z.string().min(1),
   subtitle: z.string().optional(),
   /**

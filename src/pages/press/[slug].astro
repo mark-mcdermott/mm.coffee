@@ -2,7 +2,7 @@
 import { render } from 'astro:content'
 import Layout from '@layouts/Layout.astro'
 import RibbonHeader from '@components/RibbonHeader.astro'
-import { getPosts, getListedPosts, formatLongDate } from '@lib/lab'
+import { getPosts, getListedPosts, formatLongDate } from '@lib/press'
 
 export async function getStaticPaths() {
   const posts = await getPosts()
