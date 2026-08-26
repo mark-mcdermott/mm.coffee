@@ -256,13 +256,74 @@
    *
    * The whole site is set in mono, which is punchy at label size but hard going
    * over several hundred words. So prose keeps the mono but buys back
-   * legibility: larger than the UI text, looser leading, and a measure capped
-   * around 68 characters.
+   * legibility: larger than the UI text, looser leading, and a capped measure.
+   *
+   * `max-width` bounds the padded box, so the 68ch cap is not 68 characters of
+   * text — the horizontal padding comes out of it, leaving 61 on the line.
    */
   .prose {
     max-width: 68ch;
     font-size: 0.9375rem;
     line-height: 1.85;
+  }
+
+  /**
+   * Essay-length posts, opted in with `layout: longform` in frontmatter.
+   *
+   * At a desk width the standard measure reads as a ribbon down the left of a
+   * mostly empty page, so this buys back ten characters a line — 640px of text,
+   * 71 characters. It stays pinned left: the asymmetry is the site's, and
+   * centring it would trade one problem for a blander one. The space this
+   * leaves on the right is where images and callouts can break out later.
+   */
+  .prose-longform {
+    max-width: 44rem;
+  }
+
+  /**
+   * Image treatments, chosen per image in the Markdown and never inferred from
+   * the image itself — a portrait is as free to be inline as a landscape is to
+   * be an aside. `inline` is the default and carries no attribute.
+   *
+   * An `aside` steps out of the measure into the empty right-hand side, at the
+   * point in the text that mentions it. Floated rather than given a grid track,
+   * because a float lets the paragraphs carry on at full measure past it — a
+   * grid row would punch a hole in the column as tall as the image. The
+   * negative margin carries it clear of the measure entirely, so it never
+   * shortens a line box, and `clear` keeps two asides from landing on top of
+   * each other.
+   *
+   * A `wide` stays in the column's flow but runs past the measure, stopping
+   * where an aside ends so the two share a right edge.
+   *
+   * Both only above 80rem. An aside needs the measure, a 4rem gutter and its
+   * own 24rem, and below that there is nowhere to put either that does not
+   * crowd the text or push the page sideways — so they stay in the column.
+   */
+  @media (width >= 80rem) {
+    .prose-longform > [data-treatment='aside'] {
+      float: right;
+      clear: right;
+      width: 24rem;
+      margin-top: 0.4em;
+      margin-right: -28rem;
+      /* Sets the gap to the next aside down rather than moving this one: a
+         cleared float clears the margin box. Without it two asides mentioned a
+         few paragraphs apart butt together and read as a sidebar. */
+      margin-bottom: 5rem;
+    }
+
+    .prose-longform > [data-treatment='wide'] {
+      width: 68rem;
+    }
+
+    /* Floats leave the flow, so without this an aside hanging past the last
+       paragraph would sit on top of the older/newer nav. */
+    .prose-longform::after {
+      content: '';
+      display: block;
+      clear: both;
+    }
   }
 
   .prose > * + * {

@@ -25,6 +25,17 @@ rendering with `export const prerender = false`.
 - **Lab posts** support `draft: true` — visible in `pnpm dev`, excluded from
   production builds and from the RSS feed. Dates are coerced, so an unquoted
   `date: 2026-08-14` in frontmatter is fine
+- **Longform posts** set `layout: longform` in frontmatter, which widens the
+  measure from 61 characters to 71 and unlocks plates. Everything else stays on
+  the standard measure
+- **Image treatment** is written as the image's title: `inline` (the default,
+  needs no marker), `aside` (breaks into the empty right of a longform post) or
+  `wide` (runs past the measure, still in flow) — `![alt](./x.jpg "aside")`.
+  `src/lib/satteri-image-treatment.mjs` turns it into a `data-treatment`
+  attribute and drops the title. **Never derive the treatment from the image** —
+  not from its aspect ratio, its size or its position. It is a decision written
+  down per image, and asides are meant to stay occasional: the whitespace beside
+  the column is part of the design, not a column waiting to be filled
 - **TypeScript is strict.** No `any`
 
 ## Typography
@@ -58,6 +69,15 @@ type, rules, and fills — never small text.
 
 ## Toolchain notes
 
+- **Don't turn on Sätteri's `directive` feature.** It reads `:1` as a text
+  directive and silently eats it, which quietly rewrites every contrast ratio on
+  the site — `3.94:1` renders as `3.94`. That is why a plate is marked with an
+  image title rather than the `:::plate` syntax that would otherwise be the
+  obvious way to write it.
+- `markdown.processor` is named explicitly in `astro.config.mjs` so a plugin can
+  be attached. It is the same Sätteri processor Astro 7 uses by default, with
+  features left alone, so naming it changes no rendered output — the build was
+  diffed page by page to confirm that.
 - `astro check` needs **TypeScript 6.x**. TypeScript 7's native compiler doesn't yet
   expose the programmatic API the checker relies on, so don't bump it to 7.
 - `build:icons` and `build:og` import `src/lib/logo.ts` directly and rely on Node's

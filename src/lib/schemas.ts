@@ -50,6 +50,11 @@ export const labSchema = z.object({
     .transform((d) => d.toISOString().slice(0, 10))
     .meta(renderedAs('date')),
   tags: z.array(z.string()).default([]),
+  /**
+   * `longform` widens the measure for essay-length posts. The column stays
+   * pinned left either way — the asymmetry is the site's, not an oversight.
+   */
+  layout: z.enum(['standard', 'longform']).default('standard'),
   /** Drafts are written locally but excluded from production builds. */
   draft: z.boolean().default(false),
 })
