@@ -19,6 +19,8 @@ In my first few years in Austin I worked a bunch of random not-sitting-around-in
 ![Hello Kitty spray-painted on a cream brick wall beside a parking sign, with "Hello Austin" written next to it in the same hand](../../assets/press/hello-austin.jpg "aside")
 Hello Austin. Circa 2011.
 
+I went to weekly poetry slams at the Scoot Inn for a while and somehow ended up playing in a competitive Skee-Ball league there, too.
+
 I was an autistic kid on a 286 PC with a 2400 baud internet connection in the pre-internet BBS and AOL era of the early nineties. When the internet took off, a cousin of mine who made a lot of money in web development suggested I become a web developer. I wasn't sure where to start. I started learning PHP on my own. I built a portfolio website for a co-worker who was an artist. I learned so much while building that site about HTTP requests, PHP, AJAX and just programming in general. I've always felt bad about how buggy that site was. Although I haven't talked to that co-worker in 15 years, I just found their current website. I also built a memorial site for a co-worker who'd passed away, though it’s no longer online. At some point I also owned dontbesuchachicken.com. The entire website was this animated GIF.
 
 ![An animated GIF of a chicken in headphones hunched over a pair of turntables in a dark club, a spiral pattern spinning on the TV behind it while a second chicken struts across the checkered floor](../../assets/press/dj-chicken.gif)
@@ -81,7 +83,7 @@ My dad channeling Benny Goodman.
 I first met my wife at Spider House Cafe, about a block from my apartment. I used to go there all the time and study and drink coffee and eat nachos. It was a quirky place with weird decorations like a rusty bumper car and a fountain with a cherub urinating into an old bathtub. There was a random tattoo parlor at the back of the patio and later, a delicious crêpe food truck appeared called DJ Crepes with a Miami Vice-inspired logo. Spider House closed during Covid.
 
 ![The Spider House patio: mismatched tables, a plaster statue and a giant letter A studded with bulbs](../../assets/press/spider-house.jpg)
-Spider House Cafe, a block from my apartment.
+Spider House Cafe, a block from my apartment. Circa 2013.
 
 My wife and I used to hang out with friends I'd met in my graduate program. We'd all go to Epoch coffeeshop on South Congress and laugh a lot and work on our laptops. I also spent a lot of late nights around then studying at the 24-7 Epoch on North Loop. I always thought their coffee was kind of watery, but the music was always good. There were often other web developers there on their laptops, too. One time I met an artist there who painted a picture of me while I was working. I took art lessons from her for a bit after that.
 
