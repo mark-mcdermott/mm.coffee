@@ -22,7 +22,7 @@ export const SITE = {
   // Packaging panel copy.
   batch: '0001',
   batchCode: 'MM013379602024',
-  roast: 'Full City',
+  roast: 'Medium',
   weight: 'Net 12oz (340g)',
   notes: 'Clean code, good taste, and a little bit weird.',
 } as const
