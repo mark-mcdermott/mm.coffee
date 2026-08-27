@@ -1,7 +1,6 @@
 ---
 import Logo from '@components/Logo.astro'
 import Globe from '@components/Globe.astro'
-import StatusDot from '@components/StatusDot.astro'
 import { NAV } from '@lib/nav'
 
 const path = Astro.url.pathname
@@ -16,7 +15,6 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
     </a>
 
     <div class="flex shrink-0 items-center gap-3">
-      <StatusDot class="hidden sm:flex" />
       <button
         type="button"
         id="nav-toggle"
@@ -77,7 +75,7 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
     </nav>
   </div>
 
-  <!-- Desktop: two cells, matching the comp — [wordmark + origin] | [nav + status] -->
+  <!-- Desktop: two cells, matching the comp — [wordmark + origin] | [nav] -->
   <div class="hidden lg:grid lg:grid-cols-2 lg:items-stretch">
     <div class="flex items-center gap-8 px-8 py-6">
       <a href="/" aria-label="mm.coffee home">
@@ -119,8 +117,6 @@ const isActive = (href: string) => path === href || path.startsWith(`${href}/`)
           }
         </ul>
       </nav>
-
-      <StatusDot />
     </div>
   </div>
 </header>

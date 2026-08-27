@@ -50,9 +50,6 @@
       for (const el of document.querySelectorAll('[data-status-for]')) {
         paint(el, 'unknown', STATUS_LABELS.unknown)
       }
-      for (const el of document.querySelectorAll('[data-status-summary]')) {
-        paint(el, 'unknown', STATUS_LABELS.unknown)
-      }
       return
     }
 
@@ -62,10 +59,6 @@
     }
 
     const overall = summarise(payload.results.map((r) => r.state))
-
-    for (const el of document.querySelectorAll('[data-status-summary]')) {
-      paint(el, overall, STATUS_LABELS[overall])
-    }
 
     for (const el of document.querySelectorAll('[data-status-light]')) {
       el.classList.remove('bg-signal', 'bg-red-deep', 'bg-ink', 'opacity-30')
