@@ -16,9 +16,15 @@ Before I moved to Austin I took a road trip around the US to figure out where I 
 
 In my first few years in Austin I worked a bunch of random not-sitting-around-in-coffeeshop jobs: landscaping, cleaning cages at an animal shelter and bagging groceries. Then I decided I probably needed a career rather than just a job. And I had no interest in using my Penn State econ degree.
 
+![Me on a roadside in a Statue of Liberty costume and foam crown, holding a large red arrow sign reading LIBERTY TAX](../../assets/press/liberty-tax.jpg)
+Career development.
+
 I was an autistic kid on a 286 PC with a 2400 baud internet connection in the pre-internet BBS and AOL era of the early nineties. When the internet took off, a cousin of mine who made a lot of money in web development suggested I become a web developer. I wasn't sure where to start. I started learning PHP on my own. I built a portfolio website for a co-worker who was an artist. I learned so much while building that site about HTTP requests, PHP, AJAX and just programming in general. I've always felt bad about how buggy that site was. Although I haven't talked to that co-worker in 15 years, I just found their current website. I also built a memorial site for a co-worker who'd passed away, though it’s no longer online.
 
 While I was working at the animal shelter, I built a website for them. It had pretty sweet "web 2.0" reflecting buttons and a cute dog with its paws hanging past the hero area. Not long after I left, I believe the shelter was shut down because of poor treatment of animals. I also built a site for a restaurant next door to the shelter, Wild Bubba's Wild Game Grill. I attempted a photorealistic collage style with that one. It was fun to make. Later the Circuit of the Americas racetrack was built about a mile from there.
+
+![Hello Kitty spray-painted on a cream brick wall beside a parking sign, with "Hello Austin" written next to it in the same hand](../../assets/press/hello-austin.jpg)
+Hello Austin.
 
 Around this time I started applying to web development jobs in Austin. I paid a [designer](https://sheamediaco.com) whose work I really liked to make a photoshop mockup for me and I sliced it and coded it. I just found the site on the Internet Archive Wayback Machine and it's pretty hilarious ("I got a fever and the only prescription is more jQuery"). I got a friend to take a photo of me working on my laptop outside a Starbucks. Amazingly, that site did land me a web dev job.
 
