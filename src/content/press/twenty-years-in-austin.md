@@ -37,7 +37,7 @@ One of the interviews I went to ended up being for a "psychic" who had written b
 
 My first web dev job was with a two-man company called S Collective. I took a pay cut from bagging groceries to get a foot in the door of the industry. I started in their office above the TV store and eventually they let me work from home (a couple blocks from the office). Stressful job, but we built some nice WordPress sites. We worked on the local Discount Electronics' website and built a site for the first city-wide initiative to get wifi in local restaurants and small businesses.
 
-![My bio on the S Collective team page: a photo of me in a suit at night with city lights behind me, headed "Mark McDermott, senior front end developer"](../../assets/press/scollective-bio.png "aside")
+![My bio on the S Collective team page: a photo of me in a suit at night with city lights behind me, headed "Mark McDermott, senior front end developer"](../../assets/press/scollective-bio.png)
 My bio on the S Collective team page, 2010. I did not write the copy.
 
 I also made sites on the side, usually for free, for some non-profits in this era. I was working the phones for the Austin GI Rights hotline and built their site, which I always liked. I also built a site for Under the Hood, a coffeehouse near Fort Hood started by antiwar veterans as a gathering place for soldiers. I built a site for an anarchist thrift shop in Drupal that was always a nightmare to maintain.
