@@ -14,7 +14,7 @@ export interface EntrySummary {
   slug: string
   title: string
   draft: boolean
-  /** Lab posts sort by this; collections without a date fall back to slug order. */
+  /** Press posts sort by this; collections without a date fall back to slug order. */
   date?: string
   order?: number
 }

@@ -6,7 +6,7 @@
  * that isn't content.
  */
 import type { ZodType } from 'zod'
-import { labSchema, batchSchema } from '@lib/schemas'
+import { pressSchema, batchSchema } from '@lib/schemas'
 
 export interface AdminCollection {
   readonly label: string
@@ -24,10 +24,10 @@ export const COLLECTIONS = {
     schema: batchSchema,
     blurb: 'Projects on the roster',
   },
-  lab: {
+  press: {
     label: 'Press',
-    dir: 'src/content/lab',
-    schema: labSchema,
+    dir: 'src/content/press',
+    schema: pressSchema,
     blurb: 'Posts and writing',
   },
 } as const satisfies Record<string, AdminCollection>
@@ -45,7 +45,7 @@ export const isCollectionKey = (value: string): value is CollectionKey =>
  */
 const SLUG = /^[a-z0-9]+(?:-[a-z0-9]+)*$/
 
-/** `/admin/lab/new` is the editor's create mode, so nothing may be filed under it. */
+/** `/admin/press/new` is the editor's create mode, so nothing may be filed under it. */
 const RESERVED = new Set(['new'])
 
 export const isSlug = (value: string): boolean =>

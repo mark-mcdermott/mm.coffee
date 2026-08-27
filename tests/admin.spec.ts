@@ -66,7 +66,7 @@ test.describe('the form is derived from the schema', () => {
   })
 
   test('honours the control hints the schema carries', async ({ page }) => {
-    await page.goto('/admin/lab/twenty-years-in-austin')
+    await page.goto('/admin/press/twenty-years-in-austin')
 
     await expect(page.locator('#field-date')).toHaveAttribute('type', 'date')
     await expect(page.locator('#field-date')).toHaveValue('2026-08-15')
@@ -136,7 +136,7 @@ test.describe('refusing bad input', () => {
   })
 
   test('refuses a slug that already exists', async ({ page }) => {
-    await page.goto('/admin/lab/new')
+    await page.goto('/admin/press/new')
     await page.locator('#field-slug').fill('twenty-years-in-austin')
     await page.locator('#field-title').fill('Dupe')
     await page.locator('#field-date').fill('2026-08-16')
@@ -148,10 +148,10 @@ test.describe('refusing bad input', () => {
 
 test.describe('paths it must not follow', () => {
   const refused = [
-    ['traversal', '/admin/lab/..%2f..%2f..%2fetc%2fpasswd'],
-    ['underscores', '/admin/lab/not_a_slug'],
+    ['traversal', '/admin/press/..%2f..%2f..%2fetc%2fpasswd'],
+    ['underscores', '/admin/press/not_a_slug'],
     ['unknown collection', '/admin/nope'],
-    ['unknown entry', '/admin/lab/no-such-post'],
+    ['unknown entry', '/admin/press/no-such-post'],
   ] as const
 
   for (const [name, path] of refused) {
@@ -161,7 +161,7 @@ test.describe('paths it must not follow', () => {
   }
 
   test('refuses a cross-site write even with a valid body', async ({ request }) => {
-    const response = await request.post('/admin/lab/new', {
+    const response = await request.post('/admin/press/new', {
       headers: { origin: 'https://evil.example' },
       form: { intent: 'save', slug: 'evil', title: 'Evil', date: '2026-08-16' },
     })
@@ -169,7 +169,7 @@ test.describe('paths it must not follow', () => {
   })
 
   test('refuses a write with no origin at all', async ({ request }) => {
-    const response = await request.post('/admin/lab/new', {
+    const response = await request.post('/admin/press/new', {
       form: { intent: 'save', slug: 'evil', title: 'Evil', date: '2026-08-16' },
     })
     expect(response.status()).toBe(403)
@@ -180,7 +180,7 @@ test.describe('round trip', () => {
   test('creates an entry, reads it back, and deletes it', async ({ page }, testInfo) => {
     const slug = scratchSlug(testInfo.project.name)
 
-    await page.goto('/admin/lab/new')
+    await page.goto('/admin/press/new')
     await page.locator('#field-slug').fill(slug)
     // Quoting this wrong is the classic hand-rolled-YAML bug, so it's the title.
     await page.locator('#field-title').fill('Round trip: quotes & colons')
@@ -192,11 +192,11 @@ test.describe('round trip', () => {
     await page.locator('#field-body').fill('# Heading\n\nBody text.')
 
     await page.getByRole('button', { name: /Create entry/ }).click()
-    await expect(page).toHaveURL(new RegExp(`/admin/lab/${slug}\\?saved=1$`))
+    await expect(page).toHaveURL(new RegExp(`/admin/press/${slug}\\?saved=1$`))
     await expect(page.getByRole('status')).toContainText('Saved')
 
     // Re-read from disk: the frontmatter survived the YAML round trip intact.
-    await page.goto(`/admin/lab/${slug}`)
+    await page.goto(`/admin/press/${slug}`)
     await expect(page.locator('#field-title')).toHaveValue('Round trip: quotes & colons')
     await expect(page.locator('#field-tags')).toHaveValue('alpha, beta')
     await expect(page.locator('#field-draft')).toBeChecked()
@@ -205,7 +205,7 @@ test.describe('round trip', () => {
     page.on('dialog', (dialog) => dialog.accept())
     await page.getByRole('button', { name: /Delete this entry/ }).click()
 
-    await expect(page).toHaveURL(/\/admin\/lab\?deleted=/)
-    expect((await page.request.get(`/admin/lab/${slug}`)).status()).toBe(404)
+    await expect(page).toHaveURL(/\/admin\/press\?deleted=/)
+    expect((await page.request.get(`/admin/press/${slug}`)).status()).toBe(404)
   })
 })

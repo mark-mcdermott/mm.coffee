@@ -16,15 +16,21 @@ rendering with `export const prerender = false`.
 - **Design tokens** live in `src/styles/globals.css` under `@theme` — never hardcode
   a hex value in a component
 - **Content** is Markdown in `src/content/`. Adding a project is one file in
-  `src/content/programs/`; adding a post is one file in `src/content/lab/`
+  `src/content/batches/`; adding a post is one file in `src/content/press/`
 - **Frontmatter schemas live in `src/lib/schemas.ts`**, not in
   `content.config.ts` — three things need them and only one can import
   `astro:content`. Change a schema there and the build, the admin's form and
   the admin's save validation all follow. Nothing should ever restate a field
   list; if you're typing one out, you're undoing the point
-- **Lab posts** support `draft: true` — visible in `pnpm dev`, excluded from
+- **Press posts** support `draft: true` — visible in `pnpm dev`, excluded from
   production builds and from the RSS feed. Dates are coerced, so an unquoted
   `date: 2026-08-14` in frontmatter is fine
+- **`unlisted: true`** is the other half of that: the post still builds, keeps
+  its URL and its place in the sitemap, but drops out of the press index, the
+  feed and the older/newer chain. For a piece that belongs on the site but not
+  in the run of build logs — something links to it on purpose. `getPosts()` is
+  everything; `getListedPosts()` is what the site lists, and is what a listing
+  should call
 - **Longform posts** set `layout: longform` in frontmatter, which widens the
   measure from 61 characters to 71 and unlocks plates. Everything else stays on
   the standard measure
@@ -105,7 +111,7 @@ type, rules, and fills — never small text.
   screenshot disagrees with a passing test, suspect the screenshot.
 - Both `astro dev` and `astro preview` **daemonise and exit**, which races Playwright's
   readiness probe. `scripts/test-server.mjs` uses Astro's programmatic `dev()` instead:
-  it stays in the foreground, renders SSR routes (`/contact`, `/api/*`), and reads from
+  it stays in the foreground, renders SSR routes (`/mailroom`, `/api/*`), and reads from
   source so the suite can't pass against a stale build.
 
 ## Colour and contrast
@@ -155,7 +161,7 @@ rather than half working.
 
 ## SEO
 
-`Seo.astro` owns every meta tag; pages pass `title`, `description`, and — for lab
+`Seo.astro` owns every meta tag; pages pass `title`, `description`, and — for press
 posts — `publishedAt` and `tags`, which switch the OG type to `article`. Canonicals
 are always absolute against `SITE.url`, so a preview host can never leak into one.
 

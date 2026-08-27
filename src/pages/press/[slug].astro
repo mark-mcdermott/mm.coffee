@@ -2,19 +2,28 @@
 import { render } from 'astro:content'
 import Layout from '@layouts/Layout.astro'
 import RibbonHeader from '@components/RibbonHeader.astro'
-import { getPosts, formatLongDate } from '@lib/lab'
+import { getPosts, getListedPosts, formatLongDate } from '@lib/press'
 
 export async function getStaticPaths() {
   const posts = await getPosts()
-  return posts.map((post, index) => ({
-    params: { slug: post.id },
-    props: {
-      post,
-      // Posts are newest first, so the next one along is older.
-      newer: posts[index - 1] ?? null,
-      older: posts[index + 1] ?? null,
-    },
-  }))
+  const listed = await getListedPosts()
+
+  return posts.map((post) => {
+    // The chain runs through the listed posts, so an unlisted one is stepped
+    // over rather than surfaced by its neighbours — and, sitting outside the
+    // run itself, has no neighbours of its own.
+    const index = listed.indexOf(post)
+
+    return {
+      params: { slug: post.id },
+      props: {
+        post,
+        // Posts are newest first, so the next one along is older.
+        newer: index === -1 ? null : (listed[index - 1] ?? null),
+        older: index === -1 ? null : (listed[index + 1] ?? null),
+      },
+    }
+  })
 }
 
 const { post, newer, older } = Astro.props
@@ -33,15 +42,23 @@ const { Content } = await render(post)
 
       {/* Article titles are arbitrary, so this sits a step below the section
           mastheads and wraps rather than being solved to a line count. */}
-      <h1 class="display display-title mt-4 max-w-[18ch] text-[clamp(1.75rem,calc(8vw_-_8px),3.6rem)] lg:text-[clamp(3.2rem,4.6vw,4.6rem)]">
+      <h1
+        class="display display-title mt-4 max-w-none text-[clamp(1.75rem,calc(8vw_-_8px),3.6rem)] lg:text-[clamp(3.2rem,4.6vw,4.6rem)]"
+      >
         {title}
       </h1>
 
-      {subtitle && <p slot="tail" class="label mt-10 max-w-[56ch] text-blue lg:mt-14">{subtitle}</p>}
+      {subtitle && <p slot="tail" class:list={['label mt-10 text-blue lg:mt-14',layout === 'longform' ? 'max-w-none' : 'max-w-[56ch]']}>{subtitle}</p>}
+                                  
     </RibbonHeader>
 
     <div
-      class:list={['prose', layout === 'longform' && 'prose-longform', 'px-6 py-10 lg:px-8 lg:py-14']}
+      class:list={[
+        'prose',
+        layout === 'longform' && 'prose-longform',
+        'px-6 pt-10 pb-10 lg:px-8 lg:pt-14',
+        layout === 'longform' ? 'lg:pb-24' : 'lg:pb-14',
+      ]}
     >
       <Content />
     </div>

@@ -1,9 +1,9 @@
 ---
 import Layout from '@layouts/Layout.astro'
 import RibbonHeader from '@components/RibbonHeader.astro'
-import { getPosts, formatDate } from '@lib/lab'
+import { getListedPosts, formatDate } from '@lib/press'
 
-const posts = await getPosts()
+const posts = await getListedPosts()
 ---
 
 <Layout

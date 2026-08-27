@@ -37,7 +37,7 @@ export const batchSchema = z.object({
   art: z.enum(['wolf', 'waves', 'chevrons']),
 })
 
-export const labSchema = z.object({
+export const pressSchema = z.object({
   title: z.string().min(1),
   subtitle: z.string().optional(),
   /**
@@ -57,4 +57,11 @@ export const labSchema = z.object({
   layout: z.enum(['standard', 'longform']).default('standard'),
   /** Drafts are written locally but excluded from production builds. */
   draft: z.boolean().default(false),
+  /**
+   * Keeps a post off the index, the feed and the older/newer chain without
+   * hiding it: the page still builds, still carries its metadata and is still
+   * in the sitemap. For a piece that belongs on the site but not in the run of
+   * build logs — it is linked to on purpose rather than found by scrolling.
+   */
+  unlisted: z.boolean().default(false),
 })

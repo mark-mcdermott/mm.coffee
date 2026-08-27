@@ -1,10 +1,10 @@
 import rss from '@astrojs/rss'
 import type { APIContext } from 'astro'
-import { getPosts } from '@lib/lab'
+import { getListedPosts } from '@lib/press'
 import { SITE } from '@lib/site'
 
 export async function GET(context: APIContext) {
-  const posts = await getPosts()
+  const posts = await getListedPosts()
 
   return rss({
     title: `${SITE.name} — ${SITE.feedTitle}`,

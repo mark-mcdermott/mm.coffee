@@ -1,7 +1,7 @@
 /**
  * Test server for the Playwright suite.
  *
- * The site is mostly static, but `/contact` and `/api/*` render per request, so
+ * The site is mostly static, but `/mailroom` and `/api/*` render per request, so
  * a plain file server can't exercise them. Astro's programmatic `dev()` runs
  * both, and — unlike the `astro dev` CLI, which daemonises and exits — it stays
  * in the foreground, so Playwright can own its lifecycle.
