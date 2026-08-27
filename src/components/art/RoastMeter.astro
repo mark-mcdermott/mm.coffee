@@ -16,7 +16,7 @@ interface Props {
 const { class: className } = Astro.props
 
 /** Light to dark. `SITE.roast` has to name one of these. */
-const SCALE = ['Light', 'City', 'City+', 'Full City', 'Vienna', 'French'] as const
+const SCALE = ['Light', 'Medium-Light', 'Medium', 'Medium-Dark', 'Dark', 'Extra Dark'] as const
 
 const active = (SCALE as readonly string[]).indexOf(SITE.roast)
 

@@ -29,6 +29,21 @@ const href = `/batches/${batch.id}`
  */
 const longestToken = title.split(/\s+/).reduce((a, w) => (w.length > a.length ? w : a), '')
 const titleFit = `calc((100cqw - 3rem) / ${(longestToken.length * 0.48).toFixed(2)})`
+
+/**
+ * The wolf gets a taller band than the other two.
+ *
+ * It is a bitmap at roughly 1.2:1 inside a band nearer 1.8:1, so `object-contain`
+ * solves it against the height and it paints narrower than the two SVGs, which
+ * run the full width. At the same band height it reads as the smallest of the
+ * three. 15% more band buys it 15% more artwork.
+ *
+ * Only at `lg`, where the three sit side by side and can be compared. Below that
+ * each card is a row of its own and there is nothing to match. The grid keeps
+ * every card the same height, so the other two carry the difference as space
+ * between their art and their stack strip.
+ */
+const artBand = art === 'wolf' ? 'lg:h-[12.65rem]' : 'lg:h-44'
 ---
 
 <!--
@@ -55,7 +70,10 @@ const titleFit = `calc((100cqw - 3rem) / ${(longestToken.length * 0.48).toFixed(
       */}
       <BatchArt
         art={art}
-        class="h-24 w-28 shrink-0 sm:h-40 sm:w-48 lg:order-2 lg:mt-6 lg:h-44 lg:w-full lg:px-6"
+        class:list={[
+          'h-24 w-28 shrink-0 sm:h-40 sm:w-48 lg:order-2 lg:mt-6 lg:w-full lg:px-6',
+          artBand,
+        ]}
       />
 
       <div class="min-w-0 flex-1 lg:order-1 lg:flex-none lg:px-6">
@@ -80,8 +98,15 @@ const titleFit = `calc((100cqw - 3rem) / ${(longestToken.length * 0.48).toFixed(
       <p class:list={['label', accentText(accent)]}>
         Stack: {stack.join(' / ')}
       </p>
+      {/* `items-center` centres the two boxes, which is not the same as
+          centring what you can see. The stack line is all caps, so its ink sits
+          entirely above the baseline, while the arrow glyph sits astride it.
+          Measured, the arrow lands 2.2px low at `text-base` and 4.2px low at
+          `text-lg` — enough to read as a mistake. Two values rather than one
+          `em`, because the label stays 11px in both layouts while the arrow
+          does not, so the correction doesn't scale with either alone. */}
       <span
-        class="shrink-0 text-base leading-none transition-transform group-hover:translate-x-1 lg:text-lg lg:leading-normal"
+        class="relative -top-[2px] shrink-0 text-base leading-none transition-transform group-hover:translate-x-1 lg:-top-[4px] lg:text-lg lg:leading-normal"
         aria-hidden="true">&rarr;</span
       >
     </div>

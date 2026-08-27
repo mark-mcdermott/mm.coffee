@@ -1,7 +1,7 @@
 ---
 title: markmcdermott.io
 order: 3
-tagline: Writing on software, AI, attention and neurodiversity.
+tagline: Writing on software & AI
 summary: The personal site — essays, notes, and a running log of what I'm learning.
 stack:
   - Astro
