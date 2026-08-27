@@ -17,7 +17,7 @@ Before I moved to Austin I took a road trip around the US to figure out where I 
 In my first few years in Austin I worked a bunch of random not-sitting-around-in-coffeeshop jobs: landscaping, cleaning cages at an animal shelter and bagging groceries. Then I decided I probably needed a career rather than just a job. And I had no interest in using my Penn State econ degree.
 
 ![Hello Kitty spray-painted on a cream brick wall beside a parking sign, with "Hello Austin" written next to it in the same hand](../../assets/press/hello-austin.jpg "aside")
-Hello Austin.
+Hello Austin. Circa 2011.
 
 I was an autistic kid on a 286 PC with a 2400 baud internet connection in the pre-internet BBS and AOL era of the early nineties. When the internet took off, a cousin of mine who made a lot of money in web development suggested I become a web developer. I wasn't sure where to start. I started learning PHP on my own. I built a portfolio website for a co-worker who was an artist. I learned so much while building that site about HTTP requests, PHP, AJAX and just programming in general. I've always felt bad about how buggy that site was. Although I haven't talked to that co-worker in 15 years, I just found their current website. I also built a memorial site for a co-worker who'd passed away, though it’s no longer online. At some point I also owned dontbesuchachicken.com. The entire website was this animated GIF.
 
@@ -52,8 +52,8 @@ After S Collective was uShip. I remember wearing a suit to the interview and the
 
 uShip had Razor scooters around the office, although I seemed to be the only person who actually used them. I'd ride one from my desk to the coffee station. I actually got pretty good at riding one with a full cup of coffee. I was so new to office life that I didn’t know you weren’t supposed to put an empty coffee carafe back on the hot plate, and I broke a couple before they made an announcement about it.
 
-![Three of us around a table in a dim coffeeshop, two laptops open and a glass mug of black coffee in the foreground](../../assets/press/eastside-coffeeshop.jpg)
-Bennu coffeeshop, circa 2015.
+![Me on a rocky trail in a Texas T-shirt and a baseball cap, a small terrier riding in a sling bag at my hip and a water bottle in my hand](../../assets/press/hiking-with-abby.jpg "aside")
+Hiking in Austin with my dog Abby and my uShip hat, 2011.
 
 I always felt awkward at uShip. It was a pretty hip crowd that hosted local bands for SXSW, tapped office kegs on Friday afternoons and rented Lake Travis party barges for offsites. I had never worked in large codebases and felt like a WWII codebreaker trying to decipher what these thousands of .NET C# files were doing.
 
@@ -86,7 +86,7 @@ Spider House Cafe, a block from my apartment.
 My wife and I used to hang out with friends I'd met in my graduate program. We'd all go to Epoch coffeeshop on South Congress and laugh a lot and work on our laptops. I also spent a lot of late nights around then studying at the 24-7 Epoch on North Loop. I always thought their coffee was kind of watery, but the music was always good. There were often other web developers there on their laptops, too. One time I met an artist there who painted a picture of me while I was working. I took art lessons from her for a bit after that.
 
 ![An oil portrait of me in profile, glasses on, painted at Epoch while I worked](../../assets/press/portrait-at-epoch.jpg "aside")
-Portrait of me painted at Epoch Coffee.
+Portrait of me painted at Epoch Coffee, 2008.
 
 My wife and I got married at a lovely wedding venue in South Austin. I think it was 114 degrees. At the last minute, we rented big fans, but they barely helped. Heat aside, it was a beautiful day. I got to chat with family members I hadn't seen for years and many whom I haven't seen since. I don't think I've ever seen a more beautiful woman than my wife on that day.
 
@@ -104,15 +104,18 @@ When the Occupy movement happened, people started sleeping in front of City Hall
 In the aughts, there was a tug of war in Austin between the '90s slacker Austin and the 2010s hustle hard, tech hub, "mini San Francisco" Austin. I would relax at Twin Falls on the weekends and would dutifully watch Linklater's "Slacker" once a year. But then I'd bust my butt learning web development and going to programmer meetups. I'd go to the Thich Nhat Hanh meditation group every Sunday and try to learn to be less type A. I'd go to Deer Park monastery in California and try to learn from the way the monastics walked so lightly.
 
 ![A laptop, shoes and bare feet on the rock ledge beside the falls at Twin Falls](../../assets/press/twin-falls.jpg)
-Type A style relaxation at Twin Falls.
+Type A style relaxation near the Hill of Life, circa 2012.
 
 For my graduate program, I had the option of doing a thesis or taking some extra classes. Of course I chose the hard route, the thesis. I ended up building the software for it from scratch, and it took me an extra year and a half. I may have learned more writing that code than I did from anything else in the degree.
 
 ![A hand-painted board nailed to a tree at Deer Park, reading "breathe you are alive"](../../assets/press/deer-park-monastery.jpg "aside")
-"Breathe, you are alive." Deer Park Monastery, Escondido, CA.
+"Breathe, you are alive." Deer Park Monastery, Escondido, CA. Circa 2008.
 
 After Schwab I thought I finally caught my white whale. A buddy from Texas State helped me get a programmer gig where he worked at Axzon, an engineering company. He and I were the whole software department. With his help, I set up a Jenkins CI/CD box and was writing a testing suite in Java. But a couple months in, the sales department had a rough quarter and half the company got laid off, including the entire software department.
 
 After being laid off from Axzon, things were a little tense because my wife was pregnant with our daughter and I wanted to make sure we had income coming in. I was lucky to quickly land a QA gig with Doximity, where I've been since. It's been six years now. My daughter was born and I consider her a Doximity-baby. When she was little, I'd go into Zoom calls with her sleeping on my shoulder. We also had an elderly Shih Tzu dog then, who I remember pooping on the floor behind me in a Zoom call once.
+
+![Three of us around a table in a dim coffeeshop, two laptops open and a glass mug of black coffee in the foreground](../../assets/press/eastside-coffeeshop.jpg)
+Bennu coffeeshop, circa 2015.
 
 My wife and I have been getting Summer Moon coffee nearly every day for years. The baristas at the drive-through know our orders. New Austin to me is grabbing Summer Moon on a Saturday and taking my daughter to a birthday party at a new splash pad in the Shoal Creek park where I used to hang out. The dads and I talk about summer travel plans while my daughter discovers the joys of Super Soakers. The kids scream with joy as they splash in the water. I keep one eye on my coffee sitting on the ledge while I ask my daughter not to shoot her friends in the eyes. Austin randomly became my home. Now it's hers, too.
