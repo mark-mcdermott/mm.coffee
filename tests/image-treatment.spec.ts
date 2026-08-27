@@ -37,6 +37,13 @@ test.describe('the image treatment plugin', () => {
     expect(html).not.toContain('title')
   })
 
+  test('carries a small treatment too, so a size reads the same way as a place', async () => {
+    const html = await render('![alt](./a.jpg "small")\nA caption.\n')
+
+    expect(html).toContain('<figure data-treatment="small">')
+    expect(html).not.toContain('title')
+  })
+
   test('still strips the marker from an image with no caption', async () => {
     const html = await render('![alt](./a.jpg "wide")\n\n![alt](./b.jpg "inline")\n')
 

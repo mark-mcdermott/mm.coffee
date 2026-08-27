@@ -9,6 +9,9 @@
  * - `aside`  — breaks out into the empty right-hand side of a longform post.
  * - `wide`   — stays in the column's flow but runs past the measure, out to
  *              where an `aside` ends.
+ * - `small`  — stays in the column but is held well inside the measure, so a
+ *              picture with more pixels than it needs spends them on sharpness
+ *              rather than on size.
  *
  * Which treatment an image gets is always a decision written down here, never
  * inferred from the image itself. Portrait and landscape are equally free to be
@@ -40,8 +43,8 @@
  * @typedef {import('mdast').PhrasingContent} PhrasingContent
  */
 
-/** The default carries no attribute, so only the two that change layout are listed. */
-const TREATMENTS = new Set(['aside', 'wide'])
+/** The default carries no attribute, so only the three that change layout are listed. */
+const TREATMENTS = new Set(['aside', 'wide', 'small'])
 const DEFAULT_TREATMENT = 'inline'
 
 /**

@@ -35,8 +35,10 @@ rendering with `export const prerender = false`.
   measure from 61 characters to 71 and unlocks plates. Everything else stays on
   the standard measure
 - **Image treatment** is written as the image's title: `inline` (the default,
-  needs no marker), `aside` (breaks into the empty right of a longform post) or
-  `wide` (runs past the measure, still in flow) — `![alt](./x.jpg "aside")`.
+  needs no marker), `aside` (breaks into the empty right of a longform post),
+  `wide` (runs past the measure, still in flow) or `small` (held well inside the
+  measure, for a source with more pixels than the layout needs — the spare ones
+  go to sharpness rather than size) — `![alt](./x.jpg "aside")`.
   `src/lib/satteri-image-treatment.mjs` turns it into a `data-treatment`
   attribute and drops the title. **Never derive the treatment from the image** —
   not from its aspect ratio, its size or its position. It is a decision written

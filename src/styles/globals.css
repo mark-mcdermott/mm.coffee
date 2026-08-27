@@ -441,6 +441,18 @@
     border: 1px solid var(--color-ink);
   }
 
+  /* A `small` image is held well inside the measure on purpose, so a source
+     with more pixels than the layout needs spends them on sharpness rather
+     than on size. Unlike `aside` and `wide` this is a size and not a place, so
+     it holds at every width and in any post, longform or not.
+
+     The cap goes on the picture rather than the figure because the figure is
+     `fit-content`: cap the picture and the figure — and so the caption —
+     follows it. 17.5rem is 280px at the default root size. */
+  .prose [data-treatment='small'] img {
+    max-width: 17.5rem;
+  }
+
   /**
    * A captioned image. The figure shrinks to the picture so the caption is set
    * to the picture's width rather than the column's — several of these photos
