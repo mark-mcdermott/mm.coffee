@@ -98,9 +98,7 @@ test.describe('refusing bad input', () => {
     // And the entry on disk is untouched.
     await page.goto('/admin/batches/mockingboard')
     await expect(page.locator('#field-title')).toHaveValue('Mockingboard')
-    await expect(page.locator('#field-tagline')).toHaveValue(
-      'Drop mockups. Arrange freely. Export one PNG.'
-    )
+    await expect(page.locator('#field-tagline')).toHaveValue('Drop mockups. Arrange freely.')
   })
 
   /** The browser's validation is a convenience; this is the one that counts. */

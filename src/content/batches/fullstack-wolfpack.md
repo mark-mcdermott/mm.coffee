@@ -6,8 +6,6 @@ summary: A learning app built around one loop — play a game, then learn a skil
 stack:
   - Astro
   - React
-  - Neon Postgres
-  - AI
 url: https://fullstackwolfpack.com
 status: building
 accent: red

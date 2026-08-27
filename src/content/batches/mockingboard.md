@@ -1,13 +1,11 @@
 ---
 title: Mockingboard
 order: 2
-tagline: Drop mockups. Arrange freely. Export one PNG.
+tagline: Drop mockups. Arrange freely.
 summary: A free tool for arranging screenshots into a single shareable image.
 stack:
   - React
   - Vite
-  - TypeScript
-  - shadcn/ui
 url: https://mockingboard.design
 status: live
 accent: gold
