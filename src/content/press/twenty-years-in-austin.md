@@ -28,7 +28,7 @@ The entirety of dontbesuchachicken.com.
 
 While I was working at the animal shelter, I built a website for them. It had pretty sweet "web 2.0" reflecting buttons and a cute dog with its paws hanging past the hero area. Not long after I left, I believe the shelter was shut down because of poor treatment of animals. I also built a site for a restaurant next door to the shelter, Wild Bubba's Wild Game Grill. I attempted a photorealistic collage style with that one. It was fun to make. Later the Circuit of the Americas racetrack was built about a mile from there.
 
-![Me on a roadside in a Statue of Liberty costume and foam crown, holding a large red arrow sign reading LIBERTY TAX](../../assets/press/liberty-tax.jpg)
+![Me on a roadside in a Statue of Liberty costume and foam crown, holding a large red arrow sign reading LIBERTY TAX](../../assets/press/liberty-tax.jpg "small")
 Career development. Circa 2008.
 
 Around this time I started applying to web development jobs in Austin. I built myself a portfolio site, mcdermottsolutions.com, with bright blue and purple colors and a stock photo of something that looked like a Rubik’s Cube. Amazingly, that site did land me a web dev job.

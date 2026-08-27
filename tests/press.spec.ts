@@ -175,13 +175,35 @@ test.describe('the longform layout', () => {
       .evaluateAll((els) => els.map((el) => el.getAttribute('data-treatment')))
 
     expect(treatments.length).toBeGreaterThan(0)
-    expect(treatments.every((t) => t === 'aside' || t === 'wide')).toBe(true)
+    expect(treatments.every((t) => t === 'aside' || t === 'wide' || t === 'small')).toBe(true)
 
     // Untreated images are the default, so the two counts have to add up.
     const total = await page.locator('.prose img').count()
     const treated = await page.locator('.prose [data-treatment] img').count()
     expect(treated).toBe(treatments.length)
     expect(total).toBeGreaterThan(treated)
+  })
+
+  test('holds a small image inside the measure and its caption to the picture', async ({ page }) => {
+    await page.setViewportSize({ width: 1440, height: 900 })
+    await page.goto('/press/twenty-years-in-austin')
+
+    const measured = await page
+      .locator('.prose figure[data-treatment="small"]')
+      .evaluate((figure) => {
+        const img = figure.querySelector('img')!
+        return {
+          rendered: Math.round(img.getBoundingClientRect().width),
+          declared: Number(img.getAttribute('width')),
+          caption: Math.round(figure.querySelector('figcaption')!.getBoundingClientRect().width),
+        }
+      })
+
+    expect(measured.rendered).toBeLessThanOrEqual(280)
+    // The whole point of the treatment: the file stays denser than the space it
+    // is given, so the spare pixels go to the screen rather than the layout.
+    expect(measured.declared).toBeGreaterThan(measured.rendered)
+    expect(measured.caption).toBe(measured.rendered)
   })
 
   test('does not derive treatment from the shape of the image', async ({ page }) => {
