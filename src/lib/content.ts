@@ -8,8 +8,8 @@ export const EXPERIMENTS = [
 ] as const
 
 export const MANIFESTO = [
-  'Software should answer to the people using it, not the people measuring them.',
-  'I build with AI every day. It does a lot of the typing. It gets no vote on what is worth building, and no byline.',
-  'Your attention is not inventory. Nothing here is designed to be hard to put down.',
-  'No bloat. No dark patterns. No bullshit.',
+  'Tech still can and should "do no evil".',
+  'I use AI, but I try to always learn from it. Probably impossible, but the goal is still to beat the machine someday, like John Henry.',
+  "Software should make people's lives a little better. It's an uphill battle at this point, but I still want to leave things better for my daughter than I found them.",
+  'Mindfulness is almost always the solution, but is never an excuse to let evil win.',
 ] as const
