@@ -118,6 +118,6 @@ After Schwab I thought I finally caught my white whale. A buddy from Texas State
 After being laid off from Axzon, things were a little tense because my wife was pregnant with our daughter and I wanted to make sure we had income coming in. I was lucky to quickly land a QA gig with Doximity, where I've been since. It's been six years now. My daughter was born and I consider her a Doximity baby. When she was little, I'd go into Zoom calls with her sleeping on my shoulder. We also had an elderly Shih Tzu dog then, who I remember pooping on the floor behind me in a Zoom call once.
 
 ![Three of us around a table in a dim coffee shop, two laptops open and a glass mug of black coffee in the foreground](../../assets/press/eastside-coffeeshop.jpg)
-Bennu coffee shop, circa 2015.
+My hackathon team at Bennu Coffee, circa 2015.
 
 My wife and I have been getting Summer Moon coffee nearly every day for years. The baristas at the drive-through know our orders. New Austin to me is grabbing Summer Moon on a Saturday and taking my daughter to a birthday party at a new splash pad in the Shoal Creek park where I used to hang out. The dads and I talk about summer travel plans while my daughter discovers the joys of Super Soakers. The kids scream with joy as they splash in the water. I keep one eye on my coffee sitting on the ledge while I ask my daughter not to shoot her friends in the eyes. Austin randomly became my home. Now it's hers, too.
