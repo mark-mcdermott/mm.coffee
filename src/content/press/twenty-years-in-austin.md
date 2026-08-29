@@ -35,19 +35,19 @@ Around this time I started applying to web development jobs in Austin. I built m
 
 One of the interviews I went to ended up being for a "psychic" who had written books and had tons of websites for the books with long rambling content, I assume for SEO to drown out bad reviews. Another I had was for a Republican media agency that did websites for Republicans running for office.
 
-My first web dev job was with a two-man company called S Collective. I took a pay cut from bagging groceries to get a foot in the door of the industry. I started in their office above the TV store and eventually they let me work from home (a couple blocks from the office). Stressful job, but we built some nice WordPress sites. We worked on the local Discount Electronics' website and built a site for the first city-wide initiative to get Wi-Fi in local restaurants and small businesses.
+My first web dev job was with a two-man company called S Collective. I took a pay cut from bagging groceries to get a foot in the door of the industry. I started in their office above the TV store and eventually they let me work from home (a couple blocks from the office). Stressful job, but we built some nice WordPress sites. We worked on the local Discount Electronics' website and built a site for an Austin campaign to bring free Wi-Fi to local restaurants, bars and small businesses.
 
 ![My bio on the S Collective team page: a photo of me in a suit at night with city lights behind me, headed "Mark McDermott, senior front end developer"](../../assets/press/scollective-bio.png)
 My bio on the S Collective team page, 2010. I did not write the copy.
 
 I also made sites on the side, usually for free, for some non-profits in this era. I was working the phones for the Austin GI Rights hotline and built their site, which I always liked. I also built a site for Under the Hood, a coffeehouse near Fort Hood started by antiwar veterans as a gathering place for soldiers. I built a site for an anarchist thrift shop in Drupal that was always a nightmare to maintain.
 
-![The Under The Hood Outreach Center and Cafe homepage on the Wayback Machine — a camouflage banner with dog tags and a cup of coffee, over notices pinned to a corkboard: the Killeen address and opening hours, an "I want you" donation poster, and panels headed "Our Mission" and "House Rules"](../../assets/press/under-the-hood-wayback.jpg)
+![A website built to look like a corkboard: a camouflage banner with dog tags and a coffee cup across the top, and below it pinned notes — the Killeen address and opening hours, an "I want you" donation poster, "Our Mission" and "House Rules"](../../assets/press/under-the-hood-wayback.jpg)
 Under the Hood website, 2009. Via the Internet Archive.
 
 After I’d been working professionally for a while, I redid mcdermottsolutions.com. This time I paid a [designer](https://sheamediaco.com) whose work I really liked to make a Photoshop mockup, then I sliced it and coded it. I got a friend to take a photo of me working on my laptop outside a Starbucks for it. The version preserved by the Wayback Machine from 2010 includes some of my S Collective work and some extremely 2010 web-developer copy.
 
-![The about page of my 2010 portfolio site, mcdermottsolutions.com, on the Wayback Machine — a black page with a polaroid of me at a laptop, under the headings "I love building web sites", "I miss my Commodore 64" and "I got a fever and the only prescription is more jQuery"](../../assets/press/mcdermott-solutions-wayback.png)
+![An about page on a black background: cyan headings — "I love building web sites", "I miss my Commodore 64" — over dense grey paragraphs, and a stack of polaroids at the right, the top one showing me in profile typing at a laptop](../../assets/press/mcdermott-solutions-wayback.png)
 mcdermottsolutions.com, 2010. “I got a fever and the only prescription is more jQuery.”
 
 After S Collective was uShip. I remember wearing a suit to the interview and they said they'd hire me but I couldn't wear the suit to work. I would ride my bike to the Austin MetroRail and take my bike on the train to get to the office downtown. I remember my first days walking into their office downtown near 3rd and Brazos. I really felt like a big shot, working downtown and walking past the skyscrapers to get to work.
@@ -118,6 +118,6 @@ After Schwab I thought I finally caught my white whale. A buddy from Texas State
 After being laid off from Axzon, things were a little tense because my wife was pregnant with our daughter and I wanted to make sure we had income coming in. I was lucky to quickly land a QA gig with Doximity, where I've been since. It's been six years now. My daughter was born and I consider her a Doximity baby. When she was little, I'd go into Zoom calls with her sleeping on my shoulder. We also had an elderly Shih Tzu dog then, who I remember pooping on the floor behind me in a Zoom call once.
 
 ![Three of us around a table in a dim coffee shop, two laptops open and a glass mug of black coffee in the foreground](../../assets/press/eastside-coffeeshop.jpg)
-Bennu coffee shop, circa 2015.
+My hackathon team at Bennu Coffee, circa 2015.
 
 My wife and I have been getting Summer Moon coffee nearly every day for years. The baristas at the drive-through know our orders. New Austin to me is grabbing Summer Moon on a Saturday and taking my daughter to a birthday party at a new splash pad in the Shoal Creek park where I used to hang out. The dads and I talk about summer travel plans while my daughter discovers the joys of Super Soakers. The kids scream with joy as they splash in the water. I keep one eye on my coffee sitting on the ledge while I ask my daughter not to shoot her friends in the eyes. Austin randomly became my home. Now it's hers, too.
