@@ -35,7 +35,7 @@ Around this time I started applying to web development jobs in Austin. I built m
 
 One of the interviews I went to ended up being for a "psychic" who had written books and had tons of websites for the books with long rambling content, I assume for SEO to drown out bad reviews. Another I had was for a Republican media agency that did websites for Republicans running for office.
 
-My first web dev job was with a two-man company called S Collective. I took a pay cut from bagging groceries to get a foot in the door of the industry. I started in their office above the TV store and eventually they let me work from home (a couple blocks from the office). Stressful job, but we built some nice WordPress sites. We worked on the local Discount Electronics' website and built a site for the first city-wide initiative to get Wi-Fi in local restaurants and small businesses.
+My first web dev job was with a two-man company called S Collective. I took a pay cut from bagging groceries to get a foot in the door of the industry. I started in their office above the TV store and eventually they let me work from home (a couple blocks from the office). Stressful job, but we built some nice WordPress sites. We worked on the local Discount Electronics' website and built a site for an Austin campaign to bring free Wi-Fi to local restaurants, bars and small businesses.
 
 ![My bio on the S Collective team page: a photo of me in a suit at night with city lights behind me, headed "Mark McDermott, senior front end developer"](../../assets/press/scollective-bio.png)
 My bio on the S Collective team page, 2010. I did not write the copy.
