@@ -42,12 +42,12 @@ My bio on the S Collective team page, 2010. I did not write the copy.
 
 I also made sites on the side, usually for free, for some non-profits in this era. I was working the phones for the Austin GI Rights hotline and built their site, which I always liked. I also built a site for Under the Hood, a coffeehouse near Fort Hood started by antiwar veterans as a gathering place for soldiers. I built a site for an anarchist thrift shop in Drupal that was always a nightmare to maintain.
 
-![The Under The Hood Outreach Center and Cafe homepage on the Wayback Machine — a camouflage banner with dog tags and a cup of coffee, over notices pinned to a corkboard: the Killeen address and opening hours, an "I want you" donation poster, and panels headed "Our Mission" and "House Rules"](../../assets/press/under-the-hood-wayback.jpg)
+![A website built to look like a corkboard: a camouflage banner with dog tags and a coffee cup across the top, and below it pinned notes — the Killeen address and opening hours, an "I want you" donation poster, "Our Mission" and "House Rules"](../../assets/press/under-the-hood-wayback.jpg)
 Under the Hood website, 2009. Via the Internet Archive.
 
 After I’d been working professionally for a while, I redid mcdermottsolutions.com. This time I paid a [designer](https://sheamediaco.com) whose work I really liked to make a Photoshop mockup, then I sliced it and coded it. I got a friend to take a photo of me working on my laptop outside a Starbucks for it. The version preserved by the Wayback Machine from 2010 includes some of my S Collective work and some extremely 2010 web-developer copy.
 
-![The about page of my 2010 portfolio site, mcdermottsolutions.com, on the Wayback Machine — a black page with a polaroid of me at a laptop, under the headings "I love building web sites", "I miss my Commodore 64" and "I got a fever and the only prescription is more jQuery"](../../assets/press/mcdermott-solutions-wayback.png)
+![An about page on a black background: cyan headings — "I love building web sites", "I miss my Commodore 64" — over dense grey paragraphs, and a stack of polaroids at the right, the top one showing me in profile typing at a laptop](../../assets/press/mcdermott-solutions-wayback.png)
 mcdermottsolutions.com, 2010. “I got a fever and the only prescription is more jQuery.”
 
 After S Collective was uShip. I remember wearing a suit to the interview and they said they'd hire me but I couldn't wear the suit to work. I would ride my bike to the Austin MetroRail and take my bike on the train to get to the office downtown. I remember my first days walking into their office downtown near 3rd and Brazos. I really felt like a big shot, working downtown and walking past the skyscrapers to get to work.
