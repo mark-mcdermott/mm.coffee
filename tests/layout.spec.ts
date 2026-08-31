@@ -83,3 +83,59 @@ for (const route of ROUTES) {
     expect(offenders, JSON.stringify(offenders, null, 2)).toEqual([])
   })
 }
+
+/**
+ * The heading column has to stay clear of the ribbon's coil.
+ *
+ * The coil sits at a fixed fraction of the artwork and the artwork is placed as
+ * a percentage of the header, so the two only stay apart because the heading
+ * column is capped. It was — but only at `lg`, so below that a long article
+ * title ran straight under the coil. These widths bracket that breakpoint.
+ */
+const RIBBON_ROUTES = [
+  '/press',
+  '/press/outline-the-logo',
+  '/press/the-test-that-passed-against-nothing',
+  '/batches',
+  '/batches/fullstack-wolfpack',
+  '/company',
+  '/mailroom',
+]
+
+/** The coil's left edge as a fraction of the artwork: its centre, 1363.5, less
+ *  its outer radius — a 172.5 band plus 16 of casing — over the 1855 viewBox. */
+const COIL_LEFT = (1363.5 - 188.5) / 1855
+
+test.describe('the ribbon header', () => {
+  for (const route of RIBBON_ROUTES) {
+    test(`${route} keeps its heading clear of the coil`, async ({ page }) => {
+      await page.goto(route)
+
+      for (const width of [320, 390, 640, 768, 1023, 1024, 1440]) {
+        await page.setViewportSize({ width, height: 900 })
+
+        const clearance = await page.evaluate((coilLeft) => {
+          const heading = document.querySelector('h1')
+          const artwork = [...document.querySelectorAll('svg')].find(
+            (svg) => svg.getAttribute('viewBox') === '0 0 1855 375.02'
+          )
+          if (!heading || !artwork) return null
+
+          // Line boxes rather than the block box: an uncapped heading is full
+          // width whatever its text actually reaches.
+          const lines = document.createRange()
+          lines.selectNodeContents(heading)
+          const ink = [...lines.getClientRects()].filter((line) => line.width > 0)
+          const art = artwork.getBoundingClientRect()
+
+          return art.left + coilLeft * art.width - Math.max(...ink.map((line) => line.right))
+        }, COIL_LEFT)
+
+        expect(
+          clearance,
+          `${route} at ${width}px: the heading runs under the coil`
+        ).toBeGreaterThanOrEqual(0)
+      }
+    })
+  }
+})
