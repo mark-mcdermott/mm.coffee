@@ -80,14 +80,15 @@ together — no gaps, no rounded corners, no drop shadows.
 
 **Light theme only.** No dark mode; a dark variant fights the paper-and-ink conceit.
 
-Gold fails AA contrast on the paper background, so it is restricted to large display
-type, rules, and fills — never small text.
+Gold is 1.82:1 on paper — under even the 3:1 floor for large text — so it is
+restricted to rules, fills and graphics, and never carries type. `gold-deep` is
+the one to set a label in.
 
 ## Toolchain notes
 
 - **Don't turn on Sätteri's `directive` feature.** It reads `:1` as a text
   directive and silently eats it, which quietly rewrites every contrast ratio on
-  the site — `3.94:1` renders as `3.94`. That is why a plate is marked with an
+  the site — `4.07:1` renders as `4.07`. That is why a plate is marked with an
   image title rather than the `:::plate` syntax that would otherwise be the
   obvious way to write it.
 - `markdown.processor` is named explicitly in `astro.config.mjs` so a plugin can
@@ -118,13 +119,15 @@ type, rules, and fills — never small text.
 
 ## Colour and contrast
 
-The comp colours are **display** colours. On paper, red is 3.94:1, orange 2.58:1 and
-gold 1.44:1 — fine for large type and fills, but they fail AA at label size, and this
-design sets most of its text at label size.
+The comp colours are **display** colours. On paper, gold is 1.82:1 and red 4.07:1 —
+fine for large type and fills, but short of AA at label size, and this design sets
+most of its text at label size.
 
-So: `red` / `gold` / `orange` for display type and graphics only; `red-deep` /
-`gold-deep` / `orange-deep` for anything at label size. `pnpm check:contrast` reads
-the tokens straight out of `globals.css` and fails the build if this slips.
+So: `red` for display type and graphics, `gold` for graphics only, and
+`red-deep` (5.76:1) or `gold-deep` (5.59:1) for anything at label size. Orange
+(6.17:1) and blue (8.43:1) already clear AA on their own, so `orange-deep` and
+`blue-deep` are aliases rather than separate colours. `pnpm check:contrast`
+reads the tokens straight out of `globals.css` and fails the build if this slips.
 
 ## The admin
 
