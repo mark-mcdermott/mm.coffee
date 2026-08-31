@@ -139,3 +139,40 @@ test.describe('the ribbon header', () => {
     })
   }
 })
+
+/**
+ * The manifesto ribbon has to reach both edges of its strip.
+ *
+ * The strip is a fixed height at any width, and the artwork is scaled to fit —
+ * so once the window is wide enough the curve was drawn narrower than the strip
+ * and centred, leaving paper at both ends. The bands run out flat to cover it,
+ * and these widths span where that used to break.
+ */
+test('the manifesto ribbon bleeds to both edges', async ({ page }) => {
+  await page.goto('/')
+
+  for (const width of [390, 560, 640, 768, 900, 1023, 1024, 1440]) {
+    await page.setViewportSize({ width, height: 900 })
+
+    const gaps = await page.evaluate(() => {
+      const ribbon = [...document.querySelectorAll('svg')].find(
+        (svg) => svg.getAttribute('viewBox') === '0 0 800 300'
+      )
+      if (!ribbon?.parentElement) return null
+
+      const strip = ribbon.parentElement.getBoundingClientRect()
+      const bands = [...ribbon.querySelectorAll('path')].map((band) =>
+        band.getBoundingClientRect()
+      )
+
+      return {
+        left: Math.min(...bands.map((band) => band.left)) - strip.left,
+        right: strip.right - Math.max(...bands.map((band) => band.right)),
+      }
+    })
+
+    expect(gaps, `no manifesto ribbon at ${width}px`).not.toBeNull()
+    expect(gaps!.left, `${width}px: paper showing left of the ribbon`).toBeLessThanOrEqual(0)
+    expect(gaps!.right, `${width}px: paper showing right of the ribbon`).toBeLessThanOrEqual(0)
+  }
+})
