@@ -24,8 +24,13 @@
  * exactly what the artwork scales with, so the two stay in step at every width
  * where a rem would drift.
  *
- * `max-w-[58%]` on the heading column is what keeps it clear of the coil at
- * `lg`. Anything longer wraps rather than running into it.
+ * The cap on the heading column is what keeps it clear of the coil, and it
+ * tracks where the coil lands: 66% below `lg`, where the coil starts at 67%,
+ * and 58% at `lg`, where it starts at 63.6%. Anything longer wraps rather than
+ * running into it. The section mastheads are solved to a line count and sit
+ * well inside the cap; it is the article titles, which are arbitrary, that need
+ * it — and they only ever got it at `lg`, so a long one ran under the coil at
+ * every width below that.
  */
 import RibbonLoop from '@components/art/RibbonLoop.astro'
 
@@ -40,7 +45,7 @@ const { as: Tag = 'section', class: className }: Props = Astro.props
 
 <Tag class:list={['overflow-hidden border-b', className]}>
   <div class="px-6 pt-16 lg:px-8 lg:pt-24">
-    <div class="lg:max-w-[58%]">
+    <div class="max-w-[66%] lg:max-w-[58%]">
       <slot />
     </div>
   </div>

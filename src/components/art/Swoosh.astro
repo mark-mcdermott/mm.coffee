@@ -62,7 +62,30 @@ const MANIFESTO = {
   ],
 }
 
-const { viewBox, width, bands } = variant === 'manifesto' ? MANIFESTO : HERO
+/**
+ * Carries the manifesto bands on past the artwork, horizontally.
+ *
+ * The strip they sit in is a fixed height but any width, and `meet` scales the
+ * viewBox to fit the shorter side — so at 1023px the curve was drawn 469px wide
+ * and centred, stranding it in the middle with paper either side. Both ends of
+ * this variant are already flat, so the bands just keep going and the strip
+ * bleeds at any shape of box. The hero curve ends on a steep diagonal and is
+ * left alone: a horizontal run-out there would read as a kink.
+ */
+const RUN_OUT = 2000
+
+/** The band, with a flat lead-in and lead-out bolted onto its own flat ends. */
+const runOut = (d: string) => {
+  const points = (d.match(/-?\d+(?:\.\d+)?/g) ?? []).map(Number)
+  const startY = points[1]
+  const endY = points[points.length - 1]
+  return `M${-RUN_OUT} ${startY}L${d.slice(1)}L${RUN_OUT} ${endY}`
+}
+
+const { viewBox, width, bands } =
+  variant === 'manifesto'
+    ? { ...MANIFESTO, bands: MANIFESTO.bands.map((b) => ({ ...b, d: runOut(b.d) })) }
+    : HERO
 ---
 
 <svg

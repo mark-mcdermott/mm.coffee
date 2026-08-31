@@ -59,7 +59,7 @@ const [, WORDMARK_TOP, WORDMARK_WIDTH] = VIEW_BOX.wordmark.split(' ').map(Number
 /** Ribbon sweeping across the lower right, echoing the hero. */
 const ribbon = [gold, orange, red, blue]
   .map((colour, i) => {
-    const y = 470 + i * 46
+    const y = 478 + i * 46
     return `<path d="M-40 ${y}C220 ${y - 90} 470 ${y + 70} 1240 ${y - 120}" stroke="${colour}" stroke-width="34" fill="none"/>`
   })
   .join('')
@@ -76,7 +76,7 @@ const svg = `<svg xmlns="http://www.w3.org/2000/svg" width="${W}" height="${H}" 
   <text x="80" y="386" font-family="Anton, 'Arial Narrow', sans-serif" font-size="86" fill="${red}" letter-spacing="-1">
     MODERN AGE.
   </text>
-  <text x="82" y="440" font-family="ui-monospace, monospace" font-size="21" fill="${ink}" opacity="0.7" letter-spacing="1.6">
+  <text x="82" y="416" font-family="ui-monospace, monospace" font-size="21" fill="${ink}" opacity="0.7" letter-spacing="1.6">
     A SOFTWARE STUDIO IN AUSTIN, TEXAS
   </text>
 </svg>`

@@ -15,9 +15,10 @@ Don't.
 
 ## What you're actually shipping
 
-A webfont for a logo means a render-blocking request to a third-party host, a
-flash of the wrong typeface while it loads, and a licence that has to stay valid
-for as long as the site is up. All so the browser can render nine glyphs it will
+A webfont for a logo means a third-party host on the critical path — an Adobe
+kit is a stylesheet, and stylesheets do block rendering — a flash of the wrong
+typeface once the font itself arrives, and a licence that has to stay valid for
+as long as the site is up. All so the browser can render nine glyphs it will
 never rearrange.
 
 A logo isn't text. It's one fixed shape. Convert it to outlines once and it

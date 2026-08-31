@@ -40,7 +40,7 @@ My first web dev job was with a two-man company called S Collective. I took a pa
 ![My bio on the S Collective team page: a photo of me in a suit at night with city lights behind me, headed "Mark McDermott, senior front end developer"](../../assets/press/scollective-bio.png)
 My bio on the S Collective team page, 2010. I did not write the copy.
 
-I also made sites on the side, usually for free, for some non-profits in this era. I was working the phones for the Austin GI Rights hotline and built their site, which I always liked. I also built a site for Under the Hood, a coffeehouse near Fort Hood started by antiwar veterans as a gathering place for soldiers. I built a site for an anarchist thrift shop in Drupal that was always a nightmare to maintain.
+I also made sites on the side, usually for free, for some non-profits in this era. I was working the phones for the Austin GI Rights Hotline and built their site, which I always liked. I also built a site for Under the Hood, a coffeehouse near Fort Hood started by antiwar veterans as a gathering place for soldiers. I built a site for an anarchist thrift shop in Drupal that was always a nightmare to maintain.
 
 ![A website built to look like a corkboard: a camouflage banner with dog tags and a coffee cup across the top, and below it pinned notes — the Killeen address and opening hours, an "I want you" donation poster, "Our Mission" and "House Rules"](../../assets/press/under-the-hood-wayback.jpg)
 Under the Hood website, 2009. Via the Internet Archive.
