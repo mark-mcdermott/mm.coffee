@@ -14,8 +14,8 @@ export function batchNumber(order: number): string {
 }
 
 /**
- * Accent colours for label-size text use the `-deep` variants — the comp
- * colours are display colours and fail AA below ~24px. See globals.css.
+ * Accent colors for label-size text use the `-deep` variants — the comp
+ * colors are display colors and fail AA below ~24px. See globals.css.
  */
 const ACCENT_TEXT = {
   red: 'text-red-deep',

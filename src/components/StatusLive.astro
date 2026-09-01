@@ -24,7 +24,7 @@
   }
 
   /** Green only when everything that could be checked actually passed. */
-  const summarise = (states: StatusState[]): StatusState => {
+  const summarize = (states: StatusState[]): StatusState => {
     if (states.some((s) => s === 'offline')) return 'offline'
     if (states.some((s) => s === 'unknown')) return 'unknown'
     if (states.every((s) => s === 'unconfigured')) return 'unconfigured'
@@ -58,7 +58,7 @@
       if (el) paint(el, state, STATUS_LABELS[state])
     }
 
-    const overall = summarise(payload.results.map((r) => r.state))
+    const overall = summarize(payload.results.map((r) => r.state))
 
     for (const el of document.querySelectorAll('[data-status-light]')) {
       el.classList.remove('bg-signal', 'bg-red-deep', 'bg-ink', 'opacity-30')

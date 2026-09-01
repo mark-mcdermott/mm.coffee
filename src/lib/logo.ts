@@ -44,7 +44,7 @@ export const NAME = [
 /**
  * The ribbon, in paint order. Named by palette token rather than by hex: the
  * component resolves each to `var(--color-…)` and the build scripts read the
- * value out of globals.css, so the logo can never hold a colour the site
+ * value out of globals.css, so the logo can never hold a color the site
  * doesn't. The authored art was a few points off every token.
  */
 export const RIBBON: readonly { token: 'red' | 'blue' | 'gold'; d: string }[] = [

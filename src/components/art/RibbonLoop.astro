@@ -4,7 +4,7 @@
  *
  * Four bands run in from the left, coil once, and carry on to the right edge.
  *
- * Everything here is derived from one centre and the four band positions rather
+ * Everything here is derived from one center and the four band positions rather
  * than drawn. A band's straight run is tangent to the bottom of its own circle,
  * so the radius falls out of where the band sits: `R = y − CY`. That is what
  * makes the rings genuinely concentric and the bands genuinely parallel — 32
@@ -12,7 +12,7 @@
  *
  * The fold is the gap in each ring, and it is computed, not placed. A ring of
  * radius R crosses the run of every band above it twice, once either side of the
- * centre; the gap spans the left-hand crossings so the ribbon reads as passing
+ * center; the gap spans the left-hand crossings so the ribbon reads as passing
  * behind there, while on the right it is drawn over them and passes in front.
  * A wider ring crosses more runs and crosses them further out, which is why the
  * gaps widen with radius — and why the innermost ring, which crosses nothing,
@@ -41,7 +41,7 @@ const THICKNESS = 21
 /** Paper between neighbouring bands, and so the width the casing adds. */
 const SEPARATION = 11
 
-/** Band centrelines, top to bottom. Their spacing is the ring spacing. */
+/** Band centerlines, top to bottom. Their spacing is the ring spacing. */
 const BANDS = [
   { token: 'gold', y: 267.5 },
   { token: 'orange', y: 299.5 },

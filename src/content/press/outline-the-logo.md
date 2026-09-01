@@ -11,21 +11,19 @@ The mm.coffee wordmark is set in R41 Stop, an Adobe Font. The obvious way to put
 that on a website is an Adobe Fonts web project: add the family, get a kit ID,
 drop a `<link>` in the head.
 
-Don't.
-
 ## What you're actually shipping
 
-A webfont for a logo means a third-party host on the critical path — an Adobe
-kit is a stylesheet, and stylesheets do block rendering — a flash of the wrong
-typeface once the font itself arrives, and a licence that has to stay valid for
-as long as the site is up. All so the browser can set ten letters and a heart
-it will never rearrange.
+Don't do that. A webfont for the logo means a request to a third-party host, and
+the Adobe kit that carries it is a stylesheet, so it blocks rendering. You also
+get a flash of the wrong typeface while the font loads, and you have to keep the
+license valid for as long as the site is up. That's a lot of machinery for ten
+letters and a heart that never move.
 
-A logo isn't text. It's one fixed shape. Convert it to outlines once and it
-becomes a couple of kilobytes of `<path>` data that renders identically
-forever, with no request, no licence question, and no flash.
+A logo is one fixed shape, so I converted it to outlines instead. It comes out
+as a couple of kilobytes of `<path>` data that renders the same way everywhere,
+with no request to make and no license to keep track of.
 
-## The catch
+## Live text in the export
 
 Illustrator's SVG export keeps type as live text by default:
 
@@ -35,18 +33,19 @@ Illustrator's SVG export keeps type as live text by default:
 </text>
 ```
 
-That renders correctly on your machine, because you have the font installed. On
-anyone else's it silently falls back to a default sans — and it looks fine
-enough that you might not notice.
+That renders correctly on your own machine, because you have the font
+installed. On anyone else's it quietly falls back to a default sans, and it
+looks close enough that you might not catch it.
 
-Select all, **Type → Create Outlines**, save again. The file should contain
-`<path>` and no `<text>`. That's the whole fix.
+The fix is to select all, do **Type → Create Outlines**, and save again. The
+file should then contain `<path>` and no `<text>`.
 
-## Worth doing anyway
+## Inheriting color
 
-Outlining also means the mark can inherit colour. Set `fill="currentColor"` on
-the root `<svg>` and the wordmark recolours by context — ink on paper in the
-header, paper on red where it reverses out — from one file.
+Outlining also means the mark can inherit color. I set `fill="currentColor"`
+on the root `<svg>`, so the wordmark picks up whatever color it is sitting in:
+ink on paper in the header, paper on red where it reverses out. That all comes
+from one file.
 
-The site now makes zero third-party font requests. The two faces that *are* type
-are self-hosted and subset at build time; the logo isn't type at all.
+The site makes no third-party font requests now. The two faces that are actually
+type are self-hosted and subset at build time, and the logo is just paths.

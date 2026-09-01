@@ -117,16 +117,16 @@ the one to set a label in.
   it stays in the foreground, renders SSR routes (`/mailroom`, `/api/*`), and reads from
   source so the suite can't pass against a stale build.
 
-## Colour and contrast
+## Color and contrast
 
-The comp colours are **display** colours. On paper, gold is 1.82:1 and red 4.07:1 —
+The comp colors are **display** colors. On paper, gold is 1.82:1 and red 4.07:1 —
 fine for large type and fills, but short of AA at label size, and this design sets
 most of its text at label size.
 
 So: `red` for display type and graphics, `gold` for graphics only, and
 `red-deep` (5.76:1) or `gold-deep` (5.59:1) for anything at label size. Orange
 (6.17:1) and blue (8.43:1) already clear AA on their own, so `orange-deep` and
-`blue-deep` are aliases rather than separate colours. `pnpm check:contrast`
+`blue-deep` are aliases rather than separate colors. `pnpm check:contrast`
 reads the tokens straight out of `globals.css` and fails the build if this slips.
 
 ## The admin

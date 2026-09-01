@@ -1,9 +1,9 @@
 /**
- * Verifies the palette's text colours clear WCAG AA against the paper
+ * Verifies the palette's text colors clear WCAG AA against the paper
  * background, reading the tokens straight out of globals.css so the check can
  * never drift from what actually ships.
  *
- * The comp colours (red, gold, orange) are display colours and legitimately
+ * The comp colors (red, gold, orange) are display colors and legitimately
  * fail at small sizes — they're asserted at the 3:1 large-text threshold, and
  * their `-deep` counterparts carry anything set at label size.
  */
@@ -12,7 +12,7 @@ import { readFileSync } from 'node:fs'
 const css = readFileSync(new URL('../src/styles/globals.css', import.meta.url), 'utf8')
 
 /**
- * Resolves a colour token to a hex value, following `var()` aliases — some
+ * Resolves a color token to a hex value, following `var()` aliases — some
  * tokens alias another rather than repeating a literal, so that a change to one
  * can't silently desync the other.
  */
@@ -99,9 +99,9 @@ for (const name of DECORATIVE) {
 }
 
 /**
- * Two places name the paper colour outside the stylesheet, because neither can
+ * Two places name the paper color outside the stylesheet, because neither can
  * read a CSS variable: the `theme-color` meta tag and the web manifest. They
- * are the only hardcoded colours left in the project, so they're asserted here
+ * are the only hardcoded colors left in the project, so they're asserted here
  * rather than left to be remembered during a palette change.
  */
 const PAPER_COPIES = [
@@ -117,7 +117,7 @@ for (const [file, pattern] of PAPER_COPIES) {
 
   if (!found) {
     failed++
-    console.log(`FAIL  ${file.padEnd(26)} no colour matched — did the markup change?`)
+    console.log(`FAIL  ${file.padEnd(26)} no color matched — did the markup change?`)
     continue
   }
 

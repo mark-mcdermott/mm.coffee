@@ -8,7 +8,7 @@ const ROUTES = [
   '/batches/markmcdermott-io',
   '/press',
   '/press/outline-the-logo',
-  '/press/display-colours-arent-text-colours',
+  '/press/display-colors-arent-text-colors',
   '/company',
   '/mailroom',
 ]
@@ -102,7 +102,7 @@ const RIBBON_ROUTES = [
   '/mailroom',
 ]
 
-/** The coil's left edge as a fraction of the artwork: its centre, 1363.5, less
+/** The coil's left edge as a fraction of the artwork: its center, 1363.5, less
  *  its outer radius — a 172.5 band plus 16 of casing — over the 1855 viewBox. */
 const COIL_LEFT = (1363.5 - 188.5) / 1855
 
@@ -145,7 +145,7 @@ test.describe('the ribbon header', () => {
  *
  * The strip is a fixed height at any width, and the artwork is scaled to fit —
  * so once the window is wide enough the curve was drawn narrower than the strip
- * and centred, leaving paper at both ends. The bands run out flat to cover it,
+ * and centered, leaving paper at both ends. The bands run out flat to cover it,
  * and these widths span where that used to break.
  */
 test('the manifesto ribbon bleeds to both edges', async ({ page }) => {
