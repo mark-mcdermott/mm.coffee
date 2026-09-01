@@ -1,12 +1,12 @@
 ---
 /**
  * MM Coffee Co wordmark, set in R41 Stop and shipped as outlined paths.
- * Inlined rather than <img> so it inherits colour via currentColor and costs
+ * Inlined rather than <img> so it inherits color via currentColor and costs
  * no extra request. Never swap this for a webfont.
  *
  * Variants:
  *   lockup    the primary mark — ribbon, name and the heart that closes it
- *   wordmark  flat single-colour, for reversed panels and tight spaces where
+ *   wordmark  flat single-color, for reversed panels and tight spaces where
  *             the ribbon would clash or turn to mush
  *   mark      just `mm`, for icons
  *
@@ -40,7 +40,7 @@ const letterforms = variant === 'mark' ? MONOGRAM : [...MONOGRAM, ...NAME]
 
   {
     /* Ribbon first so the letterforms paint over it. Its authored hexes sat a
-       few points off every token, so it takes its colour from the palette
+       few points off every token, so it takes its color from the palette
        instead — the logo and the site stay one palette by construction. */
     variant === 'lockup' &&
       RIBBON.map(({ token, d }) => <path d={d} fill={`var(--color-${token})`} />)

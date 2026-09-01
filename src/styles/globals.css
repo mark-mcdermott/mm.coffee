@@ -19,7 +19,7 @@
   --color-signal: #2f5423;
 
   /* Accessible counterparts, same hue and saturation, darkened until they clear
-     4.5:1 on paper. The brand colours are display colours: ochre is 1.82:1 —
+     4.5:1 on paper. The brand colors are display colors: ochre is 1.82:1 —
      fine for large type and fills, but nowhere near AA at label size, and this
      design sets most of its text at label size. So: bright for display type and
      graphics, deep for anything small.
@@ -95,7 +95,7 @@
   }
 
   /* A hazard lamp, not a gradient — `steps(1)` hard-switches between the two
-     colours instead of fading, which is what makes it read as a warning light
+     colors instead of fading, which is what makes it read as a warning light
      rather than a hover polish. 0.75s per state. */
   --animate-hazard: hazard 1.5s steps(1, end) infinite;
 
@@ -194,7 +194,7 @@
 
 @layer components {
   /* Primary call to action. Padding stays in the markup — the panels want
-     different sizes — but the colour and its hazard-blink hover live here so
+     different sizes — but the color and its hazard-blink hover live here so
      the three placements can't drift apart. */
   .cta {
     background-color: var(--color-ink);
@@ -273,7 +273,7 @@
    * At a desk width the standard measure reads as a ribbon down the left of a
    * mostly empty page, so this buys back ten characters a line — 640px of text,
    * 71 characters. It stays pinned left: the asymmetry is the site's, and
-   * centring it would trade one problem for a blander one. The space this
+   * centering it would trade one problem for a blander one. The space this
    * leaves on the right is where images and callouts can break out later.
    */
   .prose-longform {

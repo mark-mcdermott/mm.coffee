@@ -58,9 +58,9 @@ const [, WORDMARK_TOP, WORDMARK_WIDTH] = VIEW_BOX.wordmark.split(' ').map(Number
 
 /** Ribbon sweeping across the lower right, echoing the hero. */
 const ribbon = [gold, orange, red, blue]
-  .map((colour, i) => {
+  .map((color, i) => {
     const y = 478 + i * 46
-    return `<path d="M-40 ${y}C220 ${y - 90} 470 ${y + 70} 1240 ${y - 120}" stroke="${colour}" stroke-width="34" fill="none"/>`
+    return `<path d="M-40 ${y}C220 ${y - 90} 470 ${y + 70} 1240 ${y - 120}" stroke="${color}" stroke-width="34" fill="none"/>`
   })
   .join('')
 

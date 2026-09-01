@@ -35,7 +35,7 @@ const BANDS = [token('gold'), token('orange'), token('red'), token('blue')]
 const BOX = 64
 
 /**
- * Centre the glyph in the 64-unit box at the given width. The `m` is authored
+ * Center the glyph in the 64-unit box at the given width. The `m` is authored
  * in the lockup's coordinate space, so the inner translate lifts it to the
  * origin before it's scaled and placed.
  */
@@ -54,9 +54,9 @@ function placeGlyph(glyphWidth, offsetY = 0) {
 
 /** Swoosh bands arcing across the lower third. */
 function swooshBands() {
-  return BANDS.map((colour, i) => {
+  return BANDS.map((color, i) => {
     const y = 44 + i * 4.4
-    return `<path d="M-2 ${y}C14 ${(y - 7).toFixed(1)} 26 ${(y + 6).toFixed(1)} 66 ${(y - 4).toFixed(1)}" stroke="${colour}" stroke-width="3.2" fill="none" stroke-linecap="butt"/>`
+    return `<path d="M-2 ${y}C14 ${(y - 7).toFixed(1)} 26 ${(y + 6).toFixed(1)} 66 ${(y - 4).toFixed(1)}" stroke="${color}" stroke-width="3.2" fill="none" stroke-linecap="butt"/>`
   }).join('')
 }
 
@@ -84,7 +84,7 @@ const rich = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${BOX} ${BOX}
 /**
  * Square treatment for iOS, which masks the icon itself — so the swoosh runs
  * edge to edge instead of clipping to a disc that would be invisible against a
- * same-coloured square.
+ * same-colored square.
  */
 const square = `<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 ${BOX} ${BOX}" role="img" aria-label="mm.coffee">
   <title>mm.coffee</title>
@@ -139,7 +139,7 @@ const entries = ICO_SIZES.map((size, i) => {
   entry.writeUInt8(size >= 256 ? 0 : size, 1) // height
   entry.writeUInt8(0, 2) // palette size
   entry.writeUInt8(0, 3) // reserved
-  entry.writeUInt16LE(1, 4) // colour planes
+  entry.writeUInt16LE(1, 4) // color planes
   entry.writeUInt16LE(32, 6) // bits per pixel
   entry.writeUInt32LE(images[i].length, 8)
   entry.writeUInt32LE(offset, 12)

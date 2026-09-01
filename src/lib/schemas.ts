@@ -41,7 +41,7 @@ export const pressSchema = z.object({
   title: z.string().min(1),
   subtitle: z.string().optional(),
   /**
-   * Normalised to `YYYY-MM-DD`. Coerced because YAML parses an unquoted
+   * Normalized to `YYYY-MM-DD`. Coerced because YAML parses an unquoted
    * `2026-08-14` into a Date, and requiring quotes is a footgun that only
    * shows up as a confusing schema error later.
    */

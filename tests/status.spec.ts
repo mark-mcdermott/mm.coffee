@@ -66,7 +66,7 @@ test.describe('the footer strip', () => {
     await expect(page.locator('[data-status-light]').first()).toHaveClass(/bg-signal/)
   })
 
-  test('shows a downed target in red, and never summarises as green', async ({ page }) => {
+  test('shows a downed target in red, and never summarizes as green', async ({ page }) => {
     await page.route('**/api/status', (route) =>
       route.fulfill({
         json: {

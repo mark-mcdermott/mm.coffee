@@ -62,7 +62,7 @@ export const STATUS_LABELS: Record<StatusState, string> = {
   unknown: 'Unknown',
 }
 
-/** Tailwind text colour per state. Nothing but a real pass reads as green. */
+/** Tailwind text color per state. Nothing but a real pass reads as green. */
 export const STATUS_COLOURS: Record<StatusState, string> = {
   online: 'text-signal',
   offline: 'text-red-deep',
