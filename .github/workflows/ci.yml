@@ -1,0 +1,48 @@
+name: CI
+
+on:
+  pull_request:
+    branches: [main]
+  push:
+    branches: [main]
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      # Version comes from packageManager in package.json, so CI and local
+      # development cannot drift apart.
+      - uses: pnpm/action-setup@v6
+        with:
+          package_json_file: package.json
+
+      # 24 is what @astrojs/vercel targets for this project's functions.
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Typecheck
+        run: pnpm check
+
+      # The suite runs against real Chrome on purpose (see playwright.config.ts),
+      # so the bundled chromium is not what to install here.
+      - name: Install Chrome
+        run: pnpm exec playwright install chrome
+
+      # `test` builds before it runs, so this covers the build too.
+      - name: Build and test
+        run: pnpm test
+
+      - name: Upload traces
+        uses: actions/upload-artifact@v7
+        if: failure()
+        with:
+          name: test-results
+          path: test-results/
+          retention-days: 7
