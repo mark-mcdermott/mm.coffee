@@ -5,8 +5,23 @@ import { evaluateSubmission, type ContactResponse } from '@lib/contact'
 
 export const prerender = false
 
-/** Verified sending domain. Replies go to whoever filled the form in. */
-const FROM = `mm.coffee <hello@mm.coffee>`
+/**
+ * Resend's shared sender, not a typo.
+ *
+ * `mm.coffee` was a verified Resend domain until 2026-10-05, when the free tier's three
+ * domain slots were given over to the apps that need auth mail — frunk.cloud, tova.so and
+ * diamondheart.app. Sending from an unverified domain is a 403, so this form had to move or
+ * stop working.
+ *
+ * `onboarding@resend.dev` is Resend's shared sender and carries one hard restriction: it
+ * delivers **only to the address the Resend account is registered under**. That is
+ * `SITE.email`, which is exactly where this form already sends, so the restriction costs
+ * nothing here — but it is why the recipient below cannot be changed to anything else
+ * without verifying a domain again.
+ *
+ * Replies still go to whoever filled the form in, via `replyTo`.
+ */
+const FROM = `mm.coffee <onboarding@resend.dev>`
 
 const json = (body: ContactResponse, status: number) =>
   new Response(JSON.stringify(body), {
