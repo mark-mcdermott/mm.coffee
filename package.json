@@ -19,24 +19,24 @@
     "astro": "astro"
   },
   "dependencies": {
-    "@astrojs/markdown-satteri": "^0.4.2",
+    "@astrojs/markdown-satteri": "^0.4.10",
     "@astrojs/rss": "^4.0.19",
-    "@astrojs/sitemap": "^3.7.3",
+    "@astrojs/sitemap": "^3.7.5",
     "@vercel/analytics": "^2.0.1",
-    "@vercel/speed-insights": "^2.0.0",
-    "astro": "^7.3.5",
-    "resend": "^6.32.0",
+    "@vercel/speed-insights": "^2.1.0",
+    "astro": "^7.4.12",
+    "resend": "^6.38.1",
     "sharp": "^0.35.5",
-    "yaml": "^2.9.0",
-    "zod": "^4.6.5"
+    "yaml": "^2.9.1",
+    "zod": "^4.6.7"
   },
   "devDependencies": {
-    "@astrojs/check": "^0.9.10",
-    "@astrojs/vercel": "^11.0.11",
-    "@playwright/test": "^1.62.1",
-    "@tailwindcss/vite": "^4.3.3",
-    "@types/node": "^26.2.0",
-    "tailwindcss": "^4.3.3",
+    "@astrojs/check": "^0.9.12",
+    "@astrojs/vercel": "^11.0.22",
+    "@playwright/test": "^1.65.1",
+    "@tailwindcss/vite": "^4.3.5",
+    "@types/node": "^26.6.6",
+    "tailwindcss": "^4.3.5",
     "typescript": "^6.0.3"
   },
   "pnpm": {
